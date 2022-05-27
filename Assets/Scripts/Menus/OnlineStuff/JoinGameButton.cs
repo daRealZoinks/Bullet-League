@@ -1,13 +1,24 @@
+using Photon.Realtime;
 using UnityEngine;
 
 public class JoinGameButton : MonoBehaviour
 {
-    //room reference
+    public Room room;
+
+    JoinGameButton(Room newRoom)
+    {
+        room = newRoom;
+        //drq stie, scrii tu aici cv
+    }
 
     private void Start()
     {
         //give this button one of the rooms
     }
 
-    //when clicked, join the room
+    public void Join()
+    {
+        //join the room
+    }
+
 }

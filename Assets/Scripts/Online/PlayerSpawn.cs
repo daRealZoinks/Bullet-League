@@ -1,11 +1,12 @@
 using Photon.Pun;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerSpawn : MonoBehaviourPunCallbacks
 {
     public GameObject player;
 
-public List<Transform> previousActiveCells, activeCells;
+    public List<Transform> previousActiveCells, activeCells;
     public Transform spawnPoint;
 
     private void Start()

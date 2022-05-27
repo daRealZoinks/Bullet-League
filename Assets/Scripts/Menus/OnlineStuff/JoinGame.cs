@@ -19,7 +19,7 @@ public class JoinGame : MonoBehaviour
 
         for (int i = 0; i < PhotonNetwork.CountOfRooms; i++)
         {
-            joinGameButtons.Add();
+            //joinGameButtons.Add();
         }
         //make new buttons representing the rooms
     }
