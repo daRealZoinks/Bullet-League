@@ -5,6 +5,7 @@ public class PlayerSpawn : MonoBehaviourPunCallbacks
 {
     public GameObject player;
 
+public List<Transform> previousActiveCells, activeCells;
     public Transform spawnPoint;
 
     private void Start()
