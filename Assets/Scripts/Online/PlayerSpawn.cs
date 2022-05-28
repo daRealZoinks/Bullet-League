@@ -6,8 +6,8 @@ public class PlayerSpawn : MonoBehaviourPunCallbacks
 {
     public GameObject player;
 
-    public List<Transform> previousActiveCells, activeCells;
-    public Transform spawnPoint;
+    public List<Transform> blueTeamSpawn;
+    public List<Transform> orangeTeamSpawn;
 
     private void Start()
     {
@@ -18,6 +18,14 @@ public class PlayerSpawn : MonoBehaviourPunCallbacks
         else
         {
             Instantiate(player, spawnPoint.position, spawnPoint.rotation);
+        }
+    }
+
+    void Spawn()
+    {
+        if(PhotonNetwork)
+        {
+
         }
     }
 }
