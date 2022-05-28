@@ -13,7 +13,7 @@ public class PlayerSpawn : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsConnected)
         {
-            PhotonNetwork.Instantiate(player.name, spawnPoint.position, spawnPoint.rotation);
+            Spawn();
         }
         else
         {
@@ -23,9 +23,17 @@ public class PlayerSpawn : MonoBehaviourPunCallbacks
 
     void Spawn()
     {
-        if(PhotonNetwork)
-        {
+        Transform spawnPoint;
 
+        if (PhotonNetwork) //if blue team
+        {
+            spawnPoint = blueTeamSpawn[Random.Range(0, orangeTeamSpawn.Count)];
         }
+        else
+        {
+            spawnPoint = orangeTeamSpawn[Random.Range(0, orangeTeamSpawn.Count)];
+        }
+
+        PhotonNetwork.Instantiate(player.name, spawnPoint.position, spawnPoint.rotation);
     }
 }
