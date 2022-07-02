@@ -8,7 +8,7 @@ public class HostGame : MonoBehaviourPunCallbacks
 
     private string roomName;
 
-    private RoomOptions roomOptions = new();
+    private readonly RoomOptions roomOptions = new();
 
     public void SetNumberOfPlayers(int numberOfPlayers)
     {
@@ -19,7 +19,6 @@ public class HostGame : MonoBehaviourPunCallbacks
     public void SetRoomName(string name)
     {
         roomName = name;
-        GameObject gj;
     }
 
     public void CreateRoom()

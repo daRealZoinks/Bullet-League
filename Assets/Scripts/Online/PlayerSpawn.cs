@@ -17,7 +17,7 @@ public class PlayerSpawn : MonoBehaviourPunCallbacks
         }
         else
         {
-            Instantiate(player, spawnPoint.position, spawnPoint.rotation);
+            //Instantiate(player, spawnPoint.position, spawnPoint.rotation);
         }
     }
 
@@ -25,7 +25,7 @@ public class PlayerSpawn : MonoBehaviourPunCallbacks
     {
         Transform spawnPoint;
 
-        if (PhotonNetwork) //if blue team
+        if (PhotonNetwork.IsConnected) //if blue team
         {
             spawnPoint = blueTeamSpawn[Random.Range(0, orangeTeamSpawn.Count)];
         }
