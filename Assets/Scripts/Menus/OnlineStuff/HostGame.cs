@@ -8,7 +8,7 @@ public class HostGame : MonoBehaviourPunCallbacks
 
     private string roomName;
 
-    private RoomOptions roomOptions;
+    private RoomOptions roomOptions = new();
 
     public void SetNumberOfPlayers(int numberOfPlayers)
     {
@@ -19,10 +19,13 @@ public class HostGame : MonoBehaviourPunCallbacks
     public void SetRoomName(string name)
     {
         roomName = name;
+        GameObject gj;
     }
 
     public void CreateRoom()
     {
+        PhotonNetwork.JoinOrCreateRoom(roomName, roomOptions, TypedLobby.Default);
+
         if (roomName != "" && roomName != null && PhotonNetwork.NickName != null)
         {
             PhotonNetwork.CreateRoom(roomName, roomOptions);

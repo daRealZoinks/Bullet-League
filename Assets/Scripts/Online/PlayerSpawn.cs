@@ -6,7 +6,9 @@ public class PlayerSpawn : MonoBehaviourPunCallbacks
 {
     public GameObject player;
 
-    public List<Transform> previousActiveCells, activeCells;
+    public List<Transform> blueTeam;
+    public List<Transform> orangeTeam;
+
     public Transform spawnPoint;
 
     private void Start()
