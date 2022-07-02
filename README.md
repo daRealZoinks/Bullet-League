@@ -1,3 +1,3 @@
 # Bullet League
 
-yes
+unity project (must open with unity)
