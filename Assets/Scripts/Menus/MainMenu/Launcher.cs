@@ -43,10 +43,9 @@ public class Launcher : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         OnlineButtonsActiveState(true);
-
         gameState.text = "Connected";
-
         PhotonNetwork.AutomaticallySyncScene = true;
+        PhotonNetwork.JoinLobby();
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)

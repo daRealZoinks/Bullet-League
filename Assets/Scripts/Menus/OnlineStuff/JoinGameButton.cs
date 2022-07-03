@@ -1,17 +1,17 @@
 using Photon.Realtime;
 using UnityEngine;
+using TMPro;
 
 public class JoinGameButton : MonoBehaviour
 {
-    public Room room;
+    public TextMeshProUGUI text;
 
-    JoinGameButton(Room newRoom)
+    public void SetRoomInfo(RoomInfo roomInfo)
     {
-        room = newRoom;
-        //drq stie, scrii tu aici cv
+        text.text = roomInfo.Name + " (" + roomInfo.PlayerCount + "/" + roomInfo.MaxPlayers + ")";
     }
 
-    private void Start()
+    private void Enable()
     {
         //give this button one of the rooms
     }
@@ -20,5 +20,4 @@ public class JoinGameButton : MonoBehaviour
     {
         //join the room
     }
-
 }

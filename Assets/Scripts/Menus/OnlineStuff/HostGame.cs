@@ -23,11 +23,12 @@ public class HostGame : MonoBehaviourPunCallbacks
 
     public void CreateRoom()
     {
-        PhotonNetwork.JoinOrCreateRoom(roomName, roomOptions, TypedLobby.Default);
-
-        if (roomName != "" && roomName != null && PhotonNetwork.NickName != null)
+        if (PhotonNetwork.IsConnected)
         {
-            PhotonNetwork.CreateRoom(roomName, roomOptions);
+            if (roomName != "" && roomName != null && PhotonNetwork.NickName != null)
+            {
+                PhotonNetwork.JoinOrCreateRoom(roomName, roomOptions, TypedLobby.Default);
+            }
         }
     }
 
@@ -38,6 +39,6 @@ public class HostGame : MonoBehaviourPunCallbacks
 
     public override void OnCreateRoomFailed(short returnCode, string message)
     {
-        Debug.Log("Room creation failed");
+        Debug.Log("Room creation failed " + message);
     }
 }

@@ -984,7 +984,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 033496ea032c816459c7aec32a65acf1, type: 2}
+  - {fileID: 2100000, guid: 234734d4433109544be8d1b9166d8f87, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1569,6 +1569,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Shotgun
+      objectReference: {fileID: 0}
+    - target: {fileID: 76856648538436070, guid: 5bb7d142c5da4f6469269fc8b5ea618b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 746150694262860636, guid: 5bb7d142c5da4f6469269fc8b5ea618b,
         type: 3}

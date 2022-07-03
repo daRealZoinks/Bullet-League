@@ -1,26 +1,22 @@
 using Photon.Pun;
+using Photon.Realtime;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class JoinGame : MonoBehaviour
+public class JoinGame : MonoBehaviourPunCallbacks
 {
-    //list for buttons
+    public Transform content;
+    public JoinGameButton button;
 
-    private List<JoinGameButton> joinGameButtons;
-
-    private void Start()
+    public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
-        RefreshRoomList();
-    }
-
-    private void RefreshRoomList()
-    {
-        joinGameButtons.Clear();
-
-        for (int i = 0; i < PhotonNetwork.CountOfRooms; i++)
+        foreach (RoomInfo info in roomList)
         {
-            //joinGameButtons.Add();
+            JoinGameButton joinGameButton = Instantiate(button, content);
+            if (joinGameButton != null)
+            {
+                button.SetRoomInfo(info);
+            }
         }
-        //make new buttons representing the rooms
     }
 }
