@@ -8,14 +8,29 @@ public class JoinGame : MonoBehaviourPunCallbacks
     public Transform content;
     public JoinGameButton button;
 
+    private List<JoinGameButton> buttonList = new();
+
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
         foreach (RoomInfo info in roomList)
         {
-            JoinGameButton joinGameButton = Instantiate(button, content);
-            if (joinGameButton != null)
+            if (info.RemovedFromList)
             {
-                button.SetRoomInfo(info);
+                int index = buttonList.FindIndex(x => x.roomInfo.Name == info.Name);
+                if (index != -1)
+                {
+                    Destroy(buttonList[index].gameObject);
+                    buttonList.RemoveAt(index);
+                }
+            }
+            else
+            {
+                JoinGameButton joinGameButton = Instantiate(button, content);
+                if (joinGameButton != null)
+                {
+                    button.SetRoomInfo(info);
+                    buttonList.Add(button);
+                }
             }
         }
     }
