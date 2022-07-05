@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class WeaponDispenser : MonoBehaviour, IPunObservable
 {
+    public GameObject particles;
+
     public GameObject[] weapons;
 
     private bool ready;
@@ -40,9 +42,11 @@ public class WeaponDispenser : MonoBehaviour, IPunObservable
     private IEnumerator LoadNewWeapon()
     {
         ready = false;
+        particles.SetActive(false);
         yield return new WaitForSeconds(rechargeTime);
         ChooseRandomWeapon();
         ready = true;
+        particles.SetActive(true);
     }
 
     private void ChooseRandomWeapon()

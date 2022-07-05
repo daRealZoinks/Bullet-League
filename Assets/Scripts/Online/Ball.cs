@@ -5,11 +5,11 @@ public class Ball : MonoBehaviour
 {
     private GameManager gameManager;
 
-    private void Start()
+    public void SetGameManager(GameManager gameManager)
     {
-        gameManager = FindObjectOfType<GameManager>();
-        gameManager.currentBall = gameObject;
+        this.gameManager = gameManager;
     }
+
 
     private void OnCollisionEnter(Collision collision)
     {

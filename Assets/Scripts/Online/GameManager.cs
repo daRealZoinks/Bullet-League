@@ -1,21 +1,40 @@
 using Photon.Pun;
 using Photon.Realtime;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 {
-    public GameObject currentBall;
+    [Header("Ball")]
+    private GameObject currentBall;
     public GameObject ballPrefab;
 
+    [Header("Score")]
     public int blueScore;
     public int orangeScore;
 
     public TextMeshProUGUI blueScoreText;
     public TextMeshProUGUI orangeScoreText;
 
+    [Header("Players")]
+    public GameObject playerPrefab;
+
+    public List<PlayerStart> blueTeamPlayerSpawnPoints;
+    public List<PlayerStart> orangeTeamPlayerSpawnPoints;
+
     public void Start()
     {
+        foreach (PlayerStart playerStart in blueTeamPlayerSpawnPoints)
+        {
+            playerStart.SetGameManager(this);
+        }
+
+        foreach (PlayerStart playerStart in orangeTeamPlayerSpawnPoints)
+        {
+            playerStart.SetGameManager(this);
+        }
+
         SpawnBall();
     }
 
@@ -42,6 +61,8 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
             currentBall = Instantiate(ballPrefab, transform.position, transform.rotation);
         }
 
+        currentBall.GetComponent<Ball>().SetGameManager(this);
+
         blueScoreText.text = blueScore.ToString();
         orangeScoreText.text = orangeScore.ToString();
     }
@@ -49,16 +70,16 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     public void BlueScored()
     {
         blueScore++;
-        Respawn();
+        RespawnBall();
     }
 
     public void OrangeScored()
     {
         orangeScore++;
-        Respawn();
+        RespawnBall();
     }
 
-    private void Respawn()
+    private void RespawnBall()
     {
         if (PhotonNetwork.IsMasterClient)
         {
