@@ -1685,6 +1685,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pistol
       objectReference: {fileID: 0}
+    - target: {fileID: 498132601748801246, guid: f3824686b810cfb40a55557b14db2ccd,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 982462407982390372, guid: f3824686b810cfb40a55557b14db2ccd,
         type: 3}
       propertyPath: m_RootOrder
@@ -1860,6 +1865,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SemiAutomatic
+      objectReference: {fileID: 0}
+    - target: {fileID: 7497812553374161164, guid: 1e8ca947df02e1b4f8e9393528f00ce2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1e8ca947df02e1b4f8e9393528f00ce2, type: 3}
