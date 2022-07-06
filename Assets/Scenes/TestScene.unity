@@ -3883,7 +3883,7 @@ MonoBehaviour:
   orangeScore: 0
   playerPrefab: {fileID: 8136020538247425386, guid: e38780a697e24274281c07d90b89f4e8,
     type: 3}
-  online: 0
+  online: 1
   blueTeamPlayerSpawnPoints: []
   orangeTeamPlayerSpawnPoints: []
   offlinePlayerStart: {fileID: 1242509323}
@@ -11673,6 +11673,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7836374226615951467, guid: bb0f3a819c3a90346bee0e92148df60f,
         type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7836374226615951467, guid: bb0f3a819c3a90346bee0e92148df60f,
+        type: 3}
       propertyPath: m_Name
       value: PlayerSpawn
       objectReference: {fileID: 0}
@@ -11689,7 +11694,7 @@ PrefabInstance:
     - target: {fileID: 7836374226615951468, guid: bb0f3a819c3a90346bee0e92148df60f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7836374226615951468, guid: bb0f3a819c3a90346bee0e92148df60f,
         type: 3}
