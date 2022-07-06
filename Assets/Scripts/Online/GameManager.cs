@@ -1,41 +1,55 @@
 using Photon.Pun;
 using Photon.Realtime;
 using System.Collections.Generic;
-using TMPro;
+using UnityEditor;
 using UnityEngine;
 
 public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 {
-    [Header("Ball")]
     private GameObject currentBall;
     public GameObject ballPrefab;
 
-    [Header("Score")]
     public int blueScore;
     public int orangeScore;
 
-    public TextMeshProUGUI blueScoreText;
-    public TextMeshProUGUI orangeScoreText;
-
-    [Header("Players")]
     public GameObject playerPrefab;
+
+    public bool online;
 
     public List<PlayerStart> blueTeamPlayerSpawnPoints;
     public List<PlayerStart> orangeTeamPlayerSpawnPoints;
 
-    public void Start()
+    public PlayerStart offlinePlayerStart;
+
+    public void Awake()
     {
-        foreach (PlayerStart playerStart in blueTeamPlayerSpawnPoints)
+        if (online)
         {
-            playerStart.SetGameManager(this);
+            foreach (PlayerStart playerStart in blueTeamPlayerSpawnPoints)
+            {
+                playerStart.SetGameManager(this);
+            }
+
+            foreach (PlayerStart playerStart in orangeTeamPlayerSpawnPoints)
+            {
+                playerStart.SetGameManager(this);
+            }
+
+            //handle the spawn of the whole playerbase later
+        }
+        else
+        {
+            PhotonNetwork.OfflineMode = true;
+
+            offlinePlayerStart.SetGameManager(this);
+
+            offlinePlayerStart.Spawn();
         }
 
-        foreach (PlayerStart playerStart in orangeTeamPlayerSpawnPoints)
+        if (ballPrefab != null)
         {
-            playerStart.SetGameManager(this);
+            SpawnBall();
         }
-
-        SpawnBall();
     }
 
     public override void OnMasterClientSwitched(Player newMasterClient)
@@ -62,9 +76,6 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         }
 
         currentBall.GetComponent<Ball>().SetGameManager(this);
-
-        blueScoreText.text = blueScore.ToString();
-        orangeScoreText.text = orangeScore.ToString();
     }
 
     public void BlueScored()
@@ -105,9 +116,56 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         {
             blueScore = (int)stream.ReceiveNext();
             orangeScore = (int)stream.ReceiveNext();
-
-            blueScoreText.text = blueScore.ToString();
-            orangeScoreText.text = orangeScore.ToString();
         }
+    }
+}
+
+[CustomEditor(typeof(GameManager))]
+public class GameManagerEditor : Editor
+{
+    SerializedProperty ballPrefab;
+
+    SerializedProperty playerPrefab;
+
+    SerializedProperty blueTeamPlayerSpawnPoints;
+    SerializedProperty orangeTeamPlayerSpawnPoints;
+
+    SerializedProperty offlinePlayerStart;
+
+    private void OnEnable()
+    {
+        ballPrefab = serializedObject.FindProperty("ballPrefab");
+        playerPrefab = serializedObject.FindProperty("playerPrefab");
+        blueTeamPlayerSpawnPoints = serializedObject.FindProperty("blueTeamPlayerSpawnPoints");
+        orangeTeamPlayerSpawnPoints = serializedObject.FindProperty("orangeTeamPlayerSpawnPoints");
+        offlinePlayerStart = serializedObject.FindProperty("offlinePlayerStart");
+    }
+
+    public override void OnInspectorGUI()
+    {
+        serializedObject.Update();
+
+        var gameManager = target as GameManager;
+
+        EditorGUILayout.PropertyField(ballPrefab);
+        EditorGUILayout.Space();
+
+        EditorGUILayout.PropertyField(playerPrefab);
+        EditorGUILayout.Space();
+
+        gameManager.online = GUILayout.Toggle(gameManager.online, "Online");
+        EditorGUILayout.Space();
+
+        if (gameManager.online)
+        {
+            EditorGUILayout.PropertyField(blueTeamPlayerSpawnPoints);
+            EditorGUILayout.PropertyField(orangeTeamPlayerSpawnPoints);
+        }
+        else
+        {
+            EditorGUILayout.PropertyField(offlinePlayerStart);
+        }
+
+        serializedObject.ApplyModifiedProperties();
     }
 }

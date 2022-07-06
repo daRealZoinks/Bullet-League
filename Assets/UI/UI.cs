@@ -9,11 +9,16 @@ public class UI : MonoBehaviour
     [Header("InGameUI")]
     public TextMeshProUGUI ammoCounter;
     public RectTransform reticle;
+    public TextMeshProUGUI blueScoreText;
+    public TextMeshProUGUI orangeScoreText;
 
     [Header("Pause")]
     public GameObject inGameUI;
     public GameObject pauseMenu;
 
+    private GameManager gameManager;
+
+    //Player related stuff
     private GameObject player;
     private GunManager gunManager;
     private PlayerMovement playerMovement;
@@ -21,6 +26,7 @@ public class UI : MonoBehaviour
 
     private void Start()
     {
+        gameManager = FindObjectOfType<GameManager>();
         playerMovement = FindObjectOfType<PlayerMovement>();
         player = playerMovement.gameObject;
         playerRB = player.GetComponent<Rigidbody>();
@@ -40,8 +46,17 @@ public class UI : MonoBehaviour
         float size = (float)(40 + playerRB.velocity.magnitude * 7 + playerMovement.lookingDirection.magnitude * 2);
 
         reticle.sizeDelta = Vector2.Lerp(reticle.sizeDelta, new Vector2(size, size), Time.deltaTime * 10);
+
+        UpdateScore();
     }
 
+    public void UpdateScore()
+    {
+        blueScoreText.text = gameManager.blueScore.ToString();
+        orangeScoreText.text = gameManager.orangeScore.ToString();
+    }
+
+    #region Pause
     public void Pause()
     {
         inGameUI.SetActive(false);
@@ -73,4 +88,5 @@ public class UI : MonoBehaviour
         }
         SceneManager.LoadScene(0, LoadSceneMode.Single);
     }
+    #endregion
 }
