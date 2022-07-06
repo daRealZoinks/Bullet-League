@@ -1,7 +1,6 @@
 using Photon.Pun;
 using UnityEngine;
 
-[ExecuteInEditMode]
 public class PlayerStart : MonoBehaviourPunCallbacks
 {
     public Color color;
