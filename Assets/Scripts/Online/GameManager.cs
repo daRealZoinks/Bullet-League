@@ -60,16 +60,16 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     }
 
     [ExecuteInEditMode]
-    private void Update()
+    public void Update()
     {
         foreach (PlayerStart playerStart in blueTeamPlayerSpawnPoints)
         {
-            playerStart.team = Team.Blue;
+            playerStart.SetColor(Team.Blue);
         }
 
         foreach (PlayerStart playerStart in orangeTeamPlayerSpawnPoints)
         {
-            playerStart.team = Team.Orange;
+            playerStart.SetColor(Team.Orange);
         }
     }
 

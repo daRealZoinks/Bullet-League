@@ -4,11 +4,8 @@ using Photon.Pun;
 public class PlayerStart : MonoBehaviourPunCallbacks
 {
     public Team team;
-
-    private Color color;
-
     public Mesh mesh;
-
+    private Color color;
     private GameManager gameManager;
 
     public void SetGameManager(GameManager gameManager)
@@ -22,10 +19,10 @@ public class PlayerStart : MonoBehaviourPunCallbacks
         switch (team)
         {
             case Team.Blue:
-                color = new Color(23, 118, 227);
+                color = new Color(23 / 255f, 118, 227 / 255f);
                 break;
             case Team.Orange:
-                color = new Color(227, 139, 23);
+                color = new Color(227 / 255f, 139 / 255f, 23 / 255f);
                 break;
         }
     }
@@ -47,14 +44,14 @@ public class PlayerStart : MonoBehaviourPunCallbacks
         Gizmos.color = Color.cyan;
         Gizmos.DrawRay(transform.position, transform.forward * 1.5f);
 
-        Gizmos.color = new Color(color.r, color.g, color.b, 5f / 255);
+        Gizmos.color = new Color(color.r, color.g, color.b, 10f / 255);
         Gizmos.DrawWireMesh(mesh, -1, transform.position, transform.rotation, transform.localScale);
 
     }
 
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = new Color(color.r, color.g, color.b, 30f / 255);
+        Gizmos.color = new Color(color.r, color.g, color.b, 55f / 255);
         Gizmos.DrawWireMesh(mesh, -1, transform.position, transform.rotation, transform.localScale);
     }
 }
