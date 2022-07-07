@@ -1,6 +1,5 @@
 using Photon.Pun;
 using Photon.Realtime;
-using UnityEngine;
 
 public class HostGame : MonoBehaviourPunCallbacks
 {
@@ -30,15 +29,5 @@ public class HostGame : MonoBehaviourPunCallbacks
                 PhotonNetwork.JoinOrCreateRoom(roomName, roomOptions, TypedLobby.Default);
             }
         }
-    }
-
-    public override void OnCreatedRoom()
-    {
-        Debug.Log("Created room");
-    }
-
-    public override void OnCreateRoomFailed(short returnCode, string message)
-    {
-        Debug.Log("Room creation failed " + message);
     }
 }

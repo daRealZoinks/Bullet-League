@@ -1,6 +1,7 @@
+using Photon.Pun;
 using Photon.Realtime;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
 public class JoinGameButton : MonoBehaviour
 {
@@ -14,13 +15,8 @@ public class JoinGameButton : MonoBehaviour
         text.text = roomInfo.Name + " (" + roomInfo.PlayerCount + "/" + roomInfo.MaxPlayers + ")";
     }
 
-    private void Enable()
-    {
-        //give this button one of the rooms
-    }
-
     public void Join()
     {
-        //join the room
+        PhotonNetwork.JoinRoom(roomInfo.Name);
     }
 }

@@ -8,7 +8,7 @@ public class JoinGame : MonoBehaviourPunCallbacks
     public Transform content;
     public JoinGameButton button;
 
-    private List<JoinGameButton> buttonList = new();
+    private readonly List<JoinGameButton> buttonList = new();
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
