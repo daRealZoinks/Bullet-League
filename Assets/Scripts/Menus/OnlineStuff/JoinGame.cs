@@ -26,7 +26,7 @@ public class JoinGame : MonoBehaviourPunCallbacks
             else
             {
                 JoinGameButton joinGameButton = Instantiate(button, content);
-                if (joinGameButton != null)
+                if (joinGameButton != null && info != null)
                 {
                     button.SetRoomInfo(info);
                     buttonList.Add(button);

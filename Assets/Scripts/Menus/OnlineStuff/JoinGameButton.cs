@@ -12,7 +12,7 @@ public class JoinGameButton : MonoBehaviour
     public void SetRoomInfo(RoomInfo roomInfo)
     {
         this.roomInfo = roomInfo;
-        text.text = roomInfo.Name + " (" + roomInfo.PlayerCount + "/" + roomInfo.MaxPlayers + ")";
+        text.text = this.roomInfo.Name + " - (" + this.roomInfo.PlayerCount + "/" + this.roomInfo.MaxPlayers + ")";
     }
 
     public void Join()
