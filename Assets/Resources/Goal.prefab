@@ -10,8 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6810296344598917578}
   - component: {fileID: 1658641085024870492}
-  - component: {fileID: 2178707277433123843}
-  - component: {fileID: 7165501391705633836}
   - component: {fileID: 4750781239170893668}
   m_Layer: 0
   m_Name: Touch
@@ -48,38 +46,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2178707277433123843
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4207674878486784196}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e741851cba3ad425c91ecf922cc6b379, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _data:
-    _json: '{"declarations":{"Kind":"Object","collection":{"$content":[{"name":"triggered","value":{"$content":false,"$type":"System.Boolean"},"typeHandle":{"Identification":"System.Boolean,
-      mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089","$version":"A"},"$version":"A"}],"$version":"A"},"$version":"A"}}'
-    _objectReferences: []
---- !u!114 &7165501391705633836
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4207674878486784196}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2fe5546f775c47d2820aa5e8a715f53, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _data:
-    _json: '{"nest":{"source":"Macro","macro":0,"embed":null}}'
-    _objectReferences:
-    - {fileID: 11400000, guid: f385412dae03ed04a9a300508af8f69b, type: 2}
 --- !u!114 &4750781239170893668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -92,6 +58,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6258bff559bcc344cbdecc90951027e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  colliding: 0
+  tagToCollide: Ball
 --- !u!1 &6132478854643594931
 GameObject:
   m_ObjectHideFlags: 0
@@ -102,8 +70,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8390092684568219966}
   - component: {fileID: 8113903288168193953}
-  - component: {fileID: 4949805713590124560}
-  - component: {fileID: 1301177119987860039}
   - component: {fileID: 3484650250567205187}
   m_Layer: 0
   m_Name: DontTouch
@@ -140,38 +106,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4949805713590124560
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6132478854643594931}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e741851cba3ad425c91ecf922cc6b379, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _data:
-    _json: '{"declarations":{"Kind":"Object","collection":{"$content":[{"name":"triggered","value":{"$content":false,"$type":"System.Boolean"},"typeHandle":{"Identification":"System.Boolean,
-      mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089","$version":"A"},"$version":"A"}],"$version":"A"},"$version":"A"}}'
-    _objectReferences: []
---- !u!114 &1301177119987860039
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6132478854643594931}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2fe5546f775c47d2820aa5e8a715f53, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _data:
-    _json: '{"nest":{"source":"Macro","macro":0,"embed":null}}'
-    _objectReferences:
-    - {fileID: 11400000, guid: f385412dae03ed04a9a300508af8f69b, type: 2}
 --- !u!114 &3484650250567205187
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -184,6 +118,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6258bff559bcc344cbdecc90951027e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  colliding: 0
+  tagToCollide: Ball
 --- !u!1 &7948132138441567688
 GameObject:
   m_ObjectHideFlags: 0
@@ -484,7 +420,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 25a9fb42d361f46ad89221f6d301e96e, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -541,8 +477,6 @@ GameObject:
   - component: {fileID: 8111124922320029391}
   - component: {fileID: 8111124922320028976}
   - component: {fileID: 8111124922320028977}
-  - component: {fileID: 5078698460551595891}
-  - component: {fileID: 3566743506022103017}
   - component: {fileID: 6041355860247294115}
   m_Layer: 0
   m_Name: Goal
@@ -1212,42 +1146,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
---- !u!114 &5078698460551595891
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8111124922320028979}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e741851cba3ad425c91ecf922cc6b379, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _data:
-    _json: '{"declarations":{"Kind":"Object","collection":{"$content":[{"name":"gameManager","value":null,"typeHandle":{"Identification":"GameManager,
-      Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null","$version":"A"},"$version":"A"},{"name":"touch","value":{"$content":0,"$type":"UnityEngine.Object"},"typeHandle":{"Identification":"UnityEngine.GameObject,
-      UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null","$version":"A"},"$version":"A"},{"name":"dontTouch","value":{"$content":1,"$type":"UnityEngine.Object"},"typeHandle":{"Identification":"UnityEngine.GameObject,
-      UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null","$version":"A"},"$version":"A"}],"$version":"A"},"$version":"A"}}'
-    _objectReferences:
-    - {fileID: 4207674878486784196}
-    - {fileID: 6132478854643594931}
---- !u!114 &3566743506022103017
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8111124922320028979}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2fe5546f775c47d2820aa5e8a715f53, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _data:
-    _json: '{"nest":{"source":"Macro","macro":0,"embed":null}}'
-    _objectReferences:
-    - {fileID: 11400000, guid: 5a3742a37b5ab434db6ee515a9f3cf7f, type: 2}
 --- !u!114 &6041355860247294115
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1260,3 +1158,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f92d02a675ed6945b929f42528c76ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
+  touch: {fileID: 4750781239170893668}
+  dontTouch: {fileID: 3484650250567205187}
+  TeamColor: 0
+  coloredPart: {fileID: 7948132138441567688}

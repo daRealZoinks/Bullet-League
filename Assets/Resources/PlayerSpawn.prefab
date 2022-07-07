@@ -44,5 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb279bae54fcee641b1630efab6368f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  color: {r: 1, g: 1, b: 1, a: 1}
+  team: 0
   mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}

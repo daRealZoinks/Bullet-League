@@ -808,8 +808,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: 30 | 30
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 59a8e64d886c98a409703f149d1bd6fa, type: 2}
+  m_sharedMaterial: {fileID: 8303159336294005651, guid: 59a8e64d886c98a409703f149d1bd6fa,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -945,8 +946,9 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 59a8e64d886c98a409703f149d1bd6fa, type: 2}
+  m_sharedMaterial: {fileID: 8303159336294005651, guid: 59a8e64d886c98a409703f149d1bd6fa,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1082,8 +1084,9 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 59a8e64d886c98a409703f149d1bd6fa, type: 2}
+  m_sharedMaterial: {fileID: 8303159336294005651, guid: 59a8e64d886c98a409703f149d1bd6fa,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1209,7 +1212,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 1
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -1267,6 +1270,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ammoCounter: {fileID: 5371284019503332353}
   reticle: {fileID: 5745854176207198370}
+  blueScoreText: {fileID: 5371284020021261942}
+  orangeScoreText: {fileID: 5371284019804686342}
   inGameUI: {fileID: 4344830163616471817}
   pauseMenu: {fileID: 6956151350230102016}
 --- !u!1 &5371284020551870365

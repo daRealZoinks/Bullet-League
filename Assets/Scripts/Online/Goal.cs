@@ -2,14 +2,27 @@ using UnityEngine;
 
 public class Goal : MonoBehaviour
 {
+    public GameManager gameManager;
+
     public CollisionCheck touch;
     public CollisionCheck dontTouch;
 
-    void Update()
+    public Team TeamColor;
+
+    public GameObject coloredPart;
+
+    private void Update()
     {
         if (touch.colliding && !dontTouch.colliding)
         {
-            //this is a goal
+            if (TeamColor == Team.Blue)
+            {
+                gameManager.BlueScored();
+            }
+            else
+            {
+                gameManager.OrangeScored();
+            }
         }
     }
 }

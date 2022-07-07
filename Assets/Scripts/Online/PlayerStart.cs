@@ -1,17 +1,33 @@
-using Photon.Pun;
 using UnityEngine;
+using Photon.Pun;
 
 public class PlayerStart : MonoBehaviourPunCallbacks
 {
-    public Color color;
+    public Team team;
 
-    private Mesh mesh;
+    private Color color;
+
+    public Mesh mesh;
 
     private GameManager gameManager;
 
     public void SetGameManager(GameManager gameManager)
     {
         this.gameManager = gameManager;
+    }
+
+    [ExecuteInEditMode]
+    public void SetColor(Team team)
+    {
+        switch (team)
+        {
+            case Team.Blue:
+                color = new Color(23, 118, 227);
+                break;
+            case Team.Orange:
+                color = new Color(227, 139, 23);
+                break;
+        }
     }
 
     public void Spawn()
@@ -29,7 +45,6 @@ public class PlayerStart : MonoBehaviourPunCallbacks
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.cyan;
-        // Gizmos.DrawLine(transform.position, transform.position + transform.forward * 1.5f);
         Gizmos.DrawRay(transform.position, transform.forward * 1.5f);
 
         Gizmos.color = new Color(color.r, color.g, color.b, 5f / 255);

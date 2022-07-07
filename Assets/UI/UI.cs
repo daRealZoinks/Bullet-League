@@ -26,7 +26,6 @@ public class UI : MonoBehaviour
 
     private void Start()
     {
-        gameManager = FindObjectOfType<GameManager>();
         playerMovement = FindObjectOfType<PlayerMovement>();
         player = playerMovement.gameObject;
         playerRB = player.GetComponent<Rigidbody>();
@@ -48,6 +47,11 @@ public class UI : MonoBehaviour
         reticle.sizeDelta = Vector2.Lerp(reticle.sizeDelta, new Vector2(size, size), Time.deltaTime * 10);
 
         UpdateScore();
+    }
+
+    public void SetGameManager(GameManager gameManager)
+    {
+        this.gameManager = gameManager;
     }
 
     public void UpdateScore()

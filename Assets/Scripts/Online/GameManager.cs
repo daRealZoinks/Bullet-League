@@ -1,7 +1,6 @@
 using Photon.Pun;
 using Photon.Realtime;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
@@ -14,6 +13,8 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 
     public GameObject playerPrefab;
 
+    public UI ui;
+
     public bool online;
 
     public List<PlayerStart> blueTeamPlayerSpawnPoints;
@@ -21,7 +22,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 
     public PlayerStart offlinePlayerStart;
 
-    public void Awake()
+    private void Awake()
     {
         if (online)
         {
@@ -39,16 +40,36 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         }
         else
         {
-            PhotonNetwork.OfflineMode = true;
+            PhotonNetwork.Disconnect();
 
             offlinePlayerStart.SetGameManager(this);
 
             offlinePlayerStart.Spawn();
         }
 
-        if (ballPrefab != null)
+        if (ballPrefab != null && currentBall == null)
         {
             SpawnBall();
+        }
+
+        if (ui == null)
+        {
+            Instantiate(ui);
+            ui.SetGameManager(this);
+        }
+    }
+
+    [ExecuteInEditMode]
+    private void Update()
+    {
+        foreach (PlayerStart playerStart in blueTeamPlayerSpawnPoints)
+        {
+            playerStart.team = Team.Blue;
+        }
+
+        foreach (PlayerStart playerStart in orangeTeamPlayerSpawnPoints)
+        {
+            playerStart.team = Team.Orange;
         }
     }
 
@@ -81,12 +102,14 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     public void BlueScored()
     {
         blueScore++;
+        ui.UpdateScore();
         RespawnBall();
     }
 
     public void OrangeScored()
     {
         orangeScore++;
+        ui.UpdateScore();
         RespawnBall();
     }
 
@@ -117,55 +140,5 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
             blueScore = (int)stream.ReceiveNext();
             orangeScore = (int)stream.ReceiveNext();
         }
-    }
-}
-
-[CustomEditor(typeof(GameManager))]
-public class GameManagerEditor : Editor
-{
-    SerializedProperty ballPrefab;
-
-    SerializedProperty playerPrefab;
-
-    SerializedProperty blueTeamPlayerSpawnPoints;
-    SerializedProperty orangeTeamPlayerSpawnPoints;
-
-    SerializedProperty offlinePlayerStart;
-
-    private void OnEnable()
-    {
-        ballPrefab = serializedObject.FindProperty("ballPrefab");
-        playerPrefab = serializedObject.FindProperty("playerPrefab");
-        blueTeamPlayerSpawnPoints = serializedObject.FindProperty("blueTeamPlayerSpawnPoints");
-        orangeTeamPlayerSpawnPoints = serializedObject.FindProperty("orangeTeamPlayerSpawnPoints");
-        offlinePlayerStart = serializedObject.FindProperty("offlinePlayerStart");
-    }
-
-    public override void OnInspectorGUI()
-    {
-        serializedObject.Update();
-
-        var gameManager = target as GameManager;
-
-        EditorGUILayout.PropertyField(ballPrefab);
-        EditorGUILayout.Space();
-
-        EditorGUILayout.PropertyField(playerPrefab);
-        EditorGUILayout.Space();
-
-        gameManager.online = GUILayout.Toggle(gameManager.online, "Online");
-        EditorGUILayout.Space();
-
-        if (gameManager.online)
-        {
-            EditorGUILayout.PropertyField(blueTeamPlayerSpawnPoints);
-            EditorGUILayout.PropertyField(orangeTeamPlayerSpawnPoints);
-        }
-        else
-        {
-            EditorGUILayout.PropertyField(offlinePlayerStart);
-        }
-
-        serializedObject.ApplyModifiedProperties();
     }
 }
