@@ -18,23 +18,22 @@
 
 namespace Photon.Realtime
 {
+    using ExitGames.Client.Photon;
     using System;
-    using System.Text;
-    using System.Collections;
     using System.Collections.Generic;
-
+    using System.Text;
+    using Hashtable = ExitGames.Client.Photon.Hashtable;
     using Stopwatch = System.Diagnostics.Stopwatch;
 
-    using ExitGames.Client.Photon;
 
-    #if SUPPORTED_UNITY
+#if SUPPORTED_UNITY
     using UnityEngine;
-    #endif
+#endif
 
-    #if SUPPORTED_UNITY || NETFX_CORE
+#if SUPPORTED_UNITY || NETFX_CORE
     using Hashtable = ExitGames.Client.Photon.Hashtable;
     using SupportClass = ExitGames.Client.Photon.SupportClass;
-    #endif
+#endif
 
     /// <summary>
     /// Helper class to debug log basic information about Photon client and vital traffic statistics.
@@ -42,29 +41,23 @@ namespace Photon.Realtime
     /// <remarks>
     /// Set SupportLogger.Client for this to work.
     /// </remarks>
-    #if SUPPORTED_UNITY
+#if SUPPORTED_UNITY
     [DisallowMultipleComponent]
-    #if PUN_2_OR_NEWER || FUSION_UNITY
+#if PUN_2_OR_NEWER || FUSION_UNITY
 	[AddComponentMenu("")] // hide from Unity Menus and searches
-    #endif
+#endif
 	public class SupportLogger : MonoBehaviour, IConnectionCallbacks , IMatchmakingCallbacks , IInRoomCallbacks, ILobbyCallbacks, IErrorInfoCallback
-    #else
-	public class SupportLogger : IConnectionCallbacks, IInRoomCallbacks, IMatchmakingCallbacks , ILobbyCallbacks
-    #endif
+#else
+    public class SupportLogger : IConnectionCallbacks, IInRoomCallbacks, IMatchmakingCallbacks, ILobbyCallbacks
+#endif
     {
         /// <summary>
         /// Toggle to enable or disable traffic statistics logging.
         /// </summary>
         public bool LogTrafficStats = true;
-        private bool loggedStillOfflineMessage;
-
         private LoadBalancingClient client;
 
         private Stopwatch startStopwatch;
-
-        /// helps skip the initial OnApplicationPause call, which is not really of interest on start
-        private bool initialOnApplicationPauseSkipped = false;
-
         private int pingMax;
         private int pingMin;
 
@@ -92,7 +85,7 @@ namespace Photon.Realtime
         }
 
 
-        #if SUPPORTED_UNITY
+#if SUPPORTED_UNITY
         protected void Start()
         {
             this.LogBasics();
@@ -124,42 +117,42 @@ namespace Photon.Realtime
         {
             this.CancelInvoke();
         }
-        #endif
+#endif
 
         public void StartLogStats()
         {
-            #if SUPPORTED_UNITY
+#if SUPPORTED_UNITY
             this.InvokeRepeating("LogStats", 10, 10);
-            #else
+#else
             Debug.Log("Not implemented for non-Unity projects.");
-            #endif
+#endif
         }
 
         public void StopLogStats()
         {
-            #if SUPPORTED_UNITY
+#if SUPPORTED_UNITY
             this.CancelInvoke("LogStats");
-            #else
+#else
             Debug.Log("Not implemented for non-Unity projects.");
-            #endif
+#endif
         }
 
         private void StartTrackValues()
         {
-            #if SUPPORTED_UNITY
+#if SUPPORTED_UNITY
             this.InvokeRepeating("TrackValues", 0.5f, 0.5f);
-            #else
+#else
             Debug.Log("Not implemented for non-Unity projects.");
-            #endif
+#endif
         }
 
         private void StopTrackValues()
         {
-            #if SUPPORTED_UNITY
+#if SUPPORTED_UNITY
             this.CancelInvoke("TrackValues");
-            #else
+#else
             Debug.Log("Not implemented for non-Unity projects.");
-            #endif
+#endif
         }
 
         private string GetFormattedTimestamp()
@@ -180,37 +173,19 @@ namespace Photon.Realtime
         }
 
 
-        // called via InvokeRepeatedly
-        private void TrackValues()
-        {
-            if (this.client != null)
-            {
-                int currentRtt = this.client.LoadBalancingPeer.RoundTripTime;
-                if (currentRtt > this.pingMax)
-                {
-                    this.pingMax = currentRtt;
-                }
-                if (currentRtt < this.pingMin)
-                {
-                    this.pingMin = currentRtt;
-                }
-            }
-        }
-
-
         /// <summary>
         /// Debug logs vital traffic statistics about the attached Photon Client.
         /// </summary>
         public void LogStats()
         {
-            if (this.client == null || this.client.State == ClientState.PeerCreated)
+            if (client == null || client.State == ClientState.PeerCreated)
             {
                 return;
             }
 
-            if (this.LogTrafficStats)
+            if (LogTrafficStats)
             {
-                Debug.Log(string.Format("{0} SupportLogger {1} Ping min/max: {2}/{3}", this.GetFormattedTimestamp() , this.client.LoadBalancingPeer.VitalStatsToString(false) , this.pingMin , this.pingMax));
+                Debug.Log(string.Format("{0} SupportLogger {1} Ping min/max: {2}/{3}", GetFormattedTimestamp(), client.LoadBalancingPeer.VitalStatsToString(false), pingMin, pingMax));
             }
         }
 
@@ -221,46 +196,46 @@ namespace Photon.Realtime
         {
             if (this.client != null)
             {
-                List<string> buildProperties = new List<string>(10);
-                #if SUPPORTED_UNITY
+                List<string> buildProperties = new(10);
+#if SUPPORTED_UNITY
                 buildProperties.Add(Application.unityVersion);
                 buildProperties.Add(Application.platform.ToString());
-                #endif
-                #if ENABLE_IL2CPP
+#endif
+#if ENABLE_IL2CPP
                 buildProperties.Add("ENABLE_IL2CPP");
-                #endif
-                #if ENABLE_MONO
+#endif
+#if ENABLE_MONO
                 buildProperties.Add("ENABLE_MONO");
-                #endif
-                #if DEBUG
+#endif
+#if DEBUG
                 buildProperties.Add("DEBUG");
-                #endif
-                #if MASTER
+#endif
+#if MASTER
                 buildProperties.Add("MASTER");
-                #endif
-                #if NET_4_6
+#endif
+#if NET_4_6
                 buildProperties.Add("NET_4_6");
-                #endif
-                #if NET_STANDARD_2_0
+#endif
+#if NET_STANDARD_2_0
                 buildProperties.Add("NET_STANDARD_2_0");
-                #endif
-                #if NETFX_CORE
+#endif
+#if NETFX_CORE
                 buildProperties.Add("NETFX_CORE");
-                #endif
-                #if NET_LEGACY
+#endif
+#if NET_LEGACY
                 buildProperties.Add("NET_LEGACY");
-                #endif
-                #if UNITY_64
+#endif
+#if UNITY_64
                 buildProperties.Add("UNITY_64");
-                #endif
-                #if UNITY_FUSION
+#endif
+#if UNITY_FUSION
                 buildProperties.Add("UNITY_FUSION");
-                #endif
+#endif
 
 
-                StringBuilder sb = new StringBuilder();
+                StringBuilder sb = new();
 
-                string appIdShort = string.IsNullOrEmpty(this.client.AppId) || this.client.AppId.Length < 8 ? this.client.AppId : string.Concat(this.client.AppId.Substring(0, 8), "***");
+                string appIdShort = string.IsNullOrEmpty(client.AppId) || client.AppId.Length < 8 ? client.AppId : string.Concat(client.AppId[..8], "***");
 
                 sb.AppendFormat("{0} SupportLogger Info: ", this.GetFormattedTimestamp());
                 sb.AppendFormat("AppID: \"{0}\" AppVersion: \"{1}\" Client: v{2} ({4}) Build: {3} ", appIdShort, this.client.AppVersion, PhotonPeer.Version, string.Join(", ", buildProperties.ToArray()), this.client.LoadBalancingPeer.TargetFramework);
@@ -299,12 +274,12 @@ namespace Photon.Realtime
 
         public void OnConnectedToMaster()
         {
-			Debug.Log(this.GetFormattedTimestamp() + " SupportLogger OnConnectedToMaster().");
+            Debug.Log(this.GetFormattedTimestamp() + " SupportLogger OnConnectedToMaster().");
         }
 
         public void OnFriendListUpdate(List<FriendInfo> friendList)
         {
-			Debug.Log(this.GetFormattedTimestamp() + " SupportLogger OnFriendListUpdate(friendList).");
+            Debug.Log(this.GetFormattedTimestamp() + " SupportLogger OnFriendListUpdate(friendList).");
         }
 
         public void OnJoinedLobby()
@@ -314,12 +289,12 @@ namespace Photon.Realtime
 
         public void OnLeftLobby()
         {
-			Debug.Log(this.GetFormattedTimestamp() + " SupportLogger OnLeftLobby().");
+            Debug.Log(this.GetFormattedTimestamp() + " SupportLogger OnLeftLobby().");
         }
 
         public void OnCreateRoomFailed(short returnCode, string message)
         {
-			Debug.Log(this.GetFormattedTimestamp() + " SupportLogger OnCreateRoomFailed(" + returnCode+","+message+").");
+            Debug.Log(this.GetFormattedTimestamp() + " SupportLogger OnCreateRoomFailed(" + returnCode + "," + message + ").");
         }
 
         public void OnJoinedRoom()
@@ -329,12 +304,12 @@ namespace Photon.Realtime
 
         public void OnJoinRoomFailed(short returnCode, string message)
         {
-            Debug.Log(this.GetFormattedTimestamp() + " SupportLogger OnJoinRoomFailed(" + returnCode+","+message+").");
+            Debug.Log(this.GetFormattedTimestamp() + " SupportLogger OnJoinRoomFailed(" + returnCode + "," + message + ").");
         }
 
         public void OnJoinRandomFailed(short returnCode, string message)
         {
-			Debug.Log(this.GetFormattedTimestamp() + " SupportLogger OnJoinRandomFailed(" + returnCode+","+message+").");
+            Debug.Log(this.GetFormattedTimestamp() + " SupportLogger OnJoinRandomFailed(" + returnCode + "," + message + ").");
         }
 
         public void OnCreatedRoom()
@@ -347,68 +322,68 @@ namespace Photon.Realtime
             Debug.Log(this.GetFormattedTimestamp() + " SupportLogger OnLeftRoom().");
         }
 
-		public void OnDisconnected(DisconnectCause cause)
+        public void OnDisconnected(DisconnectCause cause)
         {
             this.StopLogStats();
             this.StopTrackValues();
 
-			Debug.Log(this.GetFormattedTimestamp() + " SupportLogger OnDisconnected(" + cause + ").");
-			this.LogBasics();
+            Debug.Log(this.GetFormattedTimestamp() + " SupportLogger OnDisconnected(" + cause + ").");
+            this.LogBasics();
             this.LogStats();
         }
 
         public void OnRegionListReceived(RegionHandler regionHandler)
         {
-			Debug.Log(this.GetFormattedTimestamp() + " SupportLogger OnRegionListReceived(regionHandler).");
+            Debug.Log(this.GetFormattedTimestamp() + " SupportLogger OnRegionListReceived(regionHandler).");
         }
 
         public void OnRoomListUpdate(List<RoomInfo> roomList)
         {
-			Debug.Log(this.GetFormattedTimestamp() + " SupportLogger OnRoomListUpdate(roomList). roomList.Count: " + roomList.Count);
+            Debug.Log(this.GetFormattedTimestamp() + " SupportLogger OnRoomListUpdate(roomList). roomList.Count: " + roomList.Count);
         }
 
         public void OnPlayerEnteredRoom(Player newPlayer)
         {
-			Debug.Log(this.GetFormattedTimestamp() + " SupportLogger OnPlayerEnteredRoom(" + newPlayer+").");
+            Debug.Log(this.GetFormattedTimestamp() + " SupportLogger OnPlayerEnteredRoom(" + newPlayer + ").");
         }
 
         public void OnPlayerLeftRoom(Player otherPlayer)
         {
-			Debug.Log(this.GetFormattedTimestamp() + " SupportLogger OnPlayerLeftRoom(" + otherPlayer+").");
+            Debug.Log(this.GetFormattedTimestamp() + " SupportLogger OnPlayerLeftRoom(" + otherPlayer + ").");
         }
 
         public void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
         {
-			Debug.Log(this.GetFormattedTimestamp() + " SupportLogger OnRoomPropertiesUpdate(propertiesThatChanged).");
+            Debug.Log(this.GetFormattedTimestamp() + " SupportLogger OnRoomPropertiesUpdate(propertiesThatChanged).");
         }
 
         public void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
         {
-			Debug.Log(this.GetFormattedTimestamp() + " SupportLogger OnPlayerPropertiesUpdate(targetPlayer,changedProps).");
+            Debug.Log(this.GetFormattedTimestamp() + " SupportLogger OnPlayerPropertiesUpdate(targetPlayer,changedProps).");
         }
 
         public void OnMasterClientSwitched(Player newMasterClient)
         {
-			Debug.Log(this.GetFormattedTimestamp() + " SupportLogger OnMasterClientSwitched(" + newMasterClient+").");
+            Debug.Log(this.GetFormattedTimestamp() + " SupportLogger OnMasterClientSwitched(" + newMasterClient + ").");
         }
 
         public void OnCustomAuthenticationResponse(Dictionary<string, object> data)
         {
-			Debug.Log(this.GetFormattedTimestamp() + " SupportLogger OnCustomAuthenticationResponse(" + data.ToStringFull()+").");
+            Debug.Log(this.GetFormattedTimestamp() + " SupportLogger OnCustomAuthenticationResponse(" + data.ToStringFull() + ").");
         }
 
-		public void OnCustomAuthenticationFailed (string debugMessage)
-		{
-			Debug.Log(this.GetFormattedTimestamp() + " SupportLogger OnCustomAuthenticationFailed(" + debugMessage+").");
-		}
+        public void OnCustomAuthenticationFailed(string debugMessage)
+        {
+            Debug.Log(this.GetFormattedTimestamp() + " SupportLogger OnCustomAuthenticationFailed(" + debugMessage + ").");
+        }
 
         public void OnLobbyStatisticsUpdate(List<TypedLobbyInfo> lobbyStatistics)
         {
-			Debug.Log(this.GetFormattedTimestamp() + " SupportLogger OnLobbyStatisticsUpdate(lobbyStatistics).");
+            Debug.Log(this.GetFormattedTimestamp() + " SupportLogger OnLobbyStatisticsUpdate(lobbyStatistics).");
         }
 
 
-        #if !SUPPORTED_UNITY
+#if !SUPPORTED_UNITY
         private static class Debug
         {
             public static void Log(string msg)
@@ -424,11 +399,21 @@ namespace Photon.Realtime
                 System.Diagnostics.Debug.WriteLine(msg);
             }
         }
-        #endif
+#endif
 
         public void OnErrorInfo(ErrorInfo errorInfo)
         {
             Debug.LogError(errorInfo.ToString());
+        }
+
+        public void OnRoomPropertiesUpdate(System.Collections.Hashtable propertiesThatChanged)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnPlayerPropertiesUpdate(Player targetPlayer, System.Collections.Hashtable changedProps)
+        {
+            throw new NotImplementedException();
         }
     }
 }
