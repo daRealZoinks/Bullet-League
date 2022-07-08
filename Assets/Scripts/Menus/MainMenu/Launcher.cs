@@ -46,6 +46,8 @@ public class Launcher : MonoBehaviourPunCallbacks
         gameState.text = "Connected";
         PhotonNetwork.AutomaticallySyncScene = true;
         PhotonNetwork.JoinLobby();
+
+
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)
