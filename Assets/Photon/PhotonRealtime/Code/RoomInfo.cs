@@ -16,13 +16,13 @@
 
 namespace Photon.Realtime
 {
+    using System.Collections;
+    using ExitGames.Client.Photon;
 
-    using Hashtable = ExitGames.Client.Photon.Hashtable;
-
-#if SUPPORTED_UNITY || NETFX_CORE
+    #if SUPPORTED_UNITY || NETFX_CORE
     using Hashtable = ExitGames.Client.Photon.Hashtable;
     using SupportClass = ExitGames.Client.Photon.SupportClass;
-#endif
+    #endif
 
 
     /// <summary>
@@ -37,6 +37,9 @@ namespace Photon.Realtime
     {
         /// <summary>Used in lobby, to mark rooms that are no longer listed (for being full, closed or hidden).</summary>
         public bool RemovedFromList;
+
+        /// <summary>Backing field for property.</summary>
+        private Hashtable customProperties = new Hashtable();
 
         /// <summary>Backing field for property.</summary>
         protected byte maxPlayers = 0;
@@ -71,7 +74,13 @@ namespace Photon.Realtime
         /// <summary>Read-only "cache" of custom properties of a room. Set via Room.SetCustomProperties (not available for RoomInfo class!).</summary>
         /// <remarks>All keys are string-typed and the values depend on the game/application.</remarks>
         /// <see cref="Room.SetCustomProperties"/>
-        public Hashtable CustomProperties { get; } = new();
+        public Hashtable CustomProperties
+        {
+            get
+            {
+                return this.customProperties;
+            }
+        }
 
         /// <summary>The name of a room. Unique identifier for a room/match (per AppId + game-Version).</summary>
         public string Name
@@ -86,7 +95,7 @@ namespace Photon.Realtime
         /// Count of players currently in room. This property is overwritten by the Room class (used when you're in a Room).
         /// </summary>
         public int PlayerCount { get; private set; }
-
+        
         /// <summary>
         /// The limit of players for this room. This property is shown in lobby, too.
         /// If the room is full (players count == maxplayers), joining this room will fail.
@@ -147,9 +156,9 @@ namespace Photon.Realtime
         /// <param name="roomProperties">Properties for this room.</param>
         protected internal RoomInfo(string roomName, Hashtable roomProperties)
         {
-            InternalCacheProperties(roomProperties);
+            this.InternalCacheProperties(roomProperties);
 
-            name = roomName;
+            this.name = roomName;
         }
 
         /// <summary>
@@ -157,7 +166,8 @@ namespace Photon.Realtime
         /// </summary>
         public override bool Equals(object other)
         {
-            return other is RoomInfo otherRoomInfo && Name.Equals(otherRoomInfo.name);
+            RoomInfo otherRoomInfo = other as RoomInfo;
+            return (otherRoomInfo != null && this.Name.Equals(otherRoomInfo.name));
         }
 
         /// <summary>
@@ -181,14 +191,14 @@ namespace Photon.Realtime
         /// <returns>Summary of this RoomInfo instance.</returns>
         public string ToStringFull()
         {
-            return string.Format("Room: '{0}' {1},{2} {4}/{3} players.\ncustomProps: {5}", this.name, this.isVisible ? "visible" : "hidden", this.isOpen ? "open" : "closed", this.maxPlayers, this.PlayerCount, this.CustomProperties.ToStringFull());
+            return string.Format("Room: '{0}' {1},{2} {4}/{3} players.\ncustomProps: {5}", this.name, this.isVisible ? "visible" : "hidden", this.isOpen ? "open" : "closed", this.maxPlayers, this.PlayerCount, this.customProperties.ToStringFull());
         }
 
         /// <summary>Copies "well known" properties to fields (IsVisible, etc) and caches the custom properties (string-keys only) in a local hashtable.</summary>
         /// <param name="propertiesToCache">New or updated properties to store in this RoomInfo.</param>
         protected internal virtual void InternalCacheProperties(Hashtable propertiesToCache)
         {
-            if (propertiesToCache == null || propertiesToCache.Count == 0 || this.CustomProperties.Equals(propertiesToCache))
+            if (propertiesToCache == null || propertiesToCache.Count == 0 || this.customProperties.Equals(propertiesToCache))
             {
                 return;
             }
@@ -198,8 +208,8 @@ namespace Photon.Realtime
             // list updates will remove this game from the game listing
             if (propertiesToCache.ContainsKey(GamePropertyKey.Removed))
             {
-                RemovedFromList = (bool)propertiesToCache[GamePropertyKey.Removed];
-                if (RemovedFromList)
+                this.RemovedFromList = (bool)propertiesToCache[GamePropertyKey.Removed];
+                if (this.RemovedFromList)
                 {
                     return;
                 }
@@ -208,57 +218,57 @@ namespace Photon.Realtime
             // fetch the "well known" properties of the room, if available
             if (propertiesToCache.ContainsKey(GamePropertyKey.MaxPlayers))
             {
-                maxPlayers = (byte)propertiesToCache[GamePropertyKey.MaxPlayers];
+                this.maxPlayers = (byte)propertiesToCache[GamePropertyKey.MaxPlayers];
             }
 
             if (propertiesToCache.ContainsKey(GamePropertyKey.IsOpen))
             {
-                isOpen = (bool)propertiesToCache[GamePropertyKey.IsOpen];
+                this.isOpen = (bool)propertiesToCache[GamePropertyKey.IsOpen];
             }
 
             if (propertiesToCache.ContainsKey(GamePropertyKey.IsVisible))
             {
-                isVisible = (bool)propertiesToCache[GamePropertyKey.IsVisible];
+                this.isVisible = (bool)propertiesToCache[GamePropertyKey.IsVisible];
             }
 
             if (propertiesToCache.ContainsKey(GamePropertyKey.PlayerCount))
             {
-                PlayerCount = (byte)propertiesToCache[GamePropertyKey.PlayerCount];
+                this.PlayerCount = (int)((byte)propertiesToCache[GamePropertyKey.PlayerCount]);
             }
 
             if (propertiesToCache.ContainsKey(GamePropertyKey.CleanupCacheOnLeave))
             {
-                autoCleanUp = (bool)propertiesToCache[GamePropertyKey.CleanupCacheOnLeave];
+                this.autoCleanUp = (bool)propertiesToCache[GamePropertyKey.CleanupCacheOnLeave];
             }
 
             if (propertiesToCache.ContainsKey(GamePropertyKey.MasterClientId))
             {
-                masterClientId = (int)propertiesToCache[GamePropertyKey.MasterClientId];
+                this.masterClientId = (int)propertiesToCache[GamePropertyKey.MasterClientId];
             }
 
             if (propertiesToCache.ContainsKey(GamePropertyKey.PropsListedInLobby))
             {
-                propertiesListedInLobby = propertiesToCache[GamePropertyKey.PropsListedInLobby] as string[];
+                this.propertiesListedInLobby = propertiesToCache[GamePropertyKey.PropsListedInLobby] as string[];
             }
 
             if (propertiesToCache.ContainsKey((byte)GamePropertyKey.ExpectedUsers))
             {
-                expectedUsers = (string[])propertiesToCache[GamePropertyKey.ExpectedUsers];
+                this.expectedUsers = (string[])propertiesToCache[GamePropertyKey.ExpectedUsers];
             }
 
             if (propertiesToCache.ContainsKey((byte)GamePropertyKey.EmptyRoomTtl))
             {
-                emptyRoomTtl = (int)propertiesToCache[GamePropertyKey.EmptyRoomTtl];
+                this.emptyRoomTtl = (int)propertiesToCache[GamePropertyKey.EmptyRoomTtl];
             }
 
             if (propertiesToCache.ContainsKey((byte)GamePropertyKey.PlayerTtl))
             {
-                playerTtl = (int)propertiesToCache[GamePropertyKey.PlayerTtl];
+                this.playerTtl = (int)propertiesToCache[GamePropertyKey.PlayerTtl];
             }
 
             // merge the custom properties (from your application) to the cache (only string-typed keys will be kept)
-            CustomProperties.MergeStringKeys(propertiesToCache);
-            CustomProperties.StripKeysWithNullValues();
+            this.customProperties.MergeStringKeys(propertiesToCache);
+            this.customProperties.StripKeysWithNullValues();
         }
     }
 }

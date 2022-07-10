@@ -8,21 +8,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SimplifiedMenu.unity
     guid: 4a8a506219ef9fa478983ec0673b8945
-  - enabled: 0
-    path: Assets/Scenes/MainMenu.unity
-    guid: 3e62a9b872d93f649a4ae16feacb899d
-  - enabled: 0
-    path: Assets/Scenes/GameMaps/Galleon.unity
-    guid: 74ae9dcd0b8aeb54d8d7936f0425ecc1
-  - enabled: 0
-    path: Assets/Scenes/GameMaps/Pillars.unity
-    guid: e188a95d5be57cf4993f0cc8f024ab5b
-  - enabled: 0
-    path: Assets/Scenes/GameMaps/EventGalleon.unity
-    guid: abdb455862586b847a1556f43e53c9ab
-  - enabled: 0
-    path: Assets/Scenes/TestScene.unity
-    guid: 52ea4d5787f80be449bc29a30b638e3e
+  - enabled: 1
+    path: Assets/Scenes/Map.unity
+    guid: fcf390a302a4a834b899f788e64b3d9f
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 88a96bdd888576046b9549582da36346,
       type: 2}

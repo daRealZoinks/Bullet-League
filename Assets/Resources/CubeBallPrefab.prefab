@@ -12,6 +12,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: CubeBallPrefab
       objectReference: {fileID: 0}
+    - target: {fileID: 8536683416045985979, guid: 002c4a97a9627e141b6e499716244d8c,
+        type: 3}
+      propertyPath: m_TagString
+      value: Ball
+      objectReference: {fileID: 0}
     - target: {fileID: 8536683416045985983, guid: 002c4a97a9627e141b6e499716244d8c,
         type: 3}
       propertyPath: m_RootOrder
@@ -75,14 +80,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 3686013267377393522}
   m_PrefabAsset: {fileID: 0}
---- !u!33 &5935788231424447318
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4998782143183957961}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!65 &3184647176542193459
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -96,3 +93,11 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!33 &5935788231424447318
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4998782143183957961}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}

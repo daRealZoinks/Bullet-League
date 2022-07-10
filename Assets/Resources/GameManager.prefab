@@ -10,9 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7672649936317349086}
   - component: {fileID: 7672649936317349081}
-  - component: {fileID: 7672649936317349087}
   - component: {fileID: -7423185828222710653}
-  - component: {fileID: 1352792565}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -28,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7672649936317349080}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 29, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -47,26 +45,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6530d90fb14484c4f9ec0f3a61a3d758, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentBall: {fileID: 0}
-  ballPrefab: {fileID: 293930131717484303, guid: 3b9e2bde2f48fe5458f9c4fca94bc435, type: 3}
+  ballPrefab: {fileID: 1049829628938673444, guid: a03b2ff0040de6a4c93b928cbd005563,
+    type: 3}
   blueScore: 0
   orangeScore: 0
-  blueScoreText: {fileID: 0}
-  orangeScoreText: {fileID: 0}
---- !u!114 &7672649936317349087
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7672649936317349080}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0177960ec2495de46a663a22b07930af, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 8136020538247425386, guid: e38780a697e24274281c07d90b89f4e8, type: 3}
-  spawnPoint: {fileID: 0}
+  playerPrefab: {fileID: 8136020538247425386, guid: e38780a697e24274281c07d90b89f4e8,
+    type: 3}
+  ui: {fileID: 0}
+  online: 0
+  blueTeamPlayerSpawnPoints: []
+  orangeTeamPlayerSpawnPoints: []
+  offlinePlayerStart: {fileID: 0}
+  players: []
 --- !u!114 &-7423185828222710653
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -90,23 +80,3 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &1352792565
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7672649936317349080}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8701526de72d8774fa165e66daf050ed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  listFoldIsOpen: 1
-  teamsList:
-  - Name: Blue
-    Code: 0
-  - Name: Red
-    Code: 1
-  - Name: Spectator
-    Code: 2

@@ -4,6 +4,17 @@ using UnityEngine;
 
 public class WeaponDispenser : MonoBehaviour, IPunObservable
 {
+    public enum Weapon
+    {
+        SemiAutomatic,
+        Shotgun,
+        GrenadeLauncher,
+        Sniper,
+        RPG
+    }
+
+    public Weapon weapon;
+
     public GameObject particles;
 
     public GameObject[] weapons;
@@ -12,7 +23,7 @@ public class WeaponDispenser : MonoBehaviour, IPunObservable
 
     public float rechargeTime;
 
-    public int activeWeapon;
+    private int activeWeaponNumber;
 
     private void OnTriggerStay(Collider other)
     {
@@ -20,14 +31,14 @@ public class WeaponDispenser : MonoBehaviour, IPunObservable
 
         if (other.gameObject.CompareTag("Player") && ready && weaponPickup.gunManager.activeGun)
         {
-            if (!(weaponPickup.weapons[activeWeapon].activeSelf &&
+            if (!(weaponPickup.weapons[activeWeaponNumber].activeSelf &&
                 (weaponPickup.gunManager.currentAmmo == weaponPickup.gunManager.activeGun.maxAmmo ||
                 weaponPickup.gunManager.reloading)))
             {
-                weaponPickup.ChooseWeapon(activeWeapon);
-                weapons[activeWeapon].SetActive(false);
+                weaponPickup.ChooseWeapon(activeWeaponNumber);
+                weapons[activeWeaponNumber].SetActive(false);
 
-                activeWeapon = weapons.Length;
+                activeWeaponNumber = weapons.Length;
 
                 StartCoroutine(LoadNewWeapon());
             }
@@ -44,26 +55,51 @@ public class WeaponDispenser : MonoBehaviour, IPunObservable
         ready = false;
         particles.SetActive(false);
         yield return new WaitForSeconds(rechargeTime);
-        ChooseRandomWeapon();
+        //ChooseRandomWeapon();
+        ChooseWeapon();
         ready = true;
         particles.SetActive(true);
     }
 
+    private void ChooseWeapon()
+    {
+        switch (weapon)
+        {
+            case Weapon.SemiAutomatic:
+                activeWeaponNumber = 0;
+                break;
+            case Weapon.Shotgun:
+                activeWeaponNumber = 1;
+                break;
+            case Weapon.GrenadeLauncher:
+                activeWeaponNumber = 2;
+                break;
+            case Weapon.Sniper:
+                activeWeaponNumber = 3;
+                break;
+            case Weapon.RPG:
+                activeWeaponNumber = 4;
+                break;
+        }
+
+        weapons[activeWeaponNumber].SetActive(true);
+    }
+
     private void ChooseRandomWeapon()
     {
-        activeWeapon = Random.Range(-weapons.Length * weapons.Length, weapons.Length * weapons.Length);
+        activeWeaponNumber = Random.Range(-weapons.Length * weapons.Length, weapons.Length * weapons.Length);
 
-        if (activeWeapon == 0)
+        if (activeWeaponNumber == 0)
         {
-            activeWeapon = weapons.Length - 1;
+            activeWeaponNumber = weapons.Length - 1;
         }
 
         for (int i = weapons.Length; i >= 1; i--)
         {
-            if (i * i <= Mathf.Abs(activeWeapon))
+            if (i * i <= Mathf.Abs(activeWeaponNumber))
             {
-                activeWeapon = weapons.Length - 1 - i;
-                weapons[activeWeapon].SetActive(true);
+                activeWeaponNumber = weapons.Length - 1 - i;
+                weapons[activeWeaponNumber].SetActive(true);
                 return;
             }
         }

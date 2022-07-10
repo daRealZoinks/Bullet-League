@@ -25,10 +25,10 @@ public class GoalEditor : Editor
         switch (goal.TeamColor)
         {
             case Team.Blue:
-                goal.coloredPart.GetComponent<MeshRenderer>().material.color = Color.blue;
+                goal.coloredPart.GetComponent<MeshRenderer>().sharedMaterial.color = Color.blue;
                 break;
             case Team.Orange:
-                goal.coloredPart.GetComponent<MeshRenderer>().material.color = Color.red;
+                goal.coloredPart.GetComponent<MeshRenderer>().sharedMaterial.color = Color.red;
                 break;
         }
 
