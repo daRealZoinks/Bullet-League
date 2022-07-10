@@ -1,12 +1,11 @@
 using Photon.Pun;
-using Photon.Realtime;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 {
-    private GameObject currentBall;
     public GameObject ballPrefab;
+    private GameObject currentBall;
 
     public int blueScore;
     public int orangeScore;
@@ -22,6 +21,8 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 
     public PlayerStart offlinePlayerStart;
 
+    public List<GameObject> players;
+
     private void Awake()
     {
         if (online)
@@ -36,7 +37,14 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
                 playerStart.SetGameManager(this);
             }
 
-            //handle the spawn of the whole playerbase later
+            if (players.Count % 2 == 1)
+            {
+                players.Add(blueTeamPlayerSpawnPoints[Random.Range(0, blueTeamPlayerSpawnPoints.Count - 1)].Spawn());
+            }
+            else
+            {
+                players.Add(orangeTeamPlayerSpawnPoints[Random.Range(0, orangeTeamPlayerSpawnPoints.Count - 1)].Spawn());
+            }
         }
         else
         {
@@ -47,41 +55,13 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
             offlinePlayerStart.Spawn();
         }
 
-        if (ballPrefab != null && currentBall == null)
-        {
-            SpawnBall();
-        }
+        SpawnBall();
 
         if (ui == null)
         {
             Instantiate(ui);
-            ui.SetGameManager(this);
         }
-    }
-
-    [ExecuteInEditMode]
-    public void Update()
-    {
-        foreach (PlayerStart playerStart in blueTeamPlayerSpawnPoints)
-        {
-            playerStart.SetColor(Team.Blue);
-        }
-
-        foreach (PlayerStart playerStart in orangeTeamPlayerSpawnPoints)
-        {
-            playerStart.SetColor(Team.Orange);
-        }
-    }
-
-    public override void OnMasterClientSwitched(Player newMasterClient)
-    {
-        Debug.Log(newMasterClient.NickName + " is now the masta'");
-
-        PhotonView currentBallView = currentBall.GetPhotonView();
-
-        currentBallView.TransferOwnership(newMasterClient);
-
-        base.OnMasterClientSwitched(newMasterClient);
+        ui.SetGameManager(this);
     }
 
     public void SpawnBall()
@@ -95,8 +75,6 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         {
             currentBall = Instantiate(ballPrefab, transform.position, transform.rotation);
         }
-
-        currentBall.GetComponent<Ball>().SetGameManager(this);
     }
 
     public void BlueScored()
@@ -115,6 +93,8 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 
     private void RespawnBall()
     {
+
+
         if (PhotonNetwork.IsMasterClient)
         {
             PhotonNetwork.Destroy(currentBall);

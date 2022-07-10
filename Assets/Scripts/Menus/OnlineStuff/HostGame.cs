@@ -1,7 +1,8 @@
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEngine;
 
-public class HostGame : MonoBehaviourPunCallbacks
+public class HostGame : MonoBehaviour
 {
     private int roomSize = 2;
 

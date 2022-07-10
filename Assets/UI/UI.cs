@@ -41,11 +41,8 @@ public class UI : MonoBehaviour
     private void Update()
     {
         ammoCounter.text = gunManager.currentAmmo + " | " + gunManager.activeGun.maxAmmo;
-
         float size = (float)(40 + playerRB.velocity.magnitude * 7 + playerMovement.lookingDirection.magnitude * 2);
-
         reticle.sizeDelta = Vector2.Lerp(reticle.sizeDelta, new Vector2(size, size), Time.deltaTime * 10);
-
         UpdateScore();
     }
 

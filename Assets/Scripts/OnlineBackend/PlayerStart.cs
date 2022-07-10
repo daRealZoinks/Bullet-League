@@ -1,5 +1,5 @@
-using UnityEngine;
 using Photon.Pun;
+using UnityEngine;
 
 public class PlayerStart : MonoBehaviourPunCallbacks
 {
@@ -27,15 +27,15 @@ public class PlayerStart : MonoBehaviourPunCallbacks
         }
     }
 
-    public void Spawn()
+    public GameObject Spawn()
     {
         if (PhotonNetwork.IsConnected)
         {
-            PhotonNetwork.Instantiate(gameManager.playerPrefab.name, transform.position - transform.up * transform.localScale.y / 2, transform.rotation);
+            return PhotonNetwork.Instantiate(gameManager.playerPrefab.name, transform.position - transform.up * transform.localScale.y / 2, transform.rotation);
         }
         else
         {
-            Instantiate(gameManager.playerPrefab, transform.position - transform.up * transform.localScale.y / 2, transform.rotation);
+            return Instantiate(gameManager.playerPrefab, transform.position - transform.up * transform.localScale.y / 2, transform.rotation);
         }
     }
 

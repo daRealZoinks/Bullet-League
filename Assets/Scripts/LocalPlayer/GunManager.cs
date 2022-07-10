@@ -20,7 +20,7 @@ public class GunManager : MonoBehaviourPunCallbacks, IPunObservable
 
     private void Start()
     {
-        currentAmmo = activeGun.maxAmmo;
+        StartCoroutine(Reload());
     }
 
     public void Shoot(CallbackContext context)
