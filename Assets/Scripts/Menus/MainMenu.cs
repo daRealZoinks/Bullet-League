@@ -31,6 +31,8 @@ public class MainMenu : MonoBehaviourPunCallbacks
         gameState.text = "Offline";
 
         OnlineButtonsActiveState(false);
+
+        Connect();
     }
 
     public void Connect()
@@ -51,6 +53,9 @@ public class MainMenu : MonoBehaviourPunCallbacks
         PhotonNetwork.AutomaticallySyncScene = true;
         PhotonNetwork.JoinLobby();
     }
+
+
+
     public override void OnJoinedRoom()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);

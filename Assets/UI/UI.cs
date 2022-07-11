@@ -28,6 +28,7 @@ public class UI : MonoBehaviour
     {
         playerMovement = FindObjectOfType<PlayerMovement>();
         player = playerMovement.gameObject;
+        player.GetComponent<PlayerManager>().UI = this;
         playerRB = player.GetComponent<Rigidbody>();
         gunManager = player.GetComponentInChildren<GunManager>();
     }

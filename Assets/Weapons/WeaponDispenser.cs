@@ -117,6 +117,7 @@ public class WeaponDispenser : MonoBehaviour, IPunObservable
         if (stream.IsWriting)
         {
             stream.SendNext(ready);
+            stream.SendNext(activeWeaponNumber);
 
             for (int i = 0; i < weapons.Length; i++)
             {
@@ -126,6 +127,7 @@ public class WeaponDispenser : MonoBehaviour, IPunObservable
         else
         {
             ready = (bool)stream.ReceiveNext();
+            activeWeaponNumber = (int)stream.ReceiveNext();
 
             for (int i = 0; i < weapons.Length; i++)
             {

@@ -17,12 +17,14 @@ public class Goal : MonoBehaviour
         {
             if (TeamColor == Team.Blue)
             {
-                gameManager.BlueScored();
+                gameManager.OrangeScored();
             }
             else
             {
-                gameManager.OrangeScored();
+                gameManager.BlueScored();
             }
+
+            touch.colliding = false;
         }
     }
 }

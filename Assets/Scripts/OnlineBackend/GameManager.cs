@@ -93,8 +93,6 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 
     private void RespawnBall()
     {
-
-
         if (PhotonNetwork.IsMasterClient)
         {
             PhotonNetwork.Destroy(currentBall);
