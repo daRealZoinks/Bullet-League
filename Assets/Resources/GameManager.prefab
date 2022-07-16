@@ -10,13 +10,14 @@ GameObject:
   m_Component:
   - component: {fileID: 7672649936317349086}
   - component: {fileID: 7672649936317349081}
+  - component: {fileID: 3026076413928000959}
   - component: {fileID: -7423185828222710653}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &7672649936317349086
 Transform:
@@ -52,11 +53,33 @@ MonoBehaviour:
   playerPrefab: {fileID: 8136020538247425386, guid: e38780a697e24274281c07d90b89f4e8,
     type: 3}
   ui: {fileID: 0}
-  online: 0
-  blueTeamPlayerSpawnPoints: []
-  orangeTeamPlayerSpawnPoints: []
+  online: 1
+  blueTeamPlayerSpawnPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  orangeTeamPlayerSpawnPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   offlinePlayerStart: {fileID: 0}
   players: []
+--- !u!114 &3026076413928000959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7672649936317349080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0700daea41cdfb24b896ab03ab67b28d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &-7423185828222710653
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74,9 +97,9 @@ MonoBehaviour:
   prefixField: -1
   Synchronization: 3
   OwnershipTransfer: 0
-  observableSearch: 2
+  observableSearch: 1
   ObservedComponents:
-  - {fileID: 7672649936317349081}
+  - {fileID: 3026076413928000959}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0

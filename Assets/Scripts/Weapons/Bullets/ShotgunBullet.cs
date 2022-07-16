@@ -34,9 +34,7 @@ public class ShotgunBullet : MonoBehaviourPunCallbacks
 
         foreach (Collider collider in colliders)
         {
-            Rigidbody rb = collider.GetComponent<Rigidbody>();
-
-            if (rb != null)
+            if (collider.TryGetComponent(out Rigidbody rb))
             {
                 rb.AddForce(transform.forward * shootForce, ForceMode.VelocityChange);
             }

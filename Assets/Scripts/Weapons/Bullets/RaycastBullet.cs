@@ -3,6 +3,7 @@ using System.Collections;
 using System.Linq;
 using UnityEngine;
 
+[RequireComponent(typeof(LineRenderer))]
 public class RaycastBullet : MonoBehaviourPunCallbacks
 {
     public float force;
@@ -16,16 +17,13 @@ public class RaycastBullet : MonoBehaviourPunCallbacks
     {
         Instantiate(startEffect, transform.position, Quaternion.identity);
 
-        RaycastHit[] hits = Physics.RaycastAll(transform.position, transform.forward, Mathf.Infinity);
-        IOrderedEnumerable<RaycastHit> sorted = hits.OrderBy(h => h.distance);
+        IOrderedEnumerable<RaycastHit> sorted = Physics.RaycastAll(transform.position, transform.forward, Mathf.Infinity).OrderBy(h => h.distance);
 
         foreach (RaycastHit hit in sorted)
         {
             if (hit.collider.gameObject.layer != 6)
             {
-                Rigidbody rb = hit.collider.attachedRigidbody;
-
-                if (rb != null)
+                if (hit.collider.gameObject.TryGetComponent(out Rigidbody rb))
                 {
                     rb.AddForceAtPosition(transform.forward * force, hit.point, ForceMode.VelocityChange);
                 }

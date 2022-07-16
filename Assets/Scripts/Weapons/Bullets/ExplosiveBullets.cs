@@ -1,6 +1,7 @@
 using Photon.Pun;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class ExplosiveBullets : MonoBehaviourPun
 {
     public Rigidbody rb;
@@ -23,26 +24,13 @@ public class ExplosiveBullets : MonoBehaviourPun
         transform.rotation = Quaternion.LookRotation(rb.velocity);
     }
 
-    private void OnTriggerStay(Collider other)
-    {
-        Detonate();
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        Detonate();
-    }
-
-    private void Detonate()
+    private void OnCollisionEnter(Collision collision)
     {
         Instantiate(contactEffect, transform.position, Quaternion.identity);
 
-        Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
-
-        foreach (Collider collider in colliders)
+        foreach (Collider collider in Physics.OverlapSphere(transform.position, explosionRadius))
         {
-            Rigidbody rb = collider.GetComponent<Rigidbody>();
-            if (rb != null)
+            if (collider.TryGetComponent(out Rigidbody rb))
             {
                 rb.AddExplosionForce(explosionForce, transform.position, explosionRadius, upwardsModifier, ForceMode.VelocityChange);
             }

@@ -2,7 +2,7 @@ using Photon.Pun;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
+public class GameManager : MonoBehaviour
 {
     public GameObject ballPrefab;
     private GameObject currentBall;
@@ -104,19 +104,5 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         }
 
         SpawnBall();
-    }
-
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        if (stream.IsWriting)
-        {
-            stream.SendNext(blueScore);
-            stream.SendNext(orangeScore);
-        }
-        else
-        {
-            blueScore = (int)stream.ReceiveNext();
-            orangeScore = (int)stream.ReceiveNext();
-        }
     }
 }

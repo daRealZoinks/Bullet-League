@@ -970,8 +970,8 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 1
-  OwnershipTransfer: 1
+  Synchronization: 3
+  OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
   - {fileID: 5845024502538132940}

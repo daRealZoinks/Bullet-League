@@ -9,7 +9,13 @@ public class Goal : MonoBehaviour
 
     public Team TeamColor;
 
-    public GameObject coloredPart;
+    public GameObject backGoal;
+    public GameObject goalField;
+
+    public Material blue;
+    public Material blueTransparent;
+    public Material red;
+    public Material redTransparent;
 
     private void Update()
     {

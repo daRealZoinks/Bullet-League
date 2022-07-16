@@ -19,16 +19,17 @@ public class GoalEditor : Editor
         var goal = target as Goal;
 
         EditorGUILayout.PropertyField(gameManager);
-        EditorGUILayout.Space();
         EditorGUILayout.PropertyField(TeamColor);
 
         switch (goal.TeamColor)
         {
             case Team.Blue:
-                goal.coloredPart.GetComponent<MeshRenderer>().sharedMaterial.color = Color.blue;
+                goal.backGoal.GetComponent<MeshRenderer>().sharedMaterial = goal.blue;
+                goal.goalField.GetComponent<MeshRenderer>().sharedMaterial = goal.blueTransparent;
                 break;
             case Team.Orange:
-                goal.coloredPart.GetComponent<MeshRenderer>().sharedMaterial.color = Color.red;
+                goal.backGoal.GetComponent<MeshRenderer>().sharedMaterial = goal.red;
+                goal.goalField.GetComponent<MeshRenderer>().sharedMaterial = goal.redTransparent;
                 break;
         }
 

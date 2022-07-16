@@ -7,6 +7,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5845024502538132940, guid: 002c4a97a9627e141b6e499716244d8c,
+        type: 3}
+      propertyPath: m_SynchronizeAngularVelocity
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8536683416045985979, guid: 002c4a97a9627e141b6e499716244d8c,
         type: 3}
       propertyPath: m_Name
@@ -66,6 +71,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9061743404284231237, guid: 002c4a97a9627e141b6e499716244d8c,
+        type: 3}
+      propertyPath: observableSearch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9061743404284231237, guid: 002c4a97a9627e141b6e499716244d8c,
+        type: 3}
+      propertyPath: OwnershipTransfer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9061743404284231237, guid: 002c4a97a9627e141b6e499716244d8c,
+        type: 3}
+      propertyPath: ObservedComponents.Array.size
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 002c4a97a9627e141b6e499716244d8c, type: 3}

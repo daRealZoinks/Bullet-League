@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8067949862999983543}
   - component: {fileID: 8185678168557410693}
   - component: {fileID: 1105147071634078042}
+  - component: {fileID: 8023559540149941409}
   - component: {fileID: 3012200432194415418}
   m_Layer: 6
   m_Name: WeaponDispenser
@@ -70,7 +71,18 @@ MonoBehaviour:
   - {fileID: 7149029509738638572}
   - {fileID: 7149029510765472938}
   - {fileID: 7149029509653899601}
-  rechargeTime: 20
+--- !u!114 &8023559540149941409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8067949862999983545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2d9ec98de265e443b13f5bf05387b37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &3012200432194415418
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88,7 +100,7 @@ MonoBehaviour:
   prefixField: -1
   Synchronization: 2
   OwnershipTransfer: 0
-  observableSearch: 0
+  observableSearch: 1
   ObservedComponents:
   - {fileID: 1105147071634078042}
   sceneViewId: 0

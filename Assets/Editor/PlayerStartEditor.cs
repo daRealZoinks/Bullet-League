@@ -17,7 +17,7 @@ public class PlayerStartEditor : Editor
 
         EditorGUILayout.PropertyField(team);
         playerStart.SetColor(playerStart.team);
-        
+
         serializedObject.ApplyModifiedProperties();
     }
 }

@@ -1,8 +1,7 @@
-using Photon.Pun;
 using System.Collections;
 using UnityEngine;
 
-public class WeaponDispenser : MonoBehaviour, IPunObservable
+public class WeaponDispenser : MonoBehaviour
 {
     public enum Weapon
     {
@@ -14,16 +13,15 @@ public class WeaponDispenser : MonoBehaviour, IPunObservable
     }
 
     public Weapon weapon;
-
     public GameObject particles;
-
     public GameObject[] weapons;
 
-    private bool ready;
-
+    [HideInInspector]
     public float rechargeTime;
-
-    private int activeWeaponNumber;
+    [HideInInspector]
+    public bool ready;
+    [HideInInspector]
+    public int activeWeaponNumber;
 
     private void OnTriggerStay(Collider other)
     {
@@ -55,7 +53,6 @@ public class WeaponDispenser : MonoBehaviour, IPunObservable
         ready = false;
         particles.SetActive(false);
         yield return new WaitForSeconds(rechargeTime);
-        //ChooseRandomWeapon();
         ChooseWeapon();
         ready = true;
         particles.SetActive(true);
@@ -67,73 +64,26 @@ public class WeaponDispenser : MonoBehaviour, IPunObservable
         {
             case Weapon.SemiAutomatic:
                 activeWeaponNumber = 0;
+                rechargeTime = 10;
                 break;
             case Weapon.Shotgun:
                 activeWeaponNumber = 1;
+                rechargeTime = 15;
                 break;
             case Weapon.GrenadeLauncher:
                 activeWeaponNumber = 2;
+                rechargeTime = 30;
                 break;
             case Weapon.Sniper:
                 activeWeaponNumber = 3;
+                rechargeTime = 45;
                 break;
             case Weapon.RPG:
                 activeWeaponNumber = 4;
+                rechargeTime = 60;
                 break;
         }
 
         weapons[activeWeaponNumber].SetActive(true);
-    }
-
-    private void ChooseRandomWeapon()
-    {
-        activeWeaponNumber = Random.Range(-weapons.Length * weapons.Length, weapons.Length * weapons.Length);
-
-        if (activeWeaponNumber == 0)
-        {
-            activeWeaponNumber = weapons.Length - 1;
-        }
-
-        for (int i = weapons.Length; i >= 1; i--)
-        {
-            if (i * i <= Mathf.Abs(activeWeaponNumber))
-            {
-                activeWeaponNumber = weapons.Length - 1 - i;
-                weapons[activeWeaponNumber].SetActive(true);
-                return;
-            }
-        }
-    }
-
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        bool[] active = new bool[weapons.Length];
-
-        for (int i = 0; i < weapons.Length; i++)
-        {
-            active[i] = weapons[i].activeSelf;
-        }
-
-        if (stream.IsWriting)
-        {
-            stream.SendNext(ready);
-            stream.SendNext(activeWeaponNumber);
-
-            for (int i = 0; i < weapons.Length; i++)
-            {
-                stream.SendNext(active[i]);
-            }
-        }
-        else
-        {
-            ready = (bool)stream.ReceiveNext();
-            activeWeaponNumber = (int)stream.ReceiveNext();
-
-            for (int i = 0; i < weapons.Length; i++)
-            {
-                active[i] = (bool)stream.ReceiveNext();
-                weapons[i].SetActive(active[i]);
-            }
-        }
     }
 }
