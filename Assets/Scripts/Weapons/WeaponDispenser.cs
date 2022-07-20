@@ -25,16 +25,29 @@ public class WeaponDispenser : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        WeaponPickup weaponPickup = other.GetComponent<WeaponPickup>();
+        GrabWeapon(other.gameObject);
+    }
 
-        if (other.gameObject.CompareTag("Player") && ready && weaponPickup.gunManager.activeGun)
+    private void GrabWeapon(GameObject player)
+    {
+        WeaponPickup weaponPickup = player.GetComponent<WeaponPickup>();
+
+        if (player.gameObject.CompareTag("Player") && ready && weaponPickup.gunManager.activeGun)
         {
-            if (!(weaponPickup.weapons[activeWeaponNumber].activeSelf &&
+            if (!(
+                //said player
+                weaponPickup.weapons[activeWeaponNumber].activeSelf &&
+                //full ammo
                 (weaponPickup.gunManager.currentAmmo == weaponPickup.gunManager.activeGun.maxAmmo ||
+                //reloading
                 weaponPickup.gunManager.reloading)))
             {
                 weaponPickup.ChooseWeapon(activeWeaponNumber);
-                weapons[activeWeaponNumber].SetActive(false);
+
+                foreach (GameObject weapon in weapons)
+                {
+                    weapon.SetActive(false);
+                }
 
                 activeWeaponNumber = weapons.Length;
 

@@ -1,7 +1,7 @@
 using Photon.Pun;
 using UnityEngine;
 
-public class PhotonWeaponView : MonoBehaviour, IPunObservable
+public class PhotonWeaponDispenserView : MonoBehaviour, IPunObservable
 {
     private WeaponDispenser weaponDispenser;
 
@@ -22,8 +22,10 @@ public class PhotonWeaponView : MonoBehaviour, IPunObservable
             weaponDispenser.ready = (bool)stream.ReceiveNext();
             weaponDispenser.activeWeaponNumber = (int)stream.ReceiveNext();
 
-            weaponDispenser.weapons[weaponDispenser.activeWeaponNumber].SetActive(weaponDispenser.ready);
+            for (int i = 0; i < weaponDispenser.weapons.Length; i++)
+            {
+                weaponDispenser.weapons[i].SetActive(i == weaponDispenser.activeWeaponNumber);
+            }
         }
     }
-
 }
