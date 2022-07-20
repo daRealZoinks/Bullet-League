@@ -1,10 +1,9 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static UnityEngine.InputSystem.InputAction;
+using  UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(CapsuleCollider))]
-[RequireComponent(typeof(PlayerInput))]
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement")]
@@ -56,12 +55,12 @@ public class PlayerMovement : MonoBehaviour
 
     #region Movement
 
-    public void Move(CallbackContext context)
+    public void Move(InputAction.CallbackContext context)
     {
         direction = context.ReadValue<Vector2>();
     }
 
-    public void Jump(CallbackContext context)
+    public void Jump(InputAction.CallbackContext context)
     {
         if (context.started)
         {
@@ -168,7 +167,7 @@ public class PlayerMovement : MonoBehaviour
 
     #region Looking around
 
-    public void Looking(CallbackContext context)
+    public void Looking(InputAction.CallbackContext context)
     {
         lookingDirection = context.ReadValue<Vector2>();
     }

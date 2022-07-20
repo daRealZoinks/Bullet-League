@@ -25,7 +25,7 @@ public class GunManager : MonoBehaviourPunCallbacks, IPunObservable
 
     public void Shoot(CallbackContext context)
     {
-        if (context.performed && !reloading && !shooting && currentAmmo > 0)
+        if (!reloading && !shooting && currentAmmo > 0)
         {
             reloading = false;
             shooting = true;
