@@ -1,21 +1,17 @@
 using Photon.Pun;
 using System.Collections;
 using UnityEngine;
-using static UnityEngine.InputSystem.InputAction;
+using UnityEngine.InputSystem;
 
-public class GunManager : MonoBehaviourPunCallbacks, IPunObservable
+public class GunManager : MonoBehaviourPun
 {
     [HideInInspector]
     public bool reloading = false;
     [HideInInspector]
     public bool shooting = false;
-
     public GameObject[] weapons;
-
     public int currentAmmo;
-
     public Gun activeGun;
-
     public WeaponPickup weaponPickup;
 
     private void Start()
@@ -23,9 +19,9 @@ public class GunManager : MonoBehaviourPunCallbacks, IPunObservable
         StartCoroutine(Reload());
     }
 
-    public void Shoot(CallbackContext context)
+    public void Shoot(InputAction.CallbackContext context)
     {
-        if (!reloading && !shooting && currentAmmo > 0)
+        if (context.performed && (!reloading && !shooting && currentAmmo > 0))
         {
             reloading = false;
             shooting = true;
@@ -81,31 +77,5 @@ public class GunManager : MonoBehaviourPunCallbacks, IPunObservable
         currentAmmo = activeGun.maxAmmo;
 
         reloading = false;
-    }
-
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        bool[] active = new bool[weapons.Length];
-
-        for (int i = 0; i < weapons.Length; i++)
-        {
-            active[i] = weapons[i].activeSelf;
-        }
-
-        if (stream.IsWriting)
-        {
-            for (int i = 0; i < weapons.Length; i++)
-            {
-                stream.SendNext(active[i]);
-            }
-        }
-        else
-        {
-            for (int i = 0; i < weapons.Length; i++)
-            {
-                active[i] = (bool)stream.ReceiveNext();
-                weapons[i].SetActive(active[i]);
-            }
-        }
     }
 }

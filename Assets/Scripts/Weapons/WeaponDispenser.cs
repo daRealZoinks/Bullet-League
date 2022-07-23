@@ -12,11 +12,9 @@ public class WeaponDispenser : MonoBehaviour
         Sniper,
         RPG
     }
-
     public Weapon weapon;
     public GameObject particles;
     public GameObject[] weapons;
-
     public float rechargeTime;
     public bool ready;
     public int activeWeaponNumber;
@@ -26,26 +24,30 @@ public class WeaponDispenser : MonoBehaviour
         GrabWeapon(other.gameObject);
     }
 
-    [PunRPC()]
     private void GrabWeapon(GameObject player)
     {
         WeaponPickup weaponPickup = player.GetComponent<WeaponPickup>();
 
-        if (!(player.CompareTag("Player") && ready && weaponPickup.gunManager.activeGun)) return;
-
-        if (weaponPickup.weapons[activeWeaponNumber].activeSelf && (weaponPickup.gunManager.currentAmmo == weaponPickup.gunManager.activeGun.maxAmmo || weaponPickup.gunManager.reloading)) return;
-
-        //TODO: fix weapon dispenser active weapon syncronisation
-        weaponPickup.ChooseWeapon(activeWeaponNumber);
-
-        foreach (GameObject weapon in weapons)
+        if (player.CompareTag("Player") &&
+            ready &&
+            weaponPickup.gunManager.activeGun)
         {
-            weapon.SetActive(false);
+            if (!weaponPickup.weapons[activeWeaponNumber].activeSelf || (
+             weaponPickup.gunManager.currentAmmo != weaponPickup.gunManager.activeGun.maxAmmo &&
+             !weaponPickup.gunManager.reloading))
+            {
+                weaponPickup.ChooseWeapon(activeWeaponNumber);
+
+                foreach (GameObject weapon in weapons)
+                {
+                    weapon.SetActive(false);
+                }
+
+                activeWeaponNumber = weapons.Length;
+
+                StartCoroutine(LoadNewWeapon());
+            }
         }
-
-        activeWeaponNumber = weapons.Length;
-
-        StartCoroutine(LoadNewWeapon());
     }
 
     private void OnEnable()
