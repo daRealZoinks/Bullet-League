@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 8067949862999983543}
   - component: {fileID: 8185678168557410693}
   - component: {fileID: 1105147071634078042}
-  - component: {fileID: 8023559540149941409}
-  - component: {fileID: 3012200432194415418}
+  - component: {fileID: 900085413867714030}
+  - component: {fileID: 2398968038259561120}
   m_Layer: 6
   m_Name: WeaponDispenser
   m_TagString: Untagged
@@ -71,7 +71,10 @@ MonoBehaviour:
   - {fileID: 7149029509738638572}
   - {fileID: 7149029510765472938}
   - {fileID: 7149029509653899601}
---- !u!114 &8023559540149941409
+  rechargeTime: 0
+  ready: 0
+  activeWeaponIndex: 0
+--- !u!114 &900085413867714030
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -83,7 +86,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2d9ec98de265e443b13f5bf05387b37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3012200432194415418
+--- !u!114 &2398968038259561120
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -98,11 +101,11 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 2
+  Synchronization: 3
   OwnershipTransfer: 0
-  observableSearch: 1
+  observableSearch: 2
   ObservedComponents:
-  - {fileID: 1105147071634078042}
+  - {fileID: 900085413867714030}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0

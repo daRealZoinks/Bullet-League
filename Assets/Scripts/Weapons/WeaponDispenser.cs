@@ -17,7 +17,7 @@ public class WeaponDispenser : MonoBehaviour
     public GameObject[] weapons;
     public float rechargeTime;
     public bool ready;
-    public int activeWeaponNumber;
+    public int activeWeaponIndex;
 
     private void OnTriggerStay(Collider other)
     {
@@ -28,22 +28,16 @@ public class WeaponDispenser : MonoBehaviour
     {
         WeaponPickup weaponPickup = player.GetComponent<WeaponPickup>();
 
-        if (player.CompareTag("Player") &&
-            ready &&
-            weaponPickup.gunManager.activeGun)
+        if (player.gameObject.CompareTag("Player") && ready && weaponPickup.gunManager.activeGun)
         {
-            if (!weaponPickup.weapons[activeWeaponNumber].activeSelf || (
-             weaponPickup.gunManager.currentAmmo != weaponPickup.gunManager.activeGun.maxAmmo &&
-             !weaponPickup.gunManager.reloading))
+            if (!(weaponPickup.weapons[activeWeaponIndex].activeSelf &&
+                (weaponPickup.gunManager.currentAmmo == weaponPickup.gunManager.activeGun.maxAmmo ||
+                weaponPickup.gunManager.reloading)))
             {
-                weaponPickup.ChooseWeapon(activeWeaponNumber);
+                weaponPickup.ChooseWeapon(activeWeaponIndex);
+                weapons[activeWeaponIndex].SetActive(false);
 
-                foreach (GameObject weapon in weapons)
-                {
-                    weapon.SetActive(false);
-                }
-
-                activeWeaponNumber = weapons.Length;
+                activeWeaponIndex = weapons.Length;
 
                 StartCoroutine(LoadNewWeapon());
             }
@@ -66,32 +60,32 @@ public class WeaponDispenser : MonoBehaviour
         particles.SetActive(true);
     }
 
-    private void ChooseWeapon()
+    public void ChooseWeapon()
     {
         switch (weapon)
         {
             case Weapon.SemiAutomatic:
-                activeWeaponNumber = 0;
+                activeWeaponIndex = 0;
                 rechargeTime = 10;
                 break;
             case Weapon.Shotgun:
-                activeWeaponNumber = 1;
+                activeWeaponIndex = 1;
                 rechargeTime = 15;
                 break;
             case Weapon.GrenadeLauncher:
-                activeWeaponNumber = 2;
+                activeWeaponIndex = 2;
                 rechargeTime = 30;
                 break;
             case Weapon.Sniper:
-                activeWeaponNumber = 3;
+                activeWeaponIndex = 3;
                 rechargeTime = 45;
                 break;
             case Weapon.RPG:
-                activeWeaponNumber = 4;
+                activeWeaponIndex = 4;
                 rechargeTime = 60;
                 break;
         }
 
-        weapons[activeWeaponNumber].SetActive(true);
+        weapons[activeWeaponIndex].SetActive(true);
     }
 }

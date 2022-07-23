@@ -545,8 +545,6 @@ GameObject:
   - component: {fileID: 1589463588634198193}
   - component: {fileID: 424175130795301873}
   - component: {fileID: 2821919414522379705}
-  - component: {fileID: 1357693665520265130}
-  - component: {fileID: 1596245246548084443}
   m_Layer: 0
   m_Name: WeaponHolder
   m_TagString: Untagged
@@ -614,41 +612,6 @@ MonoBehaviour:
   smooth: 5
   swayMultiplier: 0.35
   playerMovement: {fileID: 8136020538247425389}
---- !u!114 &1357693665520265130
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6421193027535251310}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efaead07180fea14cbf69277b45f3247, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1596245246548084443
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6421193027535251310}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents:
-  - {fileID: 1357693665520265130}
-  sceneViewId: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!1 &6941635891195658933
 GameObject:
   m_ObjectHideFlags: 0

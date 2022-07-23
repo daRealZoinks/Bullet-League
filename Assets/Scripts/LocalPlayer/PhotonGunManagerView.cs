@@ -9,7 +9,6 @@ public class PhotonGunManagerView : MonoBehaviour, IPunObservable
     {
         gunManager = GetComponent<GunManager>();
     }
-
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         bool[] active = new bool[gunManager.weapons.Length];
