@@ -28,7 +28,7 @@ public class WeaponDispenser : MonoBehaviour
     {
         WeaponPickup weaponPickup = player.GetComponent<WeaponPickup>();
 
-        if (player.gameObject.CompareTag("Player") && ready && weaponPickup.gunManager.activeGun)
+        if (player.CompareTag("Player") && ready && weaponPickup.gunManager.activeGun)
         {
             if (!(weaponPickup.weapons[activeWeaponIndex].activeSelf &&
                 (weaponPickup.gunManager.currentAmmo == weaponPickup.gunManager.activeGun.maxAmmo ||

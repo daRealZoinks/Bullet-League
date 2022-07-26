@@ -9,20 +9,25 @@ public class PhotonWeaponDispenserView : MonoBehaviour, IPunObservable
     {
         weaponDispenser = GetComponent<WeaponDispenser>();
     }
+
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        if (stream.IsWriting)
+        if (PhotonNetwork.IsMasterClient)
         {
-            stream.SendNext(weaponDispenser.ready);
-            stream.SendNext(weaponDispenser.activeWeaponIndex);
+            stream.Serialize(ref weaponDispenser.ready);
+            stream.Serialize(ref weaponDispenser.activeWeaponIndex);
         }
         else
         {
-            weaponDispenser.ready = (bool)stream.ReceiveNext();
-            weaponDispenser.activeWeaponIndex = (int)stream.ReceiveNext();
+            stream.Serialize(ref weaponDispenser.ready);
+            stream.Serialize(ref weaponDispenser.activeWeaponIndex);
+
             weaponDispenser.particles.SetActive(weaponDispenser.ready);
 
-            weaponDispenser.weapons[weaponDispenser.activeWeaponIndex].SetActive(weaponDispenser.ready);
+            for (int i = 0; i < weaponDispenser.weapons.Length; i++)
+            {
+                weaponDispenser.weapons[i].SetActive(i == weaponDispenser.activeWeaponIndex);
+            }
         }
     }
 }
