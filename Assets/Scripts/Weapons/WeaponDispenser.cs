@@ -21,23 +21,29 @@ public class WeaponDispenser : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        GrabWeapon(other.gameObject);
+        if (other.CompareTag("Player"))
+        {
+            GrabWeapon(other.GetComponent<WeaponPickup>());
+        }
     }
 
-    private void GrabWeapon(GameObject player)
+    private void GrabWeapon(WeaponPickup weaponPickup)
     {
-        WeaponPickup weaponPickup = player.GetComponent<WeaponPickup>();
-
-        if (player.CompareTag("Player") && ready && weaponPickup.gunManager.activeGun)
+        if (ready && weaponPickup.gunManager.activeGun)
         {
             if (!(weaponPickup.weapons[activeWeaponIndex].activeSelf &&
                 (weaponPickup.gunManager.currentAmmo == weaponPickup.gunManager.activeGun.maxAmmo ||
                 weaponPickup.gunManager.reloading)))
             {
                 weaponPickup.ChooseWeapon(activeWeaponIndex);
-                weapons[activeWeaponIndex].SetActive(false);
 
-                activeWeaponIndex = weapons.Length;
+                foreach (var weapon in weapons)
+                {
+                    weapon.SetActive(false);
+                }
+
+                ready = false;
+                particles.SetActive(false);
 
                 StartCoroutine(LoadNewWeapon());
             }
@@ -52,8 +58,6 @@ public class WeaponDispenser : MonoBehaviour
     private IEnumerator LoadNewWeapon()
     {
         if (!PhotonNetwork.IsMasterClient) yield break;
-        ready = false;
-        particles.SetActive(false);
         yield return new WaitForSeconds(rechargeTime);
         ChooseWeapon();
         ready = true;

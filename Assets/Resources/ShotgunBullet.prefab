@@ -47,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   recoilForce: 10
   shootForce: 40
-  radius: 1.5
+  radius: 3
   shootEffect: {fileID: 6968184924739665185, guid: a8d907664ae2ee548b5d420ec54082f3,
     type: 3}
   layerMask:

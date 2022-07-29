@@ -48,6 +48,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ballPrefab: {fileID: 1049829628938673444, guid: a03b2ff0040de6a4c93b928cbd005563,
     type: 3}
+  blueExplosion: {fileID: 860853727015281076, guid: fe408b2197196854e988cccb325e9a1a,
+    type: 3}
+  orangeExplosion: {fileID: 860853727015281076, guid: fbf6644752736c744a0a804e010cbabe,
+    type: 3}
   blueScore: 0
   orangeScore: 0
   playerPrefab: {fileID: 8136020538247425386, guid: e38780a697e24274281c07d90b89f4e8,

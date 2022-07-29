@@ -6,6 +6,9 @@ public class GameManagerEditor : Editor
 {
     SerializedProperty ballPrefab;
 
+    SerializedProperty blueExplosion;
+    SerializedProperty orangeExplosion;
+
     SerializedProperty playerPrefab;
 
     SerializedProperty blueTeamPlayerSpawnPoints;
@@ -15,6 +18,8 @@ public class GameManagerEditor : Editor
     private void OnEnable()
     {
         ballPrefab = serializedObject.FindProperty("ballPrefab");
+        blueExplosion = serializedObject.FindProperty("blueExplosion");
+        orangeExplosion = serializedObject.FindProperty("orangeExplosion");
         playerPrefab = serializedObject.FindProperty("playerPrefab");
         blueTeamPlayerSpawnPoints = serializedObject.FindProperty("blueTeamPlayerSpawnPoints");
         orangeTeamPlayerSpawnPoints = serializedObject.FindProperty("orangeTeamPlayerSpawnPoints");
@@ -28,6 +33,10 @@ public class GameManagerEditor : Editor
         var gameManager = target as GameManager;
 
         EditorGUILayout.PropertyField(ballPrefab);
+        EditorGUILayout.Space();
+
+        EditorGUILayout.PropertyField(blueExplosion);
+        EditorGUILayout.PropertyField(orangeExplosion);
         EditorGUILayout.Space();
 
         EditorGUILayout.PropertyField(playerPrefab);

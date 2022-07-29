@@ -7,6 +7,9 @@ public class GameManager : MonoBehaviour
     public GameObject ballPrefab;
     private GameObject currentBall;
 
+    public GameObject blueExplosion;
+    public GameObject orangeExplosion;
+
     public int blueScore;
     public int orangeScore;
 
@@ -20,8 +23,6 @@ public class GameManager : MonoBehaviour
     public List<PlayerStart> orangeTeamPlayerSpawnPoints;
 
     public PlayerStart offlinePlayerStart;
-
-    public List<GameObject> players;
 
     private void Awake()
     {
@@ -37,13 +38,13 @@ public class GameManager : MonoBehaviour
                 playerStart.SetGameManager(this);
             }
 
-            if (players.Count % 2 == 1)
+            if (PhotonNetwork.PlayerList.Length % 2 == 1)
             {
-                players.Add(blueTeamPlayerSpawnPoints[Random.Range(0, blueTeamPlayerSpawnPoints.Count - 1)].Spawn());
+                blueTeamPlayerSpawnPoints[Random.Range(0, blueTeamPlayerSpawnPoints.Count - 1)].Spawn();
             }
             else
             {
-                players.Add(orangeTeamPlayerSpawnPoints[Random.Range(0, orangeTeamPlayerSpawnPoints.Count - 1)].Spawn());
+                orangeTeamPlayerSpawnPoints[Random.Range(0, orangeTeamPlayerSpawnPoints.Count - 1)].Spawn();
             }
         }
         else
@@ -81,6 +82,7 @@ public class GameManager : MonoBehaviour
     {
         blueScore++;
         ui.UpdateScore();
+        Instantiate(orangeExplosion, currentBall.transform.position, Quaternion.identity);
         RespawnBall();
     }
 
@@ -88,6 +90,7 @@ public class GameManager : MonoBehaviour
     {
         orangeScore++;
         ui.UpdateScore();
+        Instantiate(blueExplosion, currentBall.transform.position, Quaternion.identity);
         RespawnBall();
     }
 
