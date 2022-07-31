@@ -5,25 +5,22 @@ using UnityEngine;
 public class ExplosiveBullets : MonoBehaviourPun
 {
     public Rigidbody rb;
-
+    [Space]
     public float speed;
-
+    [Space]
     public float explosionForce;
     public float explosionRadius;
     public float upwardsModifier;
-
+    [Space]
     public GameObject contactEffect;
-
-    void Start()
+    private void Awake()
     {
         rb.AddForce(transform.forward * speed, ForceMode.VelocityChange);
     }
-
-    void Update()
+    private void Update()
     {
         transform.rotation = Quaternion.LookRotation(rb.velocity);
     }
-
     private void OnCollisionEnter(Collision collision)
     {
         Instantiate(contactEffect, transform.position, Quaternion.identity);
@@ -36,14 +33,16 @@ public class ExplosiveBullets : MonoBehaviourPun
             }
         }
 
-        if (photonView.IsMine)
-        {
-            PhotonNetwork.Destroy(gameObject);
-        }
-
         if (PhotonNetwork.OfflineMode)
         {
             Destroy(gameObject);
+        }
+        else
+        {
+            if (photonView.IsMine)
+            {
+                PhotonNetwork.Destroy(gameObject);
+            }
         }
     }
 }

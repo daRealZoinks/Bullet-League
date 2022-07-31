@@ -2,8 +2,5 @@ using UnityEngine;
 
 public class DeleteEffect : MonoBehaviour
 {
-    void Start()
-    {
-        Destroy(gameObject, 5);
-    }
+    void Awake() => Destroy(gameObject, 5);
 }

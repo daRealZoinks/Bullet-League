@@ -1,7 +1,7 @@
 using Photon.Pun;
 using UnityEngine;
 
-public class PhotonMatchView : MonoBehaviour, IPunObservable
+public class PhotonGameManagerView : MonoBehaviour, IPunObservable
 {
     private GameManager gameManager;
 

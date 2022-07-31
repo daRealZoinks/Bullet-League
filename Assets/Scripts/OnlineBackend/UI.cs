@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class UI : MonoBehaviour
 {
@@ -11,20 +12,16 @@ public class UI : MonoBehaviour
     public RectTransform reticle;
     public TextMeshProUGUI blueScoreText;
     public TextMeshProUGUI orangeScoreText;
-
+    public Image ballPopup;
     [Header("Pause")]
     public GameObject inGameUI;
     public GameObject pauseMenu;
-
     private GameManager gameManager;
-
-    //Player related stuff
     private GameObject player;
     private GunManager gunManager;
     private PlayerMovement playerMovement;
     private Rigidbody playerRB;
-
-    private void Start()
+    private void Awake()
     {
         playerMovement = FindObjectOfType<PlayerMovement>();
         player = playerMovement.gameObject;
@@ -32,13 +29,11 @@ public class UI : MonoBehaviour
         playerRB = player.GetComponent<Rigidbody>();
         gunManager = player.GetComponentInChildren<GunManager>();
     }
-
     private void OnEnable()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
-
     private void Update()
     {
         ammoCounter.text = gunManager.currentAmmo + " | " + gunManager.activeGun.maxAmmo;
@@ -46,12 +41,10 @@ public class UI : MonoBehaviour
         reticle.sizeDelta = Vector2.Lerp(reticle.sizeDelta, new Vector2(size, size), Time.deltaTime * 10);
         UpdateScore();
     }
-
     public void SetGameManager(GameManager gameManager)
     {
         this.gameManager = gameManager;
     }
-
     public void UpdateScore()
     {
         blueScoreText.text = gameManager.blueScore.ToString();
@@ -69,7 +62,6 @@ public class UI : MonoBehaviour
 
         player.GetComponent<PlayerInput>().enabled = false;
     }
-
     public void UnPause()
     {
         inGameUI.SetActive(true);
@@ -80,7 +72,6 @@ public class UI : MonoBehaviour
 
         player.GetComponent<PlayerInput>().enabled = true;
     }
-
     public void QuitToTheMenu()
     {
         if (PhotonNetwork.IsConnected)

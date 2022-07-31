@@ -18,7 +18,6 @@ public class WeaponDispenser : MonoBehaviour
     public float rechargeTime;
     public bool ready;
     public int activeWeaponIndex;
-
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -26,35 +25,35 @@ public class WeaponDispenser : MonoBehaviour
             GrabWeapon(other.GetComponent<WeaponPickup>());
         }
     }
-
     private void GrabWeapon(WeaponPickup weaponPickup)
     {
-        if (ready && weaponPickup.gunManager.activeGun)
+        if (PhotonNetwork.IsMasterClient)
         {
-            if (!(weaponPickup.weapons[activeWeaponIndex].activeSelf &&
-                (weaponPickup.gunManager.currentAmmo == weaponPickup.gunManager.activeGun.maxAmmo ||
-                weaponPickup.gunManager.reloading)))
+            if (ready && weaponPickup.gunManager.activeGun)
             {
-                weaponPickup.ChooseWeapon(activeWeaponIndex);
-
-                foreach (var weapon in weapons)
+                if (!(weaponPickup.weapons[activeWeaponIndex].activeSelf &&
+                    (weaponPickup.gunManager.currentAmmo == weaponPickup.gunManager.activeGun.maxAmmo ||
+                    weaponPickup.gunManager.reloading)))
                 {
-                    weapon.SetActive(false);
+                    weaponPickup.ChooseWeapon(activeWeaponIndex);
+
+                    foreach (var weapon in weapons)
+                    {
+                        weapon.SetActive(false);
+                    }
+
+                    ready = false;
+                    particles.SetActive(false);
+
+                    StartCoroutine(LoadNewWeapon());
                 }
-
-                ready = false;
-                particles.SetActive(false);
-
-                StartCoroutine(LoadNewWeapon());
             }
         }
     }
-
     private void OnEnable()
     {
         StartCoroutine(LoadNewWeapon());
     }
-
     private IEnumerator LoadNewWeapon()
     {
         if (!PhotonNetwork.IsMasterClient) yield break;
@@ -63,7 +62,6 @@ public class WeaponDispenser : MonoBehaviour
         ready = true;
         particles.SetActive(true);
     }
-
     public void ChooseWeapon()
     {
         switch (weapon)

@@ -5,15 +5,12 @@ public class WeaponMovement : MonoBehaviour
     [Header("Sway settings")]
     public float smooth;
     public float swayMultiplier;
-
     [Space]
     public PlayerMovement playerMovement;
-
     private void Update()
     {
         WeaponSway();
     }
-
     void WeaponSway()
     {
         Quaternion rotationX = Quaternion.AngleAxis(-playerMovement.lookingDirection.y * swayMultiplier, Vector3.right);

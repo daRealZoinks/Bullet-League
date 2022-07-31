@@ -6,24 +6,23 @@ public class GameManager : MonoBehaviour
 {
     public GameObject ballPrefab;
     private GameObject currentBall;
-
+    [Space]
     public GameObject blueExplosion;
     public GameObject orangeExplosion;
-
+    [Space]
     public int blueScore;
     public int orangeScore;
-
+    [Space]
     public GameObject playerPrefab;
-
+    [Space]
     public UI ui;
-
+    [Space]
     public bool online;
-
+    [Space]
     public List<PlayerStart> blueTeamPlayerSpawnPoints;
     public List<PlayerStart> orangeTeamPlayerSpawnPoints;
-
+    [Space]
     public PlayerStart offlinePlayerStart;
-
     private void Awake()
     {
         if (online)
@@ -64,7 +63,6 @@ public class GameManager : MonoBehaviour
         }
         ui.SetGameManager(this);
     }
-
     public void SpawnBall()
     {
         if (PhotonNetwork.IsMasterClient)
@@ -77,23 +75,26 @@ public class GameManager : MonoBehaviour
             currentBall = Instantiate(ballPrefab, transform.position, transform.rotation);
         }
     }
-
     public void BlueScored()
     {
-        blueScore++;
+        if (PhotonNetwork.IsMasterClient)
+        {
+            blueScore++;
+        }
         ui.UpdateScore();
         Instantiate(orangeExplosion, currentBall.transform.position, Quaternion.identity);
         RespawnBall();
     }
-
     public void OrangeScored()
     {
-        orangeScore++;
+        if (PhotonNetwork.IsMasterClient)
+        {
+            orangeScore++;
+        }
         ui.UpdateScore();
         Instantiate(blueExplosion, currentBall.transform.position, Quaternion.identity);
         RespawnBall();
     }
-
     private void RespawnBall()
     {
         if (PhotonNetwork.IsMasterClient)

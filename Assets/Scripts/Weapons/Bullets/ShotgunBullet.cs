@@ -7,12 +7,11 @@ public class ShotgunBullet : MonoBehaviourPunCallbacks
     public float recoilForce;
     public float shootForce;
     public float radius;
-
+    [Space]
     public GameObject shootEffect;
-
+    [Space]
     public LayerMask layerMask;
-
-    private void Start()
+    private void Awake()
     {
         Instantiate(shootEffect, transform.position, transform.rotation);
 
@@ -42,19 +41,20 @@ public class ShotgunBullet : MonoBehaviourPunCallbacks
 
         StartCoroutine(Destroy());
     }
-
     public IEnumerator Destroy()
     {
         yield return new WaitForSeconds(5);
 
-        if (photonView.IsMine)
-        {
-            PhotonNetwork.Destroy(gameObject);
-        }
-
         if (PhotonNetwork.OfflineMode)
         {
             Destroy(gameObject);
+        }
+        else
+        {
+            if (photonView.IsMine)
+            {
+                PhotonNetwork.Destroy(gameObject);
+            }
         }
     }
 }

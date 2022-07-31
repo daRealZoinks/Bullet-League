@@ -3,20 +3,18 @@ using UnityEngine;
 public class CollisionCheck : MonoBehaviour
 {
     public bool colliding;
-
-    public string tagToCollide;
-
-    private void OnTriggerStay(Collider other)
+    [Space]
+    public string tagToCollideAgainst;
+    private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag(tagToCollide))
+        if (other.gameObject.CompareTag(tagToCollideAgainst))
         {
             colliding = true;
         }
     }
-
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag(tagToCollide))
+        if (other.gameObject.CompareTag(tagToCollideAgainst))
         {
             colliding = false;
         }

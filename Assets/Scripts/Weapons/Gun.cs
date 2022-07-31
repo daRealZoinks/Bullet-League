@@ -12,12 +12,9 @@ public class Gun : MonoBehaviour
     [Space]
     public AudioClip loadSound;
     public AnimationClip loadAnimation;
-
+    [Space]
     public Animation animationController;
-
-    [HideInInspector]
-    public GunManager gunManager;
-
+    [HideInInspector] public GunManager gunManager;
     private void OnEnable()
     {
         gunManager = GetComponentInParent<GunManager>();
@@ -26,7 +23,6 @@ public class Gun : MonoBehaviour
         gunManager.activeGun = this;
         gunManager.StartCoroutine(gunManager.Reload());
     }
-
     private void OnDisable()
     {
         animationController.Stop();

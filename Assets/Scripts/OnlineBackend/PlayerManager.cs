@@ -6,15 +6,10 @@ using static UnityEngine.InputSystem.InputAction;
 public class PlayerManager : MonoBehaviourPun
 {
     public Behaviour[] componentsToDisable;
-
     public GameObject[] gunStuff;
-
     public GameObject userNameText;
-
     public UI UI;
-
     public Camera cam;
-
     public void Start()
     {
         if (photonView.AmOwner || PhotonNetwork.OfflineMode)
@@ -30,10 +25,11 @@ public class PlayerManager : MonoBehaviourPun
         }
         else
         {
-            for (int i = 0; i < componentsToDisable.Length; i++)
+            foreach (var component in componentsToDisable)
             {
-                componentsToDisable[i].enabled = false;
+                component.enabled = false;
             }
+
             userNameText.GetComponentInChildren<TMP_Text>().text = photonView.Owner.NickName;
         }
     }

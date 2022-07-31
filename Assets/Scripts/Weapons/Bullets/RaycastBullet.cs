@@ -7,13 +7,12 @@ using UnityEngine;
 public class RaycastBullet : MonoBehaviourPunCallbacks
 {
     public float force;
-
+    [Space]
     public LineRenderer lineRenderer;
-
+    [Space]
     public GameObject startEffect;
     public GameObject contactEffect;
-
-    private void Start()
+    private void Awake()
     {
         Instantiate(startEffect, transform.position, Quaternion.identity);
 
@@ -44,14 +43,16 @@ public class RaycastBullet : MonoBehaviourPunCallbacks
     {
         yield return new WaitForSeconds(5);
 
-        if (photonView.IsMine)
-        {
-            PhotonNetwork.Destroy(gameObject);
-        }
-
         if (PhotonNetwork.OfflineMode)
         {
             Destroy(gameObject);
+        }
+        else
+        {
+            if (photonView.IsMine)
+            {
+                PhotonNetwork.Destroy(gameObject);
+            }
         }
     }
 }

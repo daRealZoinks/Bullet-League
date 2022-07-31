@@ -8,57 +8,37 @@ public class PlayerMovement : MonoBehaviour
     [Header("Movement")]
     public float moveSpeed;
     private float moveSpeedMultiplier;
-
     public float groundSpeedMultiplier;
-
     public float airSpeedMultiplier;
-
     public float groundDrag;
     public float airDrag;
-
     public LayerMask whatIsGround;
-
     private Vector2 direction;
-
     [Space]
     [HideInInspector]
     public Rigidbody rb;
-
     [Space]
     public float jumpForce;
     public CapsuleCollider capsuleCollider;
-
     private bool isGrounded;
-
     [Header("Looking around")]
     public float sensitivity;
-
     [HideInInspector]
     public Vector2 lookingDirection;
-
     public Camera cam;
-
     [Header("Wallrun")]
-
     public float wallDistance;
-
     [Space]
-
     public float wallRunGravityCancelForce;
-
     private bool wallLeft;
     private bool wallRight;
-
     RaycastHit leftWallHit;
     RaycastHit rightWallHit;
-
     #region Movement
-
     public void Move(InputAction.CallbackContext context)
     {
         direction = context.ReadValue<Vector2>();
     }
-
     public void Jump(InputAction.CallbackContext context)
     {
         if (context.started)
@@ -91,12 +71,10 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
-
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
     }
-
     private void Update()
     {
         WallRun();
@@ -105,7 +83,6 @@ public class PlayerMovement : MonoBehaviour
 
         ControlDrag();
     }
-
     public void WallRun()
     {
         wallLeft = Physics.Raycast(transform.position + capsuleCollider.center, -transform.right, out leftWallHit, wallDistance, whatIsGround);
@@ -137,7 +114,6 @@ public class PlayerMovement : MonoBehaviour
             wallLeft = false;
         }
     }
-
     private void ControlDrag()
     {
         if (isGrounded)
@@ -151,8 +127,7 @@ public class PlayerMovement : MonoBehaviour
             moveSpeedMultiplier = Mathf.Lerp(moveSpeedMultiplier, airSpeedMultiplier, 20);
         }
     }
-
-    private void FixedUpdate() //this is where you apply the movement overall
+    private void FixedUpdate()
     {
         if (!(wallRight || wallLeft))
         {
@@ -161,17 +136,13 @@ public class PlayerMovement : MonoBehaviour
             rb.AddForce(moveSpeed * moveSpeedMultiplier * moveDirection, ForceMode.Acceleration);
         }
     }
-
     #endregion
-
     #region Looking around
-
     public void Looking(InputAction.CallbackContext context)
     {
         lookingDirection = context.ReadValue<Vector2>();
     }
-
-    private void LateUpdate() //camera related things
+    private void LateUpdate()
     {
         transform.Rotate(sensitivity * Time.deltaTime * new Vector3(0, lookingDirection.x, 0));
         cam.transform.Rotate(sensitivity * Time.deltaTime * new Vector3(-lookingDirection.y, 0, 0));
@@ -207,6 +178,5 @@ public class PlayerMovement : MonoBehaviour
 
         cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, newFieldOfView, Time.deltaTime * 5);
     }
-
     #endregion
 }

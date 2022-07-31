@@ -11,26 +11,22 @@ public class PhotonGunManagerView : MonoBehaviour, IPunObservable
     }
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        bool[] active = new bool[gunManager.weapons.Length];
-
-        for (int i = 0; i < gunManager.weapons.Length; i++)
-        {
-            active[i] = gunManager.weapons[i].activeSelf;
-        }
-
         if (stream.IsWriting)
         {
-            for (int i = 0; i < gunManager.weapons.Length; i++)
+            stream.SendNext(gunManager.activeGun);
+
+            foreach (var weapon in gunManager.weapons)
             {
-                stream.SendNext(active[i]);
+                stream.SendNext(weapon.activeSelf);
             }
         }
         else
         {
-            for (int i = 0; i < gunManager.weapons.Length; i++)
+            gunManager.activeGun = (Gun)stream.ReceiveNext();
+
+            foreach (var weapon in gunManager.weapons)
             {
-                active[i] = (bool)stream.ReceiveNext();
-                gunManager.weapons[i].SetActive(active[i]);
+                weapon.SetActive((bool)stream.ReceiveNext());
             }
         }
     }

@@ -6,17 +6,14 @@ public class HostGame : MonoBehaviour
 {
     private int roomSize = 2;
     private string roomName;
-
     public void SetNumberOfPlayers(int numberOfPlayers)
     {
         roomSize = (numberOfPlayers + 1) * 2;
     }
-
     public void SetRoomName(string name)
     {
         roomName = name;
     }
-
     public void CreateRoom()
     {
         RoomOptions roomOptions = new()

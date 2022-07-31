@@ -6,14 +6,15 @@ public class WeaponPickup : MonoBehaviour
 
     public GunManager gunManager;
 
-    public void ChooseWeapon(int weapon)
+    public void ChooseWeapon(int chosenWeapon)
     {
         StopAllCoroutines();
-        for (int i = 0; i < weapons.Length; i++)
+
+        foreach (var weapon in weapons)
         {
-            weapons[i].SetActive(false);
+            weapon.SetActive(false);
         }
 
-        weapons[weapon].SetActive(true);
+        weapons[chosenWeapon].SetActive(true);
     }
 }

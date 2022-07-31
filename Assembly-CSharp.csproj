@@ -8,7 +8,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <ProjectGuid>{9DC1C353-E2B4-8CD7-A0D3-054C9D73F09F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -58,6 +59,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\OnlineBackend\CameraFollow.cs" />
     <Compile Include="Assets\Photon\PhotonLibs\WebSocket\SocketWebTcp.cs" />
+    <Compile Include="Assets\Scripts\Prototyping\BallPopup.cs" />
     <Compile Include="Assets\Scripts\Weapons\WeaponPickup.cs" />
     <Compile Include="Assets\Scripts\Depracated\TabGroup.cs" />
     <Compile Include="Assets\Scripts\Weapons\Bullets\NormalBullets.cs" />
@@ -87,7 +89,7 @@
     <Compile Include="Assets\Scripts\Prototyping\Team.cs" />
     <Compile Include="Assets\Scripts\LocalPlayer\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\LocalPlayer\GunManager.cs" />
-    <Compile Include="Assets\Scripts\OnlineBackend\PhotonMatchView.cs" />
+    <Compile Include="Assets\Scripts\OnlineBackend\PhotonGameManagerView.cs" />
     <Compile Include="Assets\Scripts\Weapons\PhotonWeaponDispenserView.cs" />
   </ItemGroup>
   <ItemGroup>

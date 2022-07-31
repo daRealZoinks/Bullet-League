@@ -7,12 +7,10 @@ public class PlayerStart : MonoBehaviourPunCallbacks
     public Mesh mesh;
     private Color color;
     private GameManager gameManager;
-
     public void SetGameManager(GameManager gameManager)
     {
         this.gameManager = gameManager;
     }
-
     [ExecuteInEditMode]
     public void SetColor(Team team)
     {
@@ -26,7 +24,6 @@ public class PlayerStart : MonoBehaviourPunCallbacks
                 break;
         }
     }
-
     public GameObject Spawn()
     {
         if (PhotonNetwork.IsConnected)
@@ -38,7 +35,6 @@ public class PlayerStart : MonoBehaviourPunCallbacks
             return Instantiate(gameManager.playerPrefab, transform.position - transform.up * transform.localScale.y / 2, transform.rotation);
         }
     }
-
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.cyan;
@@ -48,7 +44,6 @@ public class PlayerStart : MonoBehaviourPunCallbacks
         Gizmos.DrawWireMesh(mesh, -1, transform.position, transform.rotation, transform.localScale);
 
     }
-
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = new Color(color.r, color.g, color.b, 55f / 255);

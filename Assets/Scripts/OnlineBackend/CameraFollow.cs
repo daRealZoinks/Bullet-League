@@ -2,11 +2,16 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    void Update()
+    public Transform target;
+    private void Awake()
     {
-        if (Camera.main != null)
+        target = Camera.main.transform;
+    }
+    private void Update()
+    {
+        if (target != null)
         {
-            transform.LookAt(transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
+            transform.LookAt(transform.position + target.rotation * Vector3.forward, target.rotation * Vector3.up);
         }
     }
 }

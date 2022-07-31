@@ -18,37 +18,27 @@ public class GunManager : MonoBehaviourPun
     {
         StartCoroutine(Reload());
     }
-
     public void Shoot(InputAction.CallbackContext context)
     {
-        if (context.performed && (!reloading && !shooting && currentAmmo > 0))
+        if (context.performed && !reloading && !shooting && currentAmmo > 0)
         {
-            reloading = false;
-            shooting = true;
             StartCoroutine(Shoot());
         }
     }
-
     public IEnumerator Shoot()
     {
-        activeGun.animationController.clip = activeGun.shootAnimation;
-        activeGun.animationController.Play();
+        shooting = true;
+        PlayAnimation(activeGun.shootAnimation);
 
         if (PhotonNetwork.OfflineMode)
         {
-            Instantiate(
-                activeGun.bullet,
-                activeGun.shootPoint.position,
-                activeGun.shootPoint.rotation);
+            Instantiate(activeGun.bullet, activeGun.shootPoint.position, activeGun.shootPoint.rotation);
         }
         else
         {
             if (photonView.IsMine)
             {
-                PhotonNetwork.Instantiate(
-                    activeGun.bullet.name,
-                    activeGun.shootPoint.position,
-                    activeGun.shootPoint.rotation);
+                PhotonNetwork.Instantiate(activeGun.bullet.name, activeGun.shootPoint.position, activeGun.shootPoint.rotation);
             }
         }
 
@@ -63,19 +53,23 @@ public class GunManager : MonoBehaviourPun
 
         shooting = false;
     }
-
     public IEnumerator Reload()
     {
-        activeGun.animationController.clip = activeGun.loadAnimation;
-        activeGun.animationController.Play();
-
         shooting = false;
         reloading = true;
 
         currentAmmo = 0;
+
+        PlayAnimation(activeGun.loadAnimation);
         yield return new WaitForSeconds(activeGun.loadAnimation.length);
+
         currentAmmo = activeGun.maxAmmo;
 
         reloading = false;
+    }
+    public void PlayAnimation(AnimationClip animationClip)
+    {
+        activeGun.animationController.clip = animationClip;
+        activeGun.animationController.Play();
     }
 }
