@@ -6,6 +6,7 @@ public class GoalEditor : Editor
 {
     private SerializedProperty gameManager;
     private SerializedProperty TeamColor;
+
     private void OnEnable()
     {
         gameManager = serializedObject.FindProperty("gameManager");
@@ -21,7 +22,7 @@ public class GoalEditor : Editor
         EditorGUILayout.PropertyField(gameManager);
         EditorGUILayout.PropertyField(TeamColor);
 
-        switch (goal.TeamColor)
+        switch (goal.teamColor)
         {
             case Team.Blue:
                 goal.backGoal.GetComponent<MeshRenderer>().sharedMaterial = goal.blue;

@@ -15,6 +15,7 @@ public class GameManagerEditor : Editor
     SerializedProperty orangeTeamPlayerSpawnPoints;
 
     SerializedProperty offlinePlayerStart;
+
     private void OnEnable()
     {
         ballPrefab = serializedObject.FindProperty("ballPrefab");
