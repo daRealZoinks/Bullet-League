@@ -58,6 +58,9 @@ MonoBehaviour:
   loadAnimation: {fileID: 7400000, guid: 36d52e34a9db1a34e90d4f31510d9ff9, type: 2}
   animationController: {fileID: 9086430298194337751}
   gunManager: {fileID: 0}
+  partsToColor:
+  - {fileID: 6900145802592543339}
+  - {fileID: 1587927994188677604}
 --- !u!111 &9086430298194337751
 Animation:
   m_ObjectHideFlags: 0
@@ -136,7 +139,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 10ffae9eaba16194a971f41c805e4dd1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -219,7 +222,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -6478536213147159724, guid: d5b20958b29cc7c438fcf8299514820f, type: 3}
+  - {fileID: 2100000, guid: 10ffae9eaba16194a971f41c805e4dd1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -302,7 +305,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -876546973899608171, guid: d5b20958b29cc7c438fcf8299514820f, type: 3}
+  - {fileID: 2100000, guid: 10ffae9eaba16194a971f41c805e4dd1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -385,7 +388,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 10ffae9eaba16194a971f41c805e4dd1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

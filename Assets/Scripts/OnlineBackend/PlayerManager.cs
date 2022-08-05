@@ -1,3 +1,4 @@
+using System;
 using Photon.Pun;
 using TMPro;
 using UnityEngine;
@@ -11,6 +12,54 @@ public class PlayerManager : MonoBehaviourPun
     public UI ui;
     public Camera cam;
 
+    public GunManager gunManager;
+    
+    [Space]
+
+    private Team _team;
+    public GameObject graphics;
+
+    [Space]
+
+    public Material blueMaterial;
+    public Material orangeMaterial;
+
+    public Team Team
+    {
+        get => _team;
+        set
+        {
+            _team = value;
+
+            ColorPlayer();
+        }
+    }
+
+    private void ColorPlayer()
+    {
+        switch (_team)
+        {
+            case Team.Blue:
+                graphics.GetComponent<MeshRenderer>().sharedMaterial = blueMaterial;
+                foreach (var weapon in gunManager.weapons)
+                {
+                    weapon.GetComponent<Gun>().Color(blueMaterial);
+                }
+
+                break;
+            case Team.Orange:
+                graphics.GetComponent<MeshRenderer>().sharedMaterial = orangeMaterial;
+                foreach (var weapon in gunManager.weapons)
+                {
+                    weapon.GetComponent<Gun>().Color(orangeMaterial);
+                }
+
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+    }
+
     public void Awake()
     {
         if (photonView.AmOwner || PhotonNetwork.OfflineMode)
@@ -21,7 +70,6 @@ public class PlayerManager : MonoBehaviourPun
             }
 
             cam.tag = "MainCamera";
-            gameObject.tag = "Player";
             userNameText.SetActive(false);
             gameObject.layer = 7;
         }
@@ -33,6 +81,8 @@ public class PlayerManager : MonoBehaviourPun
             }
 
             userNameText.GetComponentInChildren<TMP_Text>().text = photonView.Owner.NickName;
+        
+            ColorPlayer();
         }
     }
 

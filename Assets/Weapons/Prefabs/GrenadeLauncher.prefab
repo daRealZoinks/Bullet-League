@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 10ffae9eaba16194a971f41c805e4dd1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -100,7 +100,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1376283080488193577
 Transform:
   m_ObjectHideFlags: 0
@@ -140,6 +140,9 @@ MonoBehaviour:
   loadAnimation: {fileID: 7400000, guid: a56de4e1c2014414e81a10ada22d0e0c, type: 2}
   animationController: {fileID: 1458826103853400829}
   gunManager: {fileID: 0}
+  partsToColor:
+  - {fileID: 308734794925698933}
+  - {fileID: 3670641279261915087}
 --- !u!111 &1458826103853400829
 Animation:
   m_ObjectHideFlags: 0
@@ -218,7 +221,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 10ffae9eaba16194a971f41c805e4dd1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -301,7 +304,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -876546973899608171, guid: 81f7f411befa08e4f88d180aa464e739, type: 3}
+  - {fileID: 2100000, guid: 10ffae9eaba16194a971f41c805e4dd1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

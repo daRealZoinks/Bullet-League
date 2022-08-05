@@ -1273,7 +1273,6 @@ MonoBehaviour:
   reticle: {fileID: 5745854176207198370}
   blueScoreText: {fileID: 5371284020021261942}
   orangeScoreText: {fileID: 5371284019804686342}
-  ballPopup: {fileID: 0}
   inGameUI: {fileID: 4344830163616471817}
   pauseMenu: {fileID: 6956151350230102016}
 --- !u!1 &5371284020551870365
@@ -1336,7 +1335,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.6883507, b: 1, a: 1}
+  m_Color: {r: 0, g: 0.32156864, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1413,7 +1412,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 0.34509805, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

@@ -4,15 +4,23 @@ public class Goal : MonoBehaviour
 {
     public GameManager gameManager;
 
-    [Space] public CollisionCheck touch;
+    [Space]
+
+    public CollisionCheck touch;
     public CollisionCheck dontTouch;
 
-    [Space] public Team teamColor;
+    [Space]
 
-    [Space] public GameObject backGoal;
+    public Team teamColor;
+
+    [Space]
+
+    public GameObject backGoal;
     public GameObject goalField;
 
-    [Space] public Material blue;
+    [Space]
+
+    public Material blue;
     public Material blueTransparent;
     public Material red;
     public Material redTransparent;

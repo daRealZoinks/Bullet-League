@@ -1,5 +1,5 @@
-using UnityEngine;
 using Photon.Pun;
+using UnityEngine;
 
 public class PhotonGunManagerView : MonoBehaviour, IPunObservable
 {
@@ -14,7 +14,7 @@ public class PhotonGunManagerView : MonoBehaviour, IPunObservable
     {
         if (stream.IsWriting)
         {
-            stream.SendNext(_gunManager.activeGun);
+            stream.SendNext(_gunManager.currentAmmo);
 
             foreach (var weapon in _gunManager.weapons)
             {
@@ -23,7 +23,7 @@ public class PhotonGunManagerView : MonoBehaviour, IPunObservable
         }
         else
         {
-            _gunManager.activeGun = (Gun)stream.ReceiveNext();
+            _gunManager.currentAmmo = (int)stream.ReceiveNext();
 
             foreach (var weapon in _gunManager.weapons)
             {

@@ -12,11 +12,6 @@ public class GunManager : MonoBehaviourPun
     public Gun activeGun;
     public WeaponPickup weaponPickup;
 
-    private void Start()
-    {
-        StartCoroutine(Reload());
-    }
-
     public void Shoot(InputAction.CallbackContext context)
     {
         if (context.performed && !reloading && !shooting && currentAmmo > 0)

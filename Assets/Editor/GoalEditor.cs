@@ -5,12 +5,12 @@ using UnityEngine;
 public class GoalEditor : Editor
 {
     private SerializedProperty gameManager;
-    private SerializedProperty TeamColor;
+    private SerializedProperty teamColor;
 
     private void OnEnable()
     {
         gameManager = serializedObject.FindProperty("gameManager");
-        TeamColor = serializedObject.FindProperty("TeamColor");
+        teamColor = serializedObject.FindProperty("teamColor");
     }
 
     public override void OnInspectorGUI()
@@ -20,7 +20,7 @@ public class GoalEditor : Editor
         var goal = target as Goal;
 
         EditorGUILayout.PropertyField(gameManager);
-        EditorGUILayout.PropertyField(TeamColor);
+        EditorGUILayout.PropertyField(teamColor);
 
         switch (goal.teamColor)
         {

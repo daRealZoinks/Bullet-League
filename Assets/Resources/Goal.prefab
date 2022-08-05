@@ -59,7 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   colliding: 0
-  tagToCollide: Ball
+  tagToCollideAgainst: Ball
 --- !u!1 &5925473609204557216
 GameObject:
   m_ObjectHideFlags: 0
@@ -302,7 +302,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   colliding: 0
-  tagToCollide: Ball
+  tagToCollideAgainst: Ball
 --- !u!1 &7948132138441567688
 GameObject:
   m_ObjectHideFlags: 0
@@ -1342,10 +1342,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f92d02a675ed6945b929f42528c76ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 0}
   touch: {fileID: 4750781239170893668}
   dontTouch: {fileID: 3484650250567205187}
-  TeamColor: 0
+  teamColor: 0
   backGoal: {fileID: 7948132138441567688}
   goalField: {fileID: 5925473609204557216}
   blue: {fileID: 2100000, guid: 8d5b311a42f29fd49ad0871e82ea8128, type: 2}

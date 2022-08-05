@@ -7,10 +7,10 @@ public class PlayerStart : MonoBehaviourPunCallbacks
     public Mesh mesh;
     private Color _color;
     private GameManager _gameManager;
-
-    public void SetGameManager(GameManager gameManager)
+    public GameManager GameManager
     {
-        this._gameManager = gameManager;
+        get => _gameManager;
+        set => _gameManager = value;
     }
 
     [ExecuteInEditMode]
@@ -24,17 +24,26 @@ public class PlayerStart : MonoBehaviourPunCallbacks
         };
     }
 
-
-    public GameObject Spawn()
+    public PlayerManager Spawn()
     {
         var playerStartTransform = transform;
-        return PhotonNetwork.IsConnected
-            ? PhotonNetwork.Instantiate(_gameManager.playerPrefab.name,
+
+        GameObject player;
+
+        if (PhotonNetwork.IsConnected)
+        {
+            player = PhotonNetwork.Instantiate(_gameManager.playerPrefab.name,
                 playerStartTransform.position - playerStartTransform.up * playerStartTransform.localScale.y / 2,
-                playerStartTransform.rotation)
-            : Instantiate(_gameManager.playerPrefab,
-                (playerStartTransform = transform).position -
-                playerStartTransform.up * playerStartTransform.localScale.y / 2, playerStartTransform.rotation);
+                playerStartTransform.rotation);
+        }
+        else
+        {
+            player = Instantiate(_gameManager.playerPrefab,
+               (playerStartTransform = transform).position -
+               playerStartTransform.up * playerStartTransform.localScale.y / 2, playerStartTransform.rotation);
+        }
+
+        return player.GetComponent<PlayerManager>();
     }
 
     private void OnDrawGizmos()

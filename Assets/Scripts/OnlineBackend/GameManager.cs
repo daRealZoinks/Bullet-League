@@ -7,22 +7,42 @@ public class GameManager : MonoBehaviour
     public GameObject ballPrefab;
     private GameObject _currentBall;
 
-    [Space] public GameObject blueExplosion;
+    public GameObject CurrentBall
+    {
+        get => _currentBall;
+        private set => _currentBall = value;
+    }
+
+    [Space]
+
+    public GameObject blueExplosion;
     public GameObject orangeExplosion;
 
-    [Space] public int blueScore;
+    [Space]
+
+    public int blueScore;
     public int orangeScore;
 
-    [Space] public GameObject playerPrefab;
+    [Space]
 
-    [Space] public UI ui;
+    public GameObject playerPrefab;
 
-    [Space] public bool online = true;
+    [Space]
 
-    [Space] public List<PlayerStart> blueTeamPlayerSpawnPoints;
+    public UI ui;
+
+    [Space]
+
+    public bool online = true;
+
+    [Space]
+
+    public List<PlayerStart> blueTeamPlayerSpawnPoints;
     public List<PlayerStart> orangeTeamPlayerSpawnPoints;
 
-    [Space] public PlayerStart offlinePlayerStart;
+    [Space]
+
+    public PlayerStart offlinePlayerStart;
 
     private void Awake()
     {
@@ -30,30 +50,30 @@ public class GameManager : MonoBehaviour
         {
             foreach (var playerStart in blueTeamPlayerSpawnPoints)
             {
-                playerStart.SetGameManager(this);
+                playerStart.GameManager = this;
             }
 
             foreach (var playerStart in orangeTeamPlayerSpawnPoints)
             {
-                playerStart.SetGameManager(this);
+                playerStart.GameManager = this;
             }
 
             if (PhotonNetwork.PlayerList.Length % 2 == 1)
             {
                 var playerStart = blueTeamPlayerSpawnPoints[Random.Range(0, blueTeamPlayerSpawnPoints.Count)];
-                playerStart.Spawn();
+                playerStart.Spawn().Team = Team.Blue;
             }
             else
             {
                 var playerStart = orangeTeamPlayerSpawnPoints[Random.Range(0, orangeTeamPlayerSpawnPoints.Count)];
-                playerStart.Spawn();
+                playerStart.Spawn().Team = Team.Orange;
             }
         }
         else
         {
             PhotonNetwork.Disconnect();
 
-            offlinePlayerStart.SetGameManager(this);
+            offlinePlayerStart.GameManager = this;
 
             offlinePlayerStart.Spawn();
         }
@@ -74,19 +94,13 @@ public class GameManager : MonoBehaviour
 
         if (PhotonNetwork.IsMasterClient)
         {
-            _currentBall =
-                PhotonNetwork.Instantiate(ballPrefab.name, playerTransform.position, playerTransform.rotation);
+            _currentBall = PhotonNetwork.Instantiate(ballPrefab.name, playerTransform.position, playerTransform.rotation);
         }
 
         if (PhotonNetwork.OfflineMode)
         {
             _currentBall = Instantiate(ballPrefab, playerTransform.position, playerTransform.rotation);
         }
-    }
-
-    public GameObject GetCurrentBall()
-    {
-        return _currentBall;
     }
 
     public void BlueScored()
