@@ -6,14 +6,20 @@ using UnityEngine;
 public class JoinGameButton : MonoBehaviour
 {
     public TextMeshProUGUI text;
-    public RoomInfo roomInfo;
-    public void SetRoomInfo(RoomInfo roomInfo)
+    private RoomInfo _roomInfo;
+
+    public RoomInfo RoomInfo
     {
-        this.roomInfo = roomInfo;
-        text.text = roomInfo.Name + " - (" + roomInfo.PlayerCount + "/" + roomInfo.MaxPlayers + ")";
+        get => _roomInfo;
+        set
+        {
+            _roomInfo = value;
+            text.text = _roomInfo.Name + " - (" + _roomInfo.PlayerCount + "/" + _roomInfo.MaxPlayers + ")";
+        }
     }
+
     public void Join()
     {
-        PhotonNetwork.JoinRoom(roomInfo.Name);
+        PhotonNetwork.JoinRoom(RoomInfo.Name);
     }
 }

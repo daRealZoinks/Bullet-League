@@ -5,10 +5,8 @@ using UnityEngine.InputSystem;
 
 public class GunManager : MonoBehaviourPun
 {
-    [HideInInspector]
-    public bool reloading = false;
-    [HideInInspector]
-    public bool shooting = false;
+    [HideInInspector] public bool reloading = false;
+    [HideInInspector] public bool shooting = false;
     public GameObject[] weapons;
     public int currentAmmo;
     public Gun activeGun;
@@ -18,6 +16,7 @@ public class GunManager : MonoBehaviourPun
     {
         StartCoroutine(Reload());
     }
+
     public void Shoot(InputAction.CallbackContext context)
     {
         if (context.performed && !reloading && !shooting && currentAmmo > 0)
@@ -25,7 +24,8 @@ public class GunManager : MonoBehaviourPun
             StartCoroutine(Shoot());
         }
     }
-    public IEnumerator Shoot()
+
+    private IEnumerator Shoot()
     {
         shooting = true;
         PlayAnimation(activeGun.shootAnimation);
@@ -38,7 +38,8 @@ public class GunManager : MonoBehaviourPun
         {
             if (photonView.IsMine)
             {
-                PhotonNetwork.Instantiate(activeGun.bullet.name, activeGun.shootPoint.position, activeGun.shootPoint.rotation);
+                PhotonNetwork.Instantiate(activeGun.bullet.name, activeGun.shootPoint.position,
+                    activeGun.shootPoint.rotation);
             }
         }
 
@@ -53,6 +54,7 @@ public class GunManager : MonoBehaviourPun
 
         shooting = false;
     }
+
     public IEnumerator Reload()
     {
         shooting = false;
@@ -67,7 +69,8 @@ public class GunManager : MonoBehaviourPun
 
         reloading = false;
     }
-    public void PlayAnimation(AnimationClip animationClip)
+
+    private void PlayAnimation(AnimationClip animationClip)
     {
         activeGun.animationController.clip = animationClip;
         activeGun.animationController.Play();

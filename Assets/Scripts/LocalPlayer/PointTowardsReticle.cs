@@ -5,18 +5,17 @@ public class PointTowardsReticle : MonoBehaviour
 {
     public Camera cam;
 
-    void Update()
+    private void Update()
     {
-        RaycastHit[] hits = Physics.RaycastAll(cam.transform.position, cam.transform.forward, Mathf.Infinity);
-        IOrderedEnumerable<RaycastHit> sorted = hits.OrderBy(h => h.distance);
+        var camTransform = cam.transform;
+        var hits = Physics.RaycastAll(camTransform.position, camTransform.forward, Mathf.Infinity);
+        var sorted = hits.OrderBy(h => h.distance);
 
-        foreach (RaycastHit hit in sorted)
+        foreach (var hit in sorted)
         {
-            if (hit.collider.gameObject.layer != 6)
-            {
-                transform.LookAt(hit.point);
-                break;
-            }
+            if (hit.collider.gameObject.layer == 6) continue;
+            transform.LookAt(hit.point);
+            break;
         }
     }
 }

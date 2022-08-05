@@ -7,21 +7,24 @@ using UnityEngine.UI;
 public class MainMenu : MonoBehaviourPunCallbacks
 {
     public Button[] onlineButtons;
-    [Space]
-    public TMP_InputField nameInput;
+
+    [Space] public TMP_InputField nameInput;
     public TextMeshProUGUI gameState;
+
     public void ChangeName(string text)
     {
         PlayerPrefs.SetString("PlayerName", text);
         PhotonNetwork.NickName = text;
     }
-    public void OnlineButtonsActiveState(bool state)
+
+    private void OnlineButtonsActiveState(bool state)
     {
-        for (int i = 0; i < onlineButtons.Length; i++)
+        foreach (var button in onlineButtons)
         {
-            onlineButtons[i].interactable = state;
+            button.interactable = state;
         }
     }
+
     private void Awake()
     {
         nameInput.text = PlayerPrefs.GetString("PlayerName");
@@ -31,16 +34,19 @@ public class MainMenu : MonoBehaviourPunCallbacks
 
         Connect();
     }
+
     public void Connect()
     {
         if (PhotonNetwork.IsConnected)
         {
             return;
         }
+
         PhotonNetwork.GameVersion = "0.0.1";
         PhotonNetwork.ConnectUsingSettings();
         gameState.text = "Connecting";
     }
+
     public override void OnConnectedToMaster()
     {
         OnlineButtonsActiveState(true);
@@ -48,10 +54,12 @@ public class MainMenu : MonoBehaviourPunCallbacks
         PhotonNetwork.AutomaticallySyncScene = true;
         PhotonNetwork.JoinLobby();
     }
+
     public override void OnJoinedRoom()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
+
     public void Quit()
     {
         Application.Quit();

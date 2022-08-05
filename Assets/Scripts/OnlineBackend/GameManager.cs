@@ -5,45 +5,48 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public GameObject ballPrefab;
-    private GameObject currentBall;
-    [Space]
-    public GameObject blueExplosion;
+    private GameObject _currentBall;
+
+    [Space] public GameObject blueExplosion;
     public GameObject orangeExplosion;
-    [Space]
-    public int blueScore;
+
+    [Space] public int blueScore;
     public int orangeScore;
-    [Space]
-    public GameObject playerPrefab;
-    [Space]
-    public UI ui;
-    [Space]
-    public bool online;
-    [Space]
-    public List<PlayerStart> blueTeamPlayerSpawnPoints;
+
+    [Space] public GameObject playerPrefab;
+
+    [Space] public UI ui;
+
+    [Space] public bool online = true;
+
+    [Space] public List<PlayerStart> blueTeamPlayerSpawnPoints;
     public List<PlayerStart> orangeTeamPlayerSpawnPoints;
-    [Space]
-    public PlayerStart offlinePlayerStart;
+
+    [Space] public PlayerStart offlinePlayerStart;
+
     private void Awake()
     {
         if (online)
         {
-            foreach (PlayerStart playerStart in blueTeamPlayerSpawnPoints)
+            foreach (var playerStart in blueTeamPlayerSpawnPoints)
             {
                 playerStart.SetGameManager(this);
             }
 
-            foreach (PlayerStart playerStart in orangeTeamPlayerSpawnPoints)
+            foreach (var playerStart in orangeTeamPlayerSpawnPoints)
             {
                 playerStart.SetGameManager(this);
             }
 
             if (PhotonNetwork.PlayerList.Length % 2 == 1)
             {
-                blueTeamPlayerSpawnPoints[Random.Range(0, blueTeamPlayerSpawnPoints.Count - 1)].Spawn();
+                var playerStart = blueTeamPlayerSpawnPoints[Random.Range(0, blueTeamPlayerSpawnPoints.Count)];
+                playerStart.Spawn();
             }
             else
             {
-                orangeTeamPlayerSpawnPoints[Random.Range(0, orangeTeamPlayerSpawnPoints.Count - 1)].Spawn();
+                var playerStart = orangeTeamPlayerSpawnPoints[Random.Range(0, orangeTeamPlayerSpawnPoints.Count)];
+                playerStart.Spawn();
             }
         }
         else
@@ -61,50 +64,65 @@ public class GameManager : MonoBehaviour
         {
             Instantiate(ui);
         }
+
         ui.SetGameManager(this);
     }
-    public void SpawnBall()
+
+    private void SpawnBall()
     {
+        var playerTransform = transform;
+
         if (PhotonNetwork.IsMasterClient)
         {
-            currentBall = PhotonNetwork.Instantiate(ballPrefab.name, transform.position, transform.rotation);
+            _currentBall =
+                PhotonNetwork.Instantiate(ballPrefab.name, playerTransform.position, playerTransform.rotation);
         }
 
         if (PhotonNetwork.OfflineMode)
         {
-            currentBall = Instantiate(ballPrefab, transform.position, transform.rotation);
+            _currentBall = Instantiate(ballPrefab, playerTransform.position, playerTransform.rotation);
         }
     }
+
+    public GameObject GetCurrentBall()
+    {
+        return _currentBall;
+    }
+
     public void BlueScored()
     {
         if (PhotonNetwork.IsMasterClient)
         {
             blueScore++;
         }
+
         ui.UpdateScore();
-        Instantiate(orangeExplosion, currentBall.transform.position, Quaternion.identity);
+        Instantiate(orangeExplosion, _currentBall.transform.position, Quaternion.identity);
         RespawnBall();
     }
+
     public void OrangeScored()
     {
         if (PhotonNetwork.IsMasterClient)
         {
             orangeScore++;
         }
+
         ui.UpdateScore();
-        Instantiate(blueExplosion, currentBall.transform.position, Quaternion.identity);
+        Instantiate(blueExplosion, _currentBall.transform.position, Quaternion.identity);
         RespawnBall();
     }
+
     private void RespawnBall()
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.Destroy(currentBall);
+            PhotonNetwork.Destroy(_currentBall);
         }
 
         if (PhotonNetwork.OfflineMode)
         {
-            Destroy(currentBall);
+            Destroy(_currentBall);
         }
 
         SpawnBall();

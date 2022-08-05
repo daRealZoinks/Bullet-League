@@ -3,24 +3,24 @@ using UnityEngine;
 
 public class PhotonGameManagerView : MonoBehaviour, IPunObservable
 {
-    private GameManager gameManager;
+    private GameManager _gameManager;
 
     private void Awake()
     {
-        gameManager = GetComponent<GameManager>();
+        _gameManager = GetComponent<GameManager>();
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         if (stream.IsWriting)
         {
-            stream.SendNext(gameManager.blueScore);
-            stream.SendNext(gameManager.orangeScore);
+            stream.SendNext(_gameManager.blueScore);
+            stream.SendNext(_gameManager.orangeScore);
         }
         else
         {
-            gameManager.blueScore = (int)stream.ReceiveNext();
-            gameManager.orangeScore = (int)stream.ReceiveNext();
+            _gameManager.blueScore = (int)stream.ReceiveNext();
+            _gameManager.orangeScore = (int)stream.ReceiveNext();
         }
     }
 }

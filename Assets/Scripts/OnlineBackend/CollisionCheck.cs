@@ -3,8 +3,9 @@ using UnityEngine;
 public class CollisionCheck : MonoBehaviour
 {
     public bool colliding;
-    [Space]
-    public string tagToCollideAgainst;
+
+    [Space] public string tagToCollideAgainst;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag(tagToCollideAgainst))
@@ -12,6 +13,7 @@ public class CollisionCheck : MonoBehaviour
             colliding = true;
         }
     }
+
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.CompareTag(tagToCollideAgainst))

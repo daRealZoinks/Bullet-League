@@ -4,36 +4,38 @@ using UnityEngine;
 
 public class ShotgunBullet : MonoBehaviourPunCallbacks
 {
-    public float recoilForce;
-    public float shootForce;
-    public float radius;
-    [Space]
-    public GameObject shootEffect;
-    [Space]
-    public LayerMask layerMask;
+    public float recoilForce = 10.0f;
+    public float shootForce = 40.0f;
+    public float radius = 3.0f;
+
+    [Space] public GameObject shootEffect;
+
+    [Space] public LayerMask layerMask;
+
     private void Awake()
     {
-        Instantiate(shootEffect, transform.position, transform.rotation);
+        var muzzleTransform = transform;
+        Instantiate(shootEffect, muzzleTransform.position, muzzleTransform.rotation);
 
-        GameObject localPlayer = GameObject.FindGameObjectWithTag("Player");
+        var localPlayer = GameObject.FindGameObjectWithTag("Player");
 
-        Collider[] colliders;
+        Collider[] physicsObjects;
 
         if (photonView.IsMine || PhotonNetwork.OfflineMode)
         {
             Rigidbody playerRb = localPlayer.GetComponent<Rigidbody>();
             playerRb.AddForce(-transform.forward * recoilForce, ForceMode.VelocityChange);
 
-            colliders = Physics.OverlapSphere(transform.position, radius, layerMask);
+            physicsObjects = Physics.OverlapSphere(transform.position, radius, layerMask);
         }
         else
         {
-            colliders = Physics.OverlapSphere(transform.position, radius);
+            physicsObjects = Physics.OverlapSphere(transform.position, radius);
         }
 
-        foreach (Collider collider in colliders)
+        foreach (var physicsObject in physicsObjects)
         {
-            if (collider.TryGetComponent(out Rigidbody rb))
+            if (physicsObject.TryGetComponent(out Rigidbody rb))
             {
                 rb.AddForce(transform.forward * shootForce, ForceMode.VelocityChange);
             }
@@ -41,7 +43,8 @@ public class ShotgunBullet : MonoBehaviourPunCallbacks
 
         StartCoroutine(Destroy());
     }
-    public IEnumerator Destroy()
+
+    private IEnumerator Destroy()
     {
         yield return new WaitForSeconds(5);
 

@@ -5,22 +5,26 @@ using UnityEngine;
 public class NormalBullets : MonoBehaviourPun
 {
     public float speed;
-    [Space]
-    public GameObject startEffect;
+
+    [Space] public GameObject startEffect;
     public GameObject contactEffect;
-    private Rigidbody rb;
+    private Rigidbody _rigidbody;
+
     private void Awake()
     {
-        rb = GetComponent<Rigidbody>();
+        _rigidbody = GetComponent<Rigidbody>();
 
-        Instantiate(startEffect, transform.position, transform.rotation);
+        var bulletTransform = transform;
+        Instantiate(startEffect, bulletTransform.position, bulletTransform.rotation);
 
-        rb.AddForce(transform.forward * speed, ForceMode.VelocityChange);
+        _rigidbody.AddForce(transform.forward * speed, ForceMode.VelocityChange);
     }
+
     private void Update()
     {
-        transform.rotation = Quaternion.LookRotation(rb.velocity);
+        transform.rotation = Quaternion.LookRotation(_rigidbody.velocity);
     }
+
     private void OnCollisionEnter(Collision collision)
     {
         Instantiate(contactEffect, transform.position, Quaternion.identity);

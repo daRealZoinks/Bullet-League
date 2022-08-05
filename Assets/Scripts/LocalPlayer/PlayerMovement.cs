@@ -5,167 +5,191 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(CapsuleCollider))]
 public class PlayerMovement : MonoBehaviour
 {
-    [Header("Movement")]
-    public float moveSpeed;
-    private float moveSpeedMultiplier;
-    public float groundSpeedMultiplier;
-    public float airSpeedMultiplier;
-    public float groundDrag;
+    [Header("Movement")] public float moveSpeed = 6.0f;
+    private float _moveSpeedMultiplier;
+    public float groundSpeedMultiplier = 15.0f;
+    public float airSpeedMultiplier = 0.4f;
+    public float groundDrag = 6.0f;
     public float airDrag;
     public LayerMask whatIsGround;
-    private Vector2 direction;
-    [Space]
-    [HideInInspector]
-    public Rigidbody rb;
-    [Space]
-    public float jumpForce;
+    private Vector2 _direction;
+
+    [Space] [HideInInspector] public Rigidbody rb;
+
+    [Space] public float jumpForce = 8.0f;
     public CapsuleCollider capsuleCollider;
-    private bool isGrounded;
-    [Header("Looking around")]
-    public float sensitivity;
-    [HideInInspector]
-    public Vector2 lookingDirection;
+    private bool _isGrounded;
+
+    [Header("Looking around")] public float sensitivity = 6;
+
+    [HideInInspector] public Vector2 lookingDirection;
     public Camera cam;
-    [Header("Wallrun")]
-    public float wallDistance;
-    [Space]
-    public float wallRunGravityCancelForce;
-    private bool wallLeft;
-    private bool wallRight;
-    RaycastHit leftWallHit;
-    RaycastHit rightWallHit;
+
+    [Header("Wall run")] public float wallDistance = .56f;
+
+    [Space] public float wallRunGravityCancelForce = 300.0f;
+    private bool _wallLeft;
+    private bool _wallRight;
+    private RaycastHit _leftWallHit;
+    private RaycastHit _rightWallHit;
+
     #region Movement
+
     public void Move(InputAction.CallbackContext context)
     {
-        direction = context.ReadValue<Vector2>();
+        _direction = context.ReadValue<Vector2>();
     }
+
     public void Jump(InputAction.CallbackContext context)
     {
-        if (context.started)
+        if (!context.started) return;
+
+        if (_isGrounded)
         {
-            if (isGrounded)
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.VelocityChange);
+        }
+        else
+        {
+            if (!_wallLeft && !_wallRight) return;
+
+            var wallRunJumpDirection = Vector3.zero;
+
+            if (_wallLeft)
             {
-                rb.AddForce(Vector3.up * jumpForce, ForceMode.VelocityChange);
+                wallRunJumpDirection = transform.up + _leftWallHit.normal;
+                _wallLeft = false;
             }
-            else
+
+            if (_wallRight)
             {
-                if (wallLeft || wallRight)
-                {
-                    Vector3 wallRunJumpDirection = Vector3.zero;
-
-                    if (wallLeft)
-                    {
-                        wallRunJumpDirection = transform.up + leftWallHit.normal;
-                        wallLeft = false;
-                    }
-
-                    if (wallRight)
-                    {
-                        wallRunJumpDirection = transform.up + rightWallHit.normal;
-                        wallRight = false;
-                    }
-
-                    rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-                    rb.AddForce(wallRunJumpDirection * jumpForce, ForceMode.VelocityChange);
-                }
+                wallRunJumpDirection = transform.up + _rightWallHit.normal;
+                _wallRight = false;
             }
+
+            var velocity = rb.velocity;
+            velocity = new Vector3(velocity.x, 0, velocity.z);
+            rb.velocity = velocity;
+            rb.AddForce(wallRunJumpDirection * jumpForce, ForceMode.VelocityChange);
         }
     }
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
     }
+
     private void Update()
     {
         WallRun();
 
-        isGrounded = Physics.Raycast(transform.position + capsuleCollider.center, Vector3.down, capsuleCollider.height / 2 + 0.3f, whatIsGround);
+        _isGrounded = Physics.Raycast(transform.position + capsuleCollider.center, Vector3.down,
+            capsuleCollider.height / 2 + 0.3f, whatIsGround);
 
         ControlDrag();
     }
-    public void WallRun()
+
+    private void WallRun()
     {
-        wallLeft = Physics.Raycast(transform.position + capsuleCollider.center, -transform.right, out leftWallHit, wallDistance, whatIsGround);
-        wallRight = Physics.Raycast(transform.position + capsuleCollider.center, transform.right, out rightWallHit, wallDistance, whatIsGround);
+        var playerTransform = transform;
+        var position = playerTransform.position;
+        var right = playerTransform.right;
 
-        if (!isGrounded && (wallRight || wallLeft))
+        _wallLeft = Physics.Raycast(position + capsuleCollider.center, -right, out _leftWallHit, wallDistance,
+            whatIsGround);
+        _wallRight = Physics.Raycast(position + capsuleCollider.center, right, out _rightWallHit, wallDistance,
+            whatIsGround);
+
+        switch (_isGrounded)
         {
-            if (rb.velocity.y < 0)
+            case false when _wallRight || _wallLeft:
             {
-                rb.AddForce(Time.fixedDeltaTime * wallRunGravityCancelForce * transform.up, ForceMode.Force);
+                if (rb.velocity.y < 0)
+                {
+                    rb.AddForce(Time.fixedDeltaTime * wallRunGravityCancelForce * transform.up, ForceMode.Force);
+                }
+
+                rb.AddForce(Time.deltaTime * groundSpeedMultiplier * transform.forward, ForceMode.Acceleration);
+
+                if (_wallRight)
+                {
+                    rb.AddForce(2 * Time.deltaTime * groundSpeedMultiplier * -_rightWallHit.normal,
+                        ForceMode.Acceleration);
+                }
+
+                if (_wallLeft)
+                {
+                    rb.AddForce(2 * Time.deltaTime * groundSpeedMultiplier * -_leftWallHit.normal,
+                        ForceMode.Acceleration);
+                }
+
+                break;
             }
-
-            rb.AddForce(Time.deltaTime * groundSpeedMultiplier * transform.forward, ForceMode.Acceleration);
-
-            if (wallRight)
-            {
-                rb.AddForce(2 * Time.deltaTime * groundSpeedMultiplier * -rightWallHit.normal, ForceMode.Acceleration);
-            }
-
-            if (wallLeft)
-            {
-                rb.AddForce(2 * Time.deltaTime * groundSpeedMultiplier * -leftWallHit.normal, ForceMode.Acceleration);
-            }
-        }
-
-        if (isGrounded)
-        {
-            wallRight = false;
-            wallLeft = false;
+            case true:
+                _wallRight = false;
+                _wallLeft = false;
+                break;
         }
     }
+
     private void ControlDrag()
     {
-        if (isGrounded)
+        if (_isGrounded)
         {
             rb.drag = Mathf.Lerp(rb.drag, groundDrag, Time.deltaTime * 10);
-            moveSpeedMultiplier = Mathf.Lerp(moveSpeedMultiplier, groundSpeedMultiplier, 20);
+            _moveSpeedMultiplier = Mathf.Lerp(_moveSpeedMultiplier, groundSpeedMultiplier, 20);
         }
         else
         {
             rb.drag = airDrag;
-            moveSpeedMultiplier = Mathf.Lerp(moveSpeedMultiplier, airSpeedMultiplier, 20);
+            _moveSpeedMultiplier = Mathf.Lerp(_moveSpeedMultiplier, airSpeedMultiplier, 20);
         }
     }
+
     private void FixedUpdate()
     {
-        if (!(wallRight || wallLeft))
-        {
-            Vector3 moveDirection = transform.forward * direction.y + transform.right * direction.x;
+        if (_wallRight || _wallLeft) return;
 
-            rb.AddForce(moveSpeed * moveSpeedMultiplier * moveDirection, ForceMode.Acceleration);
-        }
+        var playerTransform = transform;
+        var moveDirection = playerTransform.forward * _direction.y + playerTransform.right * _direction.x;
+
+        rb.AddForce(moveSpeed * _moveSpeedMultiplier * moveDirection, ForceMode.Acceleration);
     }
+
     #endregion
+
     #region Looking around
+
     public void Looking(InputAction.CallbackContext context)
     {
         lookingDirection = context.ReadValue<Vector2>();
     }
+
     private void LateUpdate()
     {
         transform.Rotate(sensitivity * Time.deltaTime * new Vector3(0, lookingDirection.x, 0));
         cam.transform.Rotate(sensitivity * Time.deltaTime * new Vector3(-lookingDirection.y, 0, 0));
 
-        if (!isGrounded)
+        if (!_isGrounded)
         {
-            if (wallRight)
+            if (_wallRight)
             {
                 cam.transform.Rotate(new Vector3(0, 0, 0.5f - 3 * cam.transform.localRotation.z));
             }
-            if (wallLeft)
+
+            if (_wallLeft)
             {
                 cam.transform.Rotate(new Vector3(0, 0, -0.5f - 3 * cam.transform.localRotation.z));
             }
         }
-        if (!wallRight && !wallLeft)
+
+        if (!_wallRight && !_wallLeft)
         {
             cam.transform.Rotate(new Vector3(0, 0, -3 * cam.transform.localRotation.z));
         }
 
         float newFieldOfView;
 
-        if (!isGrounded)
+        if (!_isGrounded)
         {
             newFieldOfView = 90 + rb.velocity.magnitude;
         }
@@ -178,5 +202,6 @@ public class PlayerMovement : MonoBehaviour
 
         cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, newFieldOfView, Time.deltaTime * 5);
     }
+
     #endregion
 }

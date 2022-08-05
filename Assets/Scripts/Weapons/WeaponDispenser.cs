@@ -1,3 +1,4 @@
+using System;
 using Photon.Pun;
 using System.Collections;
 using UnityEngine;
@@ -10,14 +11,16 @@ public class WeaponDispenser : MonoBehaviour
         Shotgun,
         GrenadeLauncher,
         Sniper,
-        RPG
+        Rpg
     }
+
     public Weapon weapon;
     public GameObject particles;
     public GameObject[] weapons;
     public float rechargeTime;
     public bool ready;
     public int activeWeaponIndex;
+
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -25,44 +28,45 @@ public class WeaponDispenser : MonoBehaviour
             GrabWeapon(other.GetComponent<WeaponPickup>());
         }
     }
+
     private void GrabWeapon(WeaponPickup weaponPickup)
     {
-        if (PhotonNetwork.IsMasterClient)
+        if (!ready || !weaponPickup.gunManager.activeGun) return;
+
+        if (weaponPickup.weapons[activeWeaponIndex].activeSelf &&
+            (weaponPickup.gunManager.currentAmmo == weaponPickup.gunManager.activeGun.maxAmmo ||
+             weaponPickup.gunManager.reloading)) return;
+
+        weaponPickup.ChooseWeapon(activeWeaponIndex);
+
+        foreach (var weaponObject in weapons)
         {
-            if (ready && weaponPickup.gunManager.activeGun)
-            {
-                if (!(weaponPickup.weapons[activeWeaponIndex].activeSelf &&
-                    (weaponPickup.gunManager.currentAmmo == weaponPickup.gunManager.activeGun.maxAmmo ||
-                    weaponPickup.gunManager.reloading)))
-                {
-                    weaponPickup.ChooseWeapon(activeWeaponIndex);
-
-                    foreach (var weapon in weapons)
-                    {
-                        weapon.SetActive(false);
-                    }
-
-                    ready = false;
-                    particles.SetActive(false);
-
-                    StartCoroutine(LoadNewWeapon());
-                }
-            }
+            weaponObject.SetActive(false);
         }
+
+        ready = false;
+        particles.SetActive(false);
+
+        StartCoroutine(LoadNewWeapon());
     }
+
     private void OnEnable()
     {
         StartCoroutine(LoadNewWeapon());
     }
+
     private IEnumerator LoadNewWeapon()
     {
         if (!PhotonNetwork.IsMasterClient) yield break;
+
         yield return new WaitForSeconds(rechargeTime);
+
         ChooseWeapon();
         ready = true;
         particles.SetActive(true);
     }
-    public void ChooseWeapon()
+
+    private void ChooseWeapon()
     {
         switch (weapon)
         {
@@ -82,10 +86,12 @@ public class WeaponDispenser : MonoBehaviour
                 activeWeaponIndex = 3;
                 rechargeTime = 45;
                 break;
-            case Weapon.RPG:
+            case Weapon.Rpg:
                 activeWeaponIndex = 4;
                 rechargeTime = 60;
                 break;
+            default:
+                throw new ArgumentOutOfRangeException();
         }
 
         weapons[activeWeaponIndex].SetActive(true);

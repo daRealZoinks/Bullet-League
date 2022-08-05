@@ -3,15 +3,23 @@ using UnityEngine;
 public class CameraFollow : MonoBehaviour
 {
     public Transform target;
+
     private void Awake()
     {
-        target = Camera.main.transform;
+        if (Camera.main != null)
+        {
+            target = Camera.main.transform;
+        }
+
+        if (target == null)
+        {
+            Destroy(this);
+        }
     }
+
     private void Update()
     {
-        if (target != null)
-        {
-            transform.LookAt(transform.position + target.rotation * Vector3.forward, target.rotation * Vector3.up);
-        }
+        var rotation = target.rotation;
+        transform.LookAt(transform.position + rotation * Vector3.forward, rotation * Vector3.up);
     }
 }

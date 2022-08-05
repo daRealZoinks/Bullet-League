@@ -3,55 +3,59 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class UI : MonoBehaviour
 {
-    [Header("InGameUI")]
-    public TextMeshProUGUI ammoCounter;
+    [Header("InGameUI")] public TextMeshProUGUI ammoCounter;
     public RectTransform reticle;
     public TextMeshProUGUI blueScoreText;
     public TextMeshProUGUI orangeScoreText;
-    public Image ballPopup;
-    [Header("Pause")]
-    public GameObject inGameUI;
+
+    [Header("Pause")] public GameObject inGameUI;
     public GameObject pauseMenu;
-    private GameManager gameManager;
-    private GameObject player;
-    private GunManager gunManager;
-    private PlayerMovement playerMovement;
-    private Rigidbody playerRB;
+
+    private GameManager _gameManager;
+    private GameObject _player;
+    private GunManager _gunManager;
+    private PlayerMovement _playerMovement;
+    private Rigidbody _playerRb;
+
     private void Awake()
     {
-        playerMovement = FindObjectOfType<PlayerMovement>();
-        player = playerMovement.gameObject;
-        player.GetComponent<PlayerManager>().UI = this;
-        playerRB = player.GetComponent<Rigidbody>();
-        gunManager = player.GetComponentInChildren<GunManager>();
+        _playerMovement = FindObjectOfType<PlayerMovement>();
+        _player = _playerMovement.gameObject;
+        _player.GetComponent<PlayerManager>().ui = this;
+        _playerRb = _player.GetComponent<Rigidbody>();
+        _gunManager = _player.GetComponentInChildren<GunManager>();
     }
+
     private void OnEnable()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
+
     private void Update()
     {
-        ammoCounter.text = gunManager.currentAmmo + " | " + gunManager.activeGun.maxAmmo;
-        float size = (float)(40 + playerRB.velocity.magnitude * 7 + playerMovement.lookingDirection.magnitude * 2);
+        ammoCounter.text = _gunManager.currentAmmo + " | " + _gunManager.activeGun.maxAmmo;
+        var size = 40 + _playerRb.velocity.magnitude * 7 + _playerMovement.lookingDirection.magnitude * 2;
         reticle.sizeDelta = Vector2.Lerp(reticle.sizeDelta, new Vector2(size, size), Time.deltaTime * 10);
         UpdateScore();
     }
+
     public void SetGameManager(GameManager gameManager)
     {
-        this.gameManager = gameManager;
+        _gameManager = gameManager;
     }
+
     public void UpdateScore()
     {
-        blueScoreText.text = gameManager.blueScore.ToString();
-        orangeScoreText.text = gameManager.orangeScore.ToString();
+        blueScoreText.text = _gameManager.blueScore.ToString();
+        orangeScoreText.text = _gameManager.orangeScore.ToString();
     }
 
     #region Pause
+
     public void Pause()
     {
         inGameUI.SetActive(false);
@@ -60,8 +64,9 @@ public class UI : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
-        player.GetComponent<PlayerInput>().enabled = false;
+        _player.GetComponent<PlayerInput>().enabled = false;
     }
+
     public void UnPause()
     {
         inGameUI.SetActive(true);
@@ -70,8 +75,9 @@ public class UI : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        player.GetComponent<PlayerInput>().enabled = true;
+        _player.GetComponent<PlayerInput>().enabled = true;
     }
+
     public void QuitToTheMenu()
     {
         if (PhotonNetwork.IsConnected)
@@ -79,7 +85,9 @@ public class UI : MonoBehaviour
             PhotonNetwork.AutomaticallySyncScene = false;
             PhotonNetwork.Disconnect();
         }
+
         SceneManager.LoadScene(0, LoadSceneMode.Single);
     }
+
     #endregion
 }

@@ -1,23 +1,25 @@
 using Photon.Pun;
 using TMPro;
 using UnityEngine;
-using static UnityEngine.InputSystem.InputAction;
+using UnityEngine.InputSystem;
 
 public class PlayerManager : MonoBehaviourPun
 {
     public Behaviour[] componentsToDisable;
-    public GameObject[] gunStuff;
+    public GameObject[] gunComponents;
     public GameObject userNameText;
-    public UI UI;
+    public UI ui;
     public Camera cam;
-    public void Start()
+
+    public void Awake()
     {
         if (photonView.AmOwner || PhotonNetwork.OfflineMode)
         {
-            for (int i = 0; i < gunStuff.Length; i++)
+            foreach (var component in gunComponents)
             {
-                gunStuff[i].layer = 3;
+                component.layer = 3;
             }
+
             cam.tag = "MainCamera";
             gameObject.tag = "Player";
             userNameText.SetActive(false);
@@ -33,11 +35,12 @@ public class PlayerManager : MonoBehaviourPun
             userNameText.GetComponentInChildren<TMP_Text>().text = photonView.Owner.NickName;
         }
     }
-    public void Pause(CallbackContext context)
+
+    public void Pause(InputAction.CallbackContext context)
     {
-        if (context.performed && UI != null)
+        if (context.performed && ui != null)
         {
-            UI.Pause();
+            ui.Pause();
         }
     }
 }

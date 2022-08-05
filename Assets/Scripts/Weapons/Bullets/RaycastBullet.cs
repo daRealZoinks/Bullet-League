@@ -6,40 +6,41 @@ using UnityEngine;
 [RequireComponent(typeof(LineRenderer))]
 public class RaycastBullet : MonoBehaviourPunCallbacks
 {
-    public float force;
-    [Space]
-    public LineRenderer lineRenderer;
-    [Space]
-    public GameObject startEffect;
+    public float force = 50.0f;
+
+    [Space] public LineRenderer lineRenderer;
+
+    [Space] public GameObject startEffect;
     public GameObject contactEffect;
+
     private void Awake()
     {
         Instantiate(startEffect, transform.position, Quaternion.identity);
 
-        IOrderedEnumerable<RaycastHit> sorted = Physics.RaycastAll(transform.position, transform.forward, Mathf.Infinity).OrderBy(h => h.distance);
+        var muzzle = transform;
+        var sorted = Physics.RaycastAll(muzzle.position, muzzle.forward, Mathf.Infinity).OrderBy(h => h.distance);
 
-        foreach (RaycastHit hit in sorted)
+        foreach (var hit in sorted)
         {
-            if (hit.collider.gameObject.layer != 6)
+            if (hit.collider.gameObject.layer == 6) continue;
+
+            if (hit.collider.gameObject.TryGetComponent(out Rigidbody rb))
             {
-                if (hit.collider.gameObject.TryGetComponent(out Rigidbody rb))
-                {
-                    rb.AddForceAtPosition(transform.forward * force, hit.point, ForceMode.VelocityChange);
-                }
-
-                lineRenderer.SetPosition(0, transform.position);
-                lineRenderer.SetPosition(1, hit.point);
-
-                StartCoroutine(Destroy());
-
-                Instantiate(contactEffect, hit.point, Quaternion.identity);
-
-                break;
+                rb.AddForceAtPosition(transform.forward * force, hit.point, ForceMode.VelocityChange);
             }
+
+            lineRenderer.SetPosition(0, transform.position);
+            lineRenderer.SetPosition(1, hit.point);
+
+            StartCoroutine(Destroy());
+
+            Instantiate(contactEffect, hit.point, Quaternion.identity);
+
+            break;
         }
     }
 
-    public IEnumerator Destroy()
+    private IEnumerator Destroy()
     {
         yield return new WaitForSeconds(5);
 
