@@ -1,4 +1,6 @@
+using System;
 using Photon.Pun;
+using Photon.Pun.UtilityScripts;
 using UnityEngine;
 
 public class PlayerStart : MonoBehaviourPunCallbacks
@@ -6,12 +8,7 @@ public class PlayerStart : MonoBehaviourPunCallbacks
     public Team team;
     public Mesh mesh;
     private Color _color;
-    private GameManager _gameManager;
-    public GameManager GameManager
-    {
-        get => _gameManager;
-        set => _gameManager = value;
-    }
+    public GameManager GameManager { get; set; }
 
     [ExecuteInEditMode]
     public void SetColor(Team teamValue)
@@ -24,7 +21,7 @@ public class PlayerStart : MonoBehaviourPunCallbacks
         };
     }
 
-    public PlayerManager Spawn()
+    public GameObject Spawn()
     {
         var playerStartTransform = transform;
 
@@ -32,18 +29,31 @@ public class PlayerStart : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.IsConnected)
         {
-            player = PhotonNetwork.Instantiate(_gameManager.playerPrefab.name,
+            player = PhotonNetwork.Instantiate(GameManager.playerPrefab.name,
                 playerStartTransform.position - playerStartTransform.up * playerStartTransform.localScale.y / 2,
                 playerStartTransform.rotation);
         }
         else
         {
-            player = Instantiate(_gameManager.playerPrefab,
+            player = Instantiate(GameManager.playerPrefab,
                (playerStartTransform = transform).position -
                playerStartTransform.up * playerStartTransform.localScale.y / 2, playerStartTransform.rotation);
         }
+        
+        player.GetComponent<PlayerManager>().Team = team;
 
-        return player.GetComponent<PlayerManager>();
+        switch (team)
+        {
+            default:
+            case Team.Blue:
+                PhotonNetwork.LocalPlayer.JoinTeam("Blue");
+                break;
+            case Team.Orange:
+                PhotonNetwork.LocalPlayer.JoinTeam("Orange");
+                break;
+        }
+        
+        return player;
     }
 
     private void OnDrawGizmos()
@@ -63,7 +73,6 @@ public class PlayerStart : MonoBehaviourPunCallbacks
     {
         Gizmos.color = new Color(_color.r, _color.g, _color.b, 55f / 255);
         var playerStartTransform = transform;
-        Gizmos.DrawWireMesh(mesh, -1, playerStartTransform.position, playerStartTransform.rotation,
-            playerStartTransform.localScale);
+        Gizmos.DrawWireMesh(mesh, -1, playerStartTransform.position, playerStartTransform.rotation, playerStartTransform.localScale);
     }
 }

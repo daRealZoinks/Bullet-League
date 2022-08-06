@@ -13,7 +13,7 @@ public class PlayerManager : MonoBehaviourPun
     public Camera cam;
 
     public GunManager gunManager;
-    
+
     [Space]
 
     private Team _team;
@@ -35,10 +35,11 @@ public class PlayerManager : MonoBehaviourPun
         }
     }
 
-    private void ColorPlayer()
+    public void ColorPlayer()
     {
         switch (_team)
         {
+            default:
             case Team.Blue:
                 graphics.GetComponent<MeshRenderer>().sharedMaterial = blueMaterial;
                 foreach (var weapon in gunManager.weapons)
@@ -47,6 +48,7 @@ public class PlayerManager : MonoBehaviourPun
                 }
 
                 break;
+
             case Team.Orange:
                 graphics.GetComponent<MeshRenderer>().sharedMaterial = orangeMaterial;
                 foreach (var weapon in gunManager.weapons)
@@ -55,8 +57,6 @@ public class PlayerManager : MonoBehaviourPun
                 }
 
                 break;
-            default:
-                throw new ArgumentOutOfRangeException();
         }
     }
 
@@ -81,7 +81,7 @@ public class PlayerManager : MonoBehaviourPun
             }
 
             userNameText.GetComponentInChildren<TMP_Text>().text = photonView.Owner.NickName;
-        
+
             ColorPlayer();
         }
     }

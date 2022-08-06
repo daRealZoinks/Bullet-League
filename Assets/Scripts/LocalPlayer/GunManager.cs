@@ -29,13 +29,10 @@ public class GunManager : MonoBehaviourPun
         {
             Instantiate(activeGun.bullet, activeGun.shootPoint.position, activeGun.shootPoint.rotation);
         }
-        else
+
+        if (photonView.IsMine)
         {
-            if (photonView.IsMine)
-            {
-                PhotonNetwork.Instantiate(activeGun.bullet.name, activeGun.shootPoint.position,
-                    activeGun.shootPoint.rotation);
-            }
+            PhotonNetwork.Instantiate(activeGun.bullet.name, activeGun.shootPoint.position, activeGun.shootPoint.rotation);
         }
 
         currentAmmo--;

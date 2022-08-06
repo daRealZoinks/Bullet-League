@@ -991,3 +991,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 641b3483c8ddbd14ebc1088dc81f3b16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  blueColor: {r: 0, g: 0.32156864, b: 1, a: 1}
+  orangeColor: {r: 1, g: 0.34509805, b: 0, a: 1}

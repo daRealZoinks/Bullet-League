@@ -1,17 +1,12 @@
 using Photon.Pun;
 using System.Collections.Generic;
+using Photon.Pun.UtilityScripts;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     public GameObject ballPrefab;
     private GameObject _currentBall;
-
-    public GameObject CurrentBall
-    {
-        get => _currentBall;
-        private set => _currentBall = value;
-    }
 
     [Space]
 
@@ -61,12 +56,12 @@ public class GameManager : MonoBehaviour
             if (PhotonNetwork.PlayerList.Length % 2 == 1)
             {
                 var playerStart = blueTeamPlayerSpawnPoints[Random.Range(0, blueTeamPlayerSpawnPoints.Count)];
-                playerStart.Spawn().Team = Team.Blue;
+                playerStart.Spawn();
             }
             else
             {
                 var playerStart = orangeTeamPlayerSpawnPoints[Random.Range(0, orangeTeamPlayerSpawnPoints.Count)];
-                playerStart.Spawn().Team = Team.Orange;
+                playerStart.Spawn();
             }
         }
         else
