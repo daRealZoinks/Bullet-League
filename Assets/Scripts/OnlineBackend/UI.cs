@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class UI : MonoBehaviour
 {
     [Header("InGameUI")] public TextMeshProUGUI ammoCounter;
-    public RectTransform reticle;
+    public RectTransform reticule;
     public TextMeshProUGUI blueScoreText;
     public TextMeshProUGUI orangeScoreText;
 
@@ -39,7 +39,7 @@ public class UI : MonoBehaviour
     {
         ammoCounter.text = _gunManager.currentAmmo + " | " + _gunManager.activeGun.maxAmmo;
         var size = 40 + _playerRb.velocity.magnitude * 7 + _playerMovement.lookingDirection.magnitude * 2;
-        reticle.sizeDelta = Vector2.Lerp(reticle.sizeDelta, new Vector2(size, size), Time.deltaTime * 10);
+        reticule.sizeDelta = Vector2.Lerp(reticule.sizeDelta, new Vector2(size, size), Time.deltaTime * 10);
         UpdateScore();
     }
 

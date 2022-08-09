@@ -623,7 +623,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5745854176207198370}
   m_Layer: 5
-  m_Name: Reticle
+  m_Name: Reticule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1270,7 +1270,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ammoCounter: {fileID: 5371284019503332353}
-  reticle: {fileID: 5745854176207198370}
+  reticule: {fileID: 5745854176207198370}
   blueScoreText: {fileID: 5371284020021261942}
   orangeScoreText: {fileID: 5371284019804686342}
   inGameUI: {fileID: 4344830163616471817}

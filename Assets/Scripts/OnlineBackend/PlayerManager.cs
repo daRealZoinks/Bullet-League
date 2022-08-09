@@ -1,5 +1,5 @@
-using System;
 using Photon.Pun;
+using Photon.Pun.UtilityScripts;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -16,7 +16,7 @@ public class PlayerManager : MonoBehaviourPun
 
     [Space]
 
-    private Team _team;
+    [SerializeField] private Team team;
     public GameObject graphics;
 
     [Space]
@@ -26,37 +26,35 @@ public class PlayerManager : MonoBehaviourPun
 
     public Team Team
     {
-        get => _team;
+        get => team;
         set
         {
-            _team = value;
+            team = value;
 
-            ColorPlayer();
-        }
-    }
+            switch (team)
+            {
+                default:
+                case Team.Blue:
+                    gameObject.GetPhotonView().Owner.JoinTeam("Blue");
 
-    public void ColorPlayer()
-    {
-        switch (_team)
-        {
-            default:
-            case Team.Blue:
-                graphics.GetComponent<MeshRenderer>().sharedMaterial = blueMaterial;
-                foreach (var weapon in gunManager.weapons)
-                {
-                    weapon.GetComponent<Gun>().Color(blueMaterial);
-                }
+                    graphics.GetComponent<MeshRenderer>().sharedMaterial = blueMaterial;
+                    foreach (var weapon in gunManager.weapons)
+                    {
+                        weapon.GetComponent<Gun>().Color(blueMaterial);
+                    }
 
-                break;
+                    break;
 
-            case Team.Orange:
-                graphics.GetComponent<MeshRenderer>().sharedMaterial = orangeMaterial;
-                foreach (var weapon in gunManager.weapons)
-                {
-                    weapon.GetComponent<Gun>().Color(orangeMaterial);
-                }
+                case Team.Orange:
+                    gameObject.GetPhotonView().Owner.JoinTeam("Orange");
 
-                break;
+                    graphics.GetComponent<MeshRenderer>().sharedMaterial = orangeMaterial;
+                    foreach (var weapon in gunManager.weapons)
+                    {
+                        weapon.GetComponent<Gun>().Color(orangeMaterial);
+                    }
+                    break;
+            }
         }
     }
 
@@ -81,8 +79,6 @@ public class PlayerManager : MonoBehaviourPun
             }
 
             userNameText.GetComponentInChildren<TMP_Text>().text = photonView.Owner.NickName;
-
-            ColorPlayer();
         }
     }
 

@@ -1,9 +1,9 @@
 using Photon.Pun;
 using System.Collections.Generic;
-using Photon.Pun.UtilityScripts;
 using UnityEngine;
+using Photon.Pun.UtilityScripts;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviourPunCallbacks
 {
     public GameObject ballPrefab;
     private GameObject _currentBall;

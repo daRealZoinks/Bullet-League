@@ -1,6 +1,4 @@
-using System;
 using Photon.Pun;
-using Photon.Pun.UtilityScripts;
 using UnityEngine;
 
 public class PlayerStart : MonoBehaviourPunCallbacks
@@ -15,8 +13,8 @@ public class PlayerStart : MonoBehaviourPunCallbacks
     {
         _color = teamValue switch
         {
-            Team.Blue => new Color(23 / 255f, 118, 227 / 255f),
-            Team.Orange => new Color(227 / 255f, 139 / 255f, 23 / 255f),
+            Team.Blue => new Color(23.0f / 255.0f, 118.0f/ 255.0f, 227.0f / 255.0f),
+            Team.Orange => new Color(227.0f / 255.0f, 139.0f / 255.0f, 23.0f / 255.0f),
             _ => _color
         };
     }
@@ -36,23 +34,12 @@ public class PlayerStart : MonoBehaviourPunCallbacks
         else
         {
             player = Instantiate(GameManager.playerPrefab,
-               (playerStartTransform = transform).position -
-               playerStartTransform.up * playerStartTransform.localScale.y / 2, playerStartTransform.rotation);
+               playerStartTransform.position - playerStartTransform.up * playerStartTransform.localScale.y / 2,
+               playerStartTransform.rotation);
         }
         
         player.GetComponent<PlayerManager>().Team = team;
 
-        switch (team)
-        {
-            default:
-            case Team.Blue:
-                PhotonNetwork.LocalPlayer.JoinTeam("Blue");
-                break;
-            case Team.Orange:
-                PhotonNetwork.LocalPlayer.JoinTeam("Orange");
-                break;
-        }
-        
         return player;
     }
 
