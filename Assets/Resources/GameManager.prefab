@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 7672649936317349081}
   - component: {fileID: 3026076413928000959}
   - component: {fileID: -7423185828222710653}
-  - component: {fileID: 2625854427803505946}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -107,21 +106,3 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &2625854427803505946
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7672649936317349080}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8701526de72d8774fa165e66daf050ed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  listFoldIsOpen: 1
-  teamsList:
-  - Name: Blue
-    Code: 1
-  - Name: Orange
-    Code: 2

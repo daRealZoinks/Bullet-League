@@ -1085,6 +1085,7 @@ GameObject:
   - component: {fileID: 116726832}
   - component: {fileID: 1909728680094047721}
   - component: {fileID: 4863384842666363552}
+  - component: {fileID: 8457862664101337396}
   - component: {fileID: 6174388699906733593}
   m_Layer: 0
   m_Name: Player
@@ -1417,6 +1418,7 @@ MonoBehaviour:
   ui: {fileID: 0}
   cam: {fileID: 5974200826120062726}
   gunManager: {fileID: 424175130795301873}
+  team: 0
   graphics: {fileID: 5310620072383500230}
   blueMaterial: {fileID: 2100000, guid: 8d5b311a42f29fd49ad0871e82ea8128, type: 2}
   orangeMaterial: {fileID: 2100000, guid: c69310f34a134e6498e50428ed645c96, type: 2}
@@ -1436,6 +1438,18 @@ MonoBehaviour:
   m_SynchronizeAngularVelocity: 1
   m_TeleportEnabled: 0
   m_TeleportIfDistanceGreaterThan: 3
+--- !u!114 &8457862664101337396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8136020538247425386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8b6b3db27685ed4f8e5216136ac009d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &6174388699906733593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1456,6 +1470,7 @@ MonoBehaviour:
   observableSearch: 1
   ObservedComponents:
   - {fileID: 4863384842666363552}
+  - {fileID: 8457862664101337396}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
