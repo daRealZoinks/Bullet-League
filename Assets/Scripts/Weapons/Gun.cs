@@ -11,7 +11,6 @@ public class Gun : MonoBehaviour
 
     [Space]
     
-    public AudioClip shootSound;
     public AnimationClip shootAnimation;
 
     [Space]

@@ -2,16 +2,21 @@ using Photon.Pun;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class NormalBullets : MonoBehaviourPun
+public class NormalBullets : Bullet
 {
     public float speed;
 
-    [Space] public GameObject startEffect;
+    [Space]
+
+    public GameObject startEffect;
     public GameObject contactEffect;
+    public SoundCue contactSoundCue;
     private Rigidbody _rigidbody;
 
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
+        
         _rigidbody = GetComponent<Rigidbody>();
 
         var bulletTransform = transform;
@@ -27,6 +32,9 @@ public class NormalBullets : MonoBehaviourPun
 
     private void OnCollisionEnter(Collision collision)
     {
+        shootSoundCue.PlayRandomSoundAtPosition(transform.position);
+        // AudioSource.PlayClipAtPoint(contactSoundCue.clips[Random.Range(0, contactSoundCue.clips.Length)], transform.position);
+
         Instantiate(contactEffect, transform.position, Quaternion.identity);
 
         if (PhotonNetwork.OfflineMode)

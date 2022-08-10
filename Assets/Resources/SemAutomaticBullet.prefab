@@ -130,11 +130,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69b449b6b6f01bc49b0c6bb8ad658ca8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shootSoundCue: {fileID: 11400000, guid: 294fdab1d39333b409a286dc119fff08, type: 2}
   speed: 300
   startEffect: {fileID: 4014874080339151988, guid: faf7a8c49a6f56f4bb6d83ddf1351a99,
     type: 3}
   contactEffect: {fileID: 5415855387476100463, guid: e0639f004b301b4479cf560ff6f5ec90,
     type: 3}
+  contactSoundCue: {fileID: 11400000, guid: 674f43f5e057bb54c8966396b83e702d, type: 2}
 --- !u!96 &7616097002840506520
 TrailRenderer:
   serializedVersion: 2

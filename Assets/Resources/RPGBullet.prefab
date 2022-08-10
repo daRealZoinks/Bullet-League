@@ -5084,13 +5084,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e7547f2c591f8a42b7af2b6c91f4dc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shootSoundCue: {fileID: 11400000, guid: 57e60901599f83149b17acbbbfd48dd5, type: 2}
   rb: {fileID: 8661128830045851117}
   speed: 50
   explosionForce: 30
   explosionRadius: 20
   upwardsModifier: 2
-  contactEffect: {fileID: 860853727015281076, guid: 0e2a0ef2424edd84b96eb196af6847e3,
+  explosionEffect: {fileID: 860853727015281076, guid: 0e2a0ef2424edd84b96eb196af6847e3,
     type: 3}
+  explosionSoundCue: {fileID: 11400000, guid: 57e60901599f83149b17acbbbfd48dd5, type: 2}
 --- !u!114 &-1305666281243048186
 MonoBehaviour:
   m_ObjectHideFlags: 0

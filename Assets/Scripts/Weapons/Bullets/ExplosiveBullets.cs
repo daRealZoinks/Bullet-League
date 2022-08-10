@@ -2,20 +2,29 @@ using Photon.Pun;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class ExplosiveBullets : MonoBehaviourPun
+public class ExplosiveBullets : Bullet
 {
     public Rigidbody rb;
 
-    [Space] public float speed;
+    [Space]
 
-    [Space] public float explosionForce;
+    public float speed;
+
+    [Space]
+
+    public float explosionForce;
     public float explosionRadius;
     public float upwardsModifier = 2.0f;
 
-    [Space] public GameObject contactEffect;
+    [Space]
 
-    private void Awake()
+    public GameObject explosionEffect;
+    public SoundCue explosionSoundCue;
+
+    public override void Awake()
     {
+        base.Awake();
+
         rb.AddForce(transform.forward * speed, ForceMode.VelocityChange);
     }
 
@@ -26,7 +35,9 @@ public class ExplosiveBullets : MonoBehaviourPun
 
     private void OnCollisionEnter(Collision collision)
     {
-        Instantiate(contactEffect, transform.position, Quaternion.identity);
+        explosionSoundCue.PlayRandomSoundAtPosition(transform.position);
+
+        Instantiate(explosionEffect, transform.position, Quaternion.identity);
 
         foreach (var physicsObject in Physics.OverlapSphere(transform.position, explosionRadius))
         {

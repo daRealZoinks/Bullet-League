@@ -84,7 +84,7 @@ public class PlayerManager : MonoBehaviourPun
 
     public void Pause(InputAction.CallbackContext context)
     {
-        if (context.performed && ui != null)
+        if (ui != null)
         {
             ui.Pause();
         }

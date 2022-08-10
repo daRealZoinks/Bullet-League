@@ -2,18 +2,24 @@ using Photon.Pun;
 using System.Collections;
 using UnityEngine;
 
-public class ShotgunBullet : MonoBehaviourPunCallbacks
+public class ShotgunBullet : Bullet
 {
     public float recoilForce = 10.0f;
     public float shootForce = 40.0f;
     public float radius = 3.0f;
 
-    [Space] public GameObject shootEffect;
+    [Space]
 
-    [Space] public LayerMask layerMask;
+    public GameObject shootEffect;
 
-    private void Awake()
+    [Space]
+
+    public LayerMask layerMask;
+
+    public override void Awake()
     {
+        base.Awake();
+        
         var muzzleTransform = transform;
         Instantiate(shootEffect, muzzleTransform.position, muzzleTransform.rotation);
 

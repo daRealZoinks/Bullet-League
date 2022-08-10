@@ -87,10 +87,10 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         var playerTransform = transform;
 
-        if (PhotonNetwork.IsMasterClient)
-        {
-            _currentBall = PhotonNetwork.Instantiate(ballPrefab.name, playerTransform.position, playerTransform.rotation);
-        }
+        // if (PhotonNetwork.IsMasterClient)
+        // {
+        _currentBall = PhotonNetwork.Instantiate(ballPrefab.name, playerTransform.position, playerTransform.rotation);
+        // }
 
         if (PhotonNetwork.OfflineMode)
         {
@@ -104,9 +104,10 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             blueScore++;
         }
-
         ui.UpdateScore();
+
         Instantiate(orangeExplosion, _currentBall.transform.position, Quaternion.identity);
+        Debug.Log("Blue scored!");
         RespawnBall();
     }
 
@@ -116,9 +117,10 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             orangeScore++;
         }
-
         ui.UpdateScore();
+
         Instantiate(blueExplosion, _currentBall.transform.position, Quaternion.identity);
+        Debug.Log("Orange scored!");
         RespawnBall();
     }
 

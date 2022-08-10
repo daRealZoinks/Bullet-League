@@ -130,13 +130,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e7547f2c591f8a42b7af2b6c91f4dc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shootSoundCue: {fileID: 11400000, guid: 294fdab1d39333b409a286dc119fff08, type: 2}
   rb: {fileID: 1979703330450482314}
   speed: 30
   explosionForce: 20
   explosionRadius: 10
   upwardsModifier: 2
-  contactEffect: {fileID: 860853727015281076, guid: 40783c63c8ae80a4286272993610ddef,
+  explosionEffect: {fileID: 860853727015281076, guid: 40783c63c8ae80a4286272993610ddef,
     type: 3}
+  explosionSoundCue: {fileID: 11400000, guid: 57e60901599f83149b17acbbbfd48dd5, type: 2}
 --- !u!96 &2854774726395361184
 TrailRenderer:
   serializedVersion: 2

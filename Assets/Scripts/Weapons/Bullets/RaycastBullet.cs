@@ -4,17 +4,25 @@ using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(LineRenderer))]
-public class RaycastBullet : MonoBehaviourPunCallbacks
+public class RaycastBullet : Bullet
 {
     public float force = 50.0f;
 
-    [Space] public LineRenderer lineRenderer;
+    [Space]
 
-    [Space] public GameObject startEffect;
+    public LineRenderer lineRenderer;
+
+    [Space]
+
+    public GameObject startEffect;
     public GameObject contactEffect;
+    public SoundCue contactSoundCue;
 
-    private void Awake()
+
+    public override void Awake()
     {
+        base.Awake();
+
         Instantiate(startEffect, transform.position, Quaternion.identity);
 
         var muzzle = transform;
@@ -35,6 +43,9 @@ public class RaycastBullet : MonoBehaviourPunCallbacks
             StartCoroutine(Destroy());
 
             Instantiate(contactEffect, hit.point, Quaternion.identity);
+
+
+            contactSoundCue.PlayRandomSoundAtPosition(hit.point);
 
             break;
         }
