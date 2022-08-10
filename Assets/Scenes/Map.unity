@@ -9130,6 +9130,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5371284020483284233, guid: 6e807f2f9b9d40748aa2921122ebea06,
         type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5371284020483284233, guid: 6e807f2f9b9d40748aa2921122ebea06,
+        type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
