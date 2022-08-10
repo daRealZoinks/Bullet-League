@@ -42,7 +42,7 @@ public class MainMenu : MonoBehaviourPunCallbacks
             return;
         }
 
-        PhotonNetwork.GameVersion = "0.0.1";
+        PhotonNetwork.GameVersion = "1.0.0";
         PhotonNetwork.ConnectUsingSettings();
         gameState.text = "Connecting";
     }

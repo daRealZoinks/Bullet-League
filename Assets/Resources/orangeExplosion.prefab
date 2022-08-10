@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 860853727015281082}
   - component: {fileID: 860853727015281077}
   - component: {fileID: 8435972440949931144}
+  - component: {fileID: 5872105845191592485}
   m_Layer: 0
   m_Name: orangeExplosion
   m_TagString: Untagged
@@ -157,3 +158,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99dd0922deaabb84da5bdd2badaf0142, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5872105845191592485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 860853727015281076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
