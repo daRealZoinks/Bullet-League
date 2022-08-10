@@ -1332,7 +1332,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   jumpForce: 8
   capsuleCollider: {fileID: 7139982480067008147}
-  sensitivity: 6
+  sensitivity: 0.16
   lookingDirection: {x: 0, y: 0}
   cam: {fileID: 5974200826120062726}
   wallDistance: 0.56

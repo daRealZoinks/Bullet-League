@@ -170,8 +170,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void LateUpdate()
     {
-        transform.Rotate(sensitivity * Time.deltaTime * new Vector3(0, lookingDirection.x, 0));
-        cam.transform.Rotate(sensitivity * Time.deltaTime * new Vector3(-lookingDirection.y, 0, 0));
+        transform.Rotate(sensitivity * new Vector3(0, lookingDirection.x, 0));
+        cam.transform.Rotate(sensitivity * new Vector3(-lookingDirection.y, 0, 0));
 
         if (!_isGrounded)
         {
