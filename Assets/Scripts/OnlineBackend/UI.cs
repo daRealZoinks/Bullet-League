@@ -3,22 +3,31 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.Rendering.Universal;
 
 public class UI : MonoBehaviour
 {
-    [Header("InGameUI")] public TextMeshProUGUI ammoCounter;
+    [Header("InGameUI")]
+
+    public TextMeshProUGUI ammoCounter;
     public RectTransform reticule;
     public TextMeshProUGUI blueScoreText;
     public TextMeshProUGUI orangeScoreText;
 
-    [Header("Pause")] public GameObject inGameUI;
+    [Header("Pause")]
+
+    public GameObject inGameUI;
     public GameObject pauseMenu;
+
+    public TextMeshProUGUI postProccessToggleText;
+    public TextMeshProUGUI graphicsToggleText;
 
     private GameManager _gameManager;
     private GameObject _player;
     private GunManager _gunManager;
     private PlayerMovement _playerMovement;
     private Rigidbody _playerRb;
+    private Camera _cam;
 
     private void Awake()
     {
@@ -27,6 +36,8 @@ public class UI : MonoBehaviour
         _player.GetComponent<PlayerManager>().ui = this;
         _playerRb = _player.GetComponent<Rigidbody>();
         _gunManager = _player.GetComponentInChildren<GunManager>();
+        _cam = Camera.main;
+        QualitySettings.SetQualityLevel(QualitySettings.names.Length - 1);
     }
 
     private void OnEnable()
@@ -76,6 +87,27 @@ public class UI : MonoBehaviour
         Cursor.visible = false;
 
         _player.GetComponent<PlayerInput>().enabled = true;
+    }
+
+    public void PostProccessToggle()
+    {
+        //TODO: Toggle post proccessing
+        _cam.GetUniversalAdditionalCameraData().renderPostProcessing = !_cam.GetUniversalAdditionalCameraData().renderPostProcessing;
+        postProccessToggleText.text = "Post Processing: " + (_cam.GetUniversalAdditionalCameraData().renderPostProcessing ? "On" : "Off");
+    }
+
+    public void Graphics()
+    {
+        //TODO: Toggle graphics
+
+        if (QualitySettings.GetQualityLevel() == 0)
+        {
+            QualitySettings.SetQualityLevel(QualitySettings.names.Length);
+        }
+
+        QualitySettings.SetQualityLevel((QualitySettings.GetQualityLevel() - 1));
+
+        graphicsToggleText.text = "Graphics: " + QualitySettings.names[QualitySettings.GetQualityLevel()];
     }
 
     public void QuitToTheMenu()

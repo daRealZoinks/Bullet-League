@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask whatIsGround;
     private Vector2 _direction;
 
-    [Space] [HideInInspector] public Rigidbody rb;
+    [Space][HideInInspector] public Rigidbody rb;
 
     [Space] public float jumpForce = 8.0f;
     public CapsuleCollider capsuleCollider;
@@ -80,7 +80,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        WallRun();
 
         _isGrounded = Physics.Raycast(transform.position + capsuleCollider.center, Vector3.down,
             capsuleCollider.height / 2 + 0.3f, whatIsGround);
@@ -102,28 +101,28 @@ public class PlayerMovement : MonoBehaviour
         switch (_isGrounded)
         {
             case false when _wallRight || _wallLeft:
-            {
-                if (rb.velocity.y < 0)
                 {
-                    rb.AddForce(Time.fixedDeltaTime * wallRunGravityCancelForce * transform.up, ForceMode.Force);
+                    if (rb.velocity.y < 0)
+                    {
+                        rb.AddForce(Time.fixedDeltaTime * wallRunGravityCancelForce * transform.up, ForceMode.Force);
+                    }
+
+                    rb.AddForce(Time.deltaTime * groundSpeedMultiplier * transform.forward, ForceMode.Acceleration);
+
+                    if (_wallRight)
+                    {
+                        rb.AddForce(2 * Time.deltaTime * groundSpeedMultiplier * -_rightWallHit.normal,
+                            ForceMode.Acceleration);
+                    }
+
+                    if (_wallLeft)
+                    {
+                        rb.AddForce(2 * Time.deltaTime * groundSpeedMultiplier * -_leftWallHit.normal,
+                            ForceMode.Acceleration);
+                    }
+
+                    break;
                 }
-
-                rb.AddForce(Time.deltaTime * groundSpeedMultiplier * transform.forward, ForceMode.Acceleration);
-
-                if (_wallRight)
-                {
-                    rb.AddForce(2 * Time.deltaTime * groundSpeedMultiplier * -_rightWallHit.normal,
-                        ForceMode.Acceleration);
-                }
-
-                if (_wallLeft)
-                {
-                    rb.AddForce(2 * Time.deltaTime * groundSpeedMultiplier * -_leftWallHit.normal,
-                        ForceMode.Acceleration);
-                }
-
-                break;
-            }
             case true:
                 _wallRight = false;
                 _wallLeft = false;
@@ -147,12 +146,17 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_wallRight || _wallLeft) return;
 
-        var playerTransform = transform;
-        var moveDirection = playerTransform.forward * _direction.y + playerTransform.right * _direction.x;
+        WallRun();
 
-        rb.AddForce(moveSpeed * _moveSpeedMultiplier * moveDirection, ForceMode.Acceleration);
+        if (!_wallLeft && !_wallRight)
+        {
+            var playerTransform = transform;
+            var moveDirection = playerTransform.forward * _direction.y + playerTransform.right * _direction.x;
+
+            rb.AddForce(moveSpeed * _moveSpeedMultiplier * moveDirection, ForceMode.Acceleration);
+        }
+
     }
 
     #endregion

@@ -446,6 +446,7 @@ MonoBehaviour:
     type: 3}
   m_DeselectOnBackgroundClick: 1
   m_PointerBehavior: 0
+  m_CursorLockBehavior: 0
 --- !u!114 &272667422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3001,6 +3002,8 @@ MonoBehaviour:
     - m_Text: 1v1
       m_Image: {fileID: 0}
     - m_Text: 2v2
+      m_Image: {fileID: 0}
+    - m_Text: 3v3
       m_Image: {fileID: 0}
     - m_Text: 4v4
       m_Image: {fileID: 0}
