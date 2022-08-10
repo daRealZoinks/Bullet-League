@@ -102,10 +102,13 @@ public class UI : MonoBehaviour
 
         if (QualitySettings.GetQualityLevel() == 0)
         {
-            QualitySettings.SetQualityLevel(QualitySettings.names.Length);
+            QualitySettings.SetQualityLevel(QualitySettings.names.Length - 1);
+        }
+        else
+        {
+            QualitySettings.SetQualityLevel((QualitySettings.GetQualityLevel() - 1));
         }
 
-        QualitySettings.SetQualityLevel((QualitySettings.GetQualityLevel() - 1));
 
         graphicsToggleText.text = "Graphics: " + QualitySettings.names[QualitySettings.GetQualityLevel()];
     }
